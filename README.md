@@ -92,3 +92,8 @@ That would lead to a dict like this:
     "arg": "argument 2",
     "2": "argument 3"
 }
+```
+
+### Check the provided branches for examples.
+
+#### Pull requests targeting new branches are welcome and encouraged.
