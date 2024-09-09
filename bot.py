@@ -109,7 +109,7 @@ async def on_member_remove( member : discord.Member ):
 #================================================================================================
 # on_command
 #================================================================================================
-async def on_message( message: discord.Message ):
+async def on_command( message: discord.Message ):
 
     message.content = message.content[ len( config[ "prefix" ] ) : ];
 
@@ -214,7 +214,7 @@ async def on_message( message: discord.Message ):
 
     if message.content.startswith( config[ "prefix" ] ):
 
-        await on_message( message );
+        await on_command( message );
 
 
 #================================================================================================
