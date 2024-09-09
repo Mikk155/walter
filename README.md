@@ -1,10 +1,10 @@
-# Walter
+# discord-bot
 
 ```
 pip install -r requirements.txt
 ```
 
-Walter has a hooking system, Create your modules in ``plugins\`` to do your stuff
+This bot template has a hooking system, Create your modules in ``plugins\`` to do your stuff.
 
 # hooking system
 
@@ -24,7 +24,7 @@ Register these hooks:
 ```python
 Plugin( plugin_name='Activity', hook_list=hooks );
 ```
-- Note: ``plugin_name`` is the plugin's filename.
+- Note: it is important for ``plugin_name`` to be the plugin's filename.
 
 Available hooks:
 ```python
@@ -38,3 +38,57 @@ async def on_message_edit( Args : HookValue.message_delete ):
 async def on_reaction_add( Args : HookValue.reaction ):
 async def on_reaction_remove( Args : HookValue.reaction ):
 ```
+
+### Commands
+
+Create an instance of Commands class
+```python
+command = Commands();
+```
+
+Explicitly set this command to be only useable on specific servers
+```python
+command.servers = [  int('your server ID'), 123456789 ];
+```
+
+Same as servers. this is for expecific roles
+```python
+command.allowed = [  int('your role ID'), 123456789 ];
+```
+
+Print information when a user uses the help command
+```python
+command.information = '''
+Print's hello world message
+'''
+```
+
+Register your function
+```python
+command.function = 'on_command'
+```
+
+Finally register the command
+```python
+RegisterCommand( plugin_name='cmd_helloworld', command_name='hello', command_class=command );
+```
+
+```python
+async def on_command( message: discord.Message, arguments: dict ):
+    await message.reply( "Hello world" );
+```
+
+``arguments`` will be a list of passed-on arguments separated by commas.
+
+If a provided argument contains a ``=`` between two strings it will be splited and the first argument will be the key pair of ``arguments`` instead of a enumeration.
+
+```
+!command argument 1, arg=argument 2, argument 3
+```
+That would lead to a dict like this:
+```json
+{
+    "1": "argument 1",
+    "arg": "argument 2",
+    "2": "argument 3"
+}
