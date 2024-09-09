@@ -58,23 +58,25 @@ class gpGlobals:
 
 async def log_channel( message: str, arguments: list = [] ):
     global config;
-    if "LOGGER" in config:
+    if gpGlobals.Logger and "LOGGER" in config:
         for __arg__ in arguments:
-            string = string.replace( "{}", str( __arg__ ), 1 )
+            message = message.replace( "{}", str( __arg__ ), 1 )
         return await bot.get_channel( config[ "LOGGER" ] ).send( message );
 
 global __pre_logs__;
-__pre_logs__ = []
+__pre_logs__:list[dict] = []
 
 def pre_log_channel( message: str, arguments: list = [] ):
     '''Delay logs using this because the bot is not yet connected'''
+    for __arg__ in arguments:
+        message = message.replace( "{}", str( __arg__ ), 1 )
     global __pre_logs__;
-    __pre_logs__.append( { message, arguments } );
+    __pre_logs__.append( message );
 
 async def post_log_channel():
     global __pre_logs__;
     while len( __pre_logs__ ) > 0:
-        await log_channel( __pre_logs__[0][0], __pre_logs__[0][1] );
+        await log_channel( __pre_logs__[0] );
         __pre_logs__.pop( 0 );
 
 def get_time( seconds : int ) -> str:
@@ -135,18 +137,6 @@ plugins : dict = {};
 global commandos
 commandos: dict = {};
 
-def Logger( string: str, arguments : list[str] = [], cut_not_matched : bool = False, not_matched_trim : bool = False ):
-
-    for __arg__ in arguments:
-        string = string.replace( "{}", str( __arg__ ), 1 )
-
-    if cut_not_matched:
-        __replace__ = '{} ' if not_matched_trim else '{}'
-        string.replace( __replace__, '' )
-
-    if gpGlobals.Logger:
-        print( string )
-
 class ReturnCode:
     Handled = 1;
     '''Handles the hook and stop calling other plugins'''
@@ -170,7 +160,7 @@ class Hooks:
 
 def RegisterHooks( plugin_name : str, hook_list : list[ Hooks ] ):
     plugins[ plugin_name ] =  hook_list;
-    print( f'{plugin_name} Registered hooks: {hook_list}' );
+    pre_log_channel( '- **{}** Registered hooks: ``{}``', [ plugin_name, hook_list ] );
 
 class Commands:
     plugin : str = None
@@ -188,7 +178,7 @@ class Commands:
 def RegisterCommand( plugin_name : str, command_name : str, command_class : Commands ):
     command_class.plugin = plugin_name
     commandos[ command_name ] = command_class;
-    print( f'{plugin_name} Registered command: {command_name}' );
+    pre_log_channel( '- **{}** Registered command: ``{}``', [ plugin_name, command_name ] );
 
 class HookValue:
     class edited:
@@ -209,4 +199,4 @@ class HookManager:
                     if hook_code == ReturnCode.Handled:
                         break;
                 except Exception as e:
-                    await log_channel( 'Exception on plugin {} at function {} error: {}'.format( plugin, hook_name, e ) );
+                    await log_channel( 'Exception on plugin ``{}`` at function ``{}`` error: ```{}```'.format( plugin, hook_name, e ) );
