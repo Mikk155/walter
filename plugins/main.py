@@ -160,7 +160,7 @@ class Hooks:
 
 def RegisterHooks( plugin_name : str, hook_list : list[ Hooks ] ):
     plugins[ plugin_name ] =  hook_list;
-    pre_log_channel( '- **{}** Registered hooks: ``{}``', [ plugin_name, hook_list ] );
+    pre_log_channel( '**{}** Registered hooks: ``{}``', [ plugin_name, hook_list ] );
 
 class Commands:
     plugin : str = None
@@ -178,7 +178,7 @@ class Commands:
 def RegisterCommand( plugin_name : str, command_name : str, command_class : Commands ):
     command_class.plugin = plugin_name
     commandos[ command_name ] = command_class;
-    pre_log_channel( '- **{}** Registered command: ``{}``', [ plugin_name, command_name ] );
+    pre_log_channel( '**{}** Registered command: ``{}``', [ plugin_name, command_name ] );
 
 class HookValue:
     class edited:
