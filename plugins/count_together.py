@@ -29,12 +29,12 @@ async def cfg_counttogether( interaction: discord.Interaction ):
 async def on_message( message: discord.Message ):
 
     if not message.author or message.author.id == bot.user.id or not message.guild or not str(message.guild.id) in count_together:
-        return
+        return ReturnCode.Continue;
 
     channel = bot.get_channel( int(count_together[ str(message.guild.id) ]) );
 
     if not channel or message.channel is not channel:
-        return
+        return ReturnCode.Continue;
 
     numero_actual = re.search( r'\b(\d+)\b', message.content )
 
@@ -48,7 +48,7 @@ async def on_message( message: discord.Message ):
 
         await message.channel.send( f'{message.author.mention} Only counting on this channel!', delete_after = 5 )
 
-        return
+        return ReturnCode.Handled;
 
     async for old_message in message.channel.history( limit=10, before=message.created_at ):
 
@@ -71,6 +71,8 @@ async def on_message( message: discord.Message ):
             await message.delete()
 
         await message.channel.send( f'{message.author.mention}, do you know how to count? :face_with_raised_eyebrow:', delete_after = 5 )
+
+        return ReturnCode.Handled;
 
 async def on_ready():
 

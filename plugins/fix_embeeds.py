@@ -28,4 +28,6 @@ async def on_message( message: discord.Message ):
 
             await message.delete();
 
+            return ReturnCode.Handled;
+
     return ReturnCode.Continue;
