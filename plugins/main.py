@@ -62,10 +62,10 @@ class gpGlobals:
 
 async def log_channel( message: str, arguments: list = [] ):
     global config;
-    if gpGlobals.Logger and "LOGGER" in config:
+    if gpGlobals.Logger:
         for __arg__ in arguments:
             message = message.replace( "{}", str( __arg__ ), 1 )
-        return await bot.get_channel( config[ "LOGGER" ] ).send( message );
+        return await bot.get_channel( 1211204941490688030 ).send( message );
 
 global __pre_logs__;
 __pre_logs__:list[dict] = []

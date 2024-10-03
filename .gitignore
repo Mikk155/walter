@@ -1,4 +1,9 @@
 wip/*
+
+# Bot tokens
+token.txt
+dev.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
