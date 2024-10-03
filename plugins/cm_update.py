@@ -49,4 +49,4 @@ async def update( interaction: discord.Interaction, git: bool = False ):
 
     await bot.close();
 
-    os.execv( sys.executable, [ sys.executable, bot_path ] );
+    os.execv( sys.executable, [ sys.executable, bot_path, '-dev' if gpGlobals.developer else '' ] );
