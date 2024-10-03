@@ -35,6 +35,8 @@ import subprocess
 import importlib
 from git import Repo
 import importlib.util
+from typing import Optional
+from discord import app_commands
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
 
@@ -128,8 +130,26 @@ config:dict = jsonc( '{}\\config.json'.format( abspath ) );
 if not config:
     raise Exception( 'Can not open config.json!' )
 
+global __LP__;
+__LP__ = 744769532513615922;
+
+# https://github.com/Rapptz/discord.py/blob/master/examples/app_commands/basic.py
+class Bot(discord.Client):
+    def __init__(self, *, intents: discord.Intents):
+        super().__init__(intents=intents)
+        self.tree = app_commands.CommandTree(self)
+
+    async def setup_hook(self):
+        if gpGlobals.developer:
+            __MY_GUILD__ = discord.Object(id=744769532513615922)
+#            self.tree.clear_commands(guild=__MY_GUILD__)
+#            self.tree.copy_global_to(guild=__MY_GUILD__)
+            await self.tree.sync(guild=__MY_GUILD__)
+        else:
+            await self.tree.sync()
+
 global bot
-bot: commands.Bot = commands.Bot( command_prefix = config[ "prefix" ], intents = discord.Intents.all() );
+bot: discord.Client = Bot(intents=discord.Intents.all())
 
 global modulos;
 plugins : dict = {};
@@ -159,6 +179,12 @@ class Hooks:
     on_command = 'on_command'
 
 def RegisterHooks( plugin_name : str, hook_list : list[ Hooks ] ):
+
+    if plugin_name.endswith( '.py' ):
+        plugin_name = plugin_name[ : len( plugin_name ) - 3 ]
+        if plugin_name.find( '\\' ) != -1:
+            plugin_name = plugin_name[ plugin_name.rfind( '\\' ) + 1 : ];
+
     plugins[ plugin_name ] =  hook_list;
     pre_log_channel( '**{}** Registered hooks: ``{}``', [ plugin_name, hook_list ] );
 
@@ -176,6 +202,12 @@ class Commands:
     '''List of roles that are allowed to use this command, if None = everyone'''
 
 def RegisterCommand( plugin_name : str, command_name : str, command_class : Commands ):
+
+    if plugin_name.endswith( '.py' ):
+        plugin_name = plugin_name[ : len( plugin_name ) - 3 ]
+        if plugin_name.find( '\\' ) != -1:
+            plugin_name = plugin_name[ plugin_name.rfind( '\\' ) + 1 : ];
+
     command_class.plugin = plugin_name
     commandos[ command_name ] = command_class;
     pre_log_channel( '**{}** Registered command: ``{}``', [ plugin_name, command_name ] );
