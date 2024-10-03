@@ -48,7 +48,7 @@ class gpGlobals:
     This increases in 1 each second.
     '''
 
-    developer = True if len( sys.argv ) > 1 and sys.argv[1] else False;
+    developer = True if '-dev' in sys.argv else False;
     '''
     Returns **True** If the bot has been run by ``test.bat``
     '''
@@ -57,6 +57,8 @@ class gpGlobals:
     '''
     Set to *True* for getting loggers
     '''
+
+    __iPlugins__ = 0;
 
 async def log_channel( message: str, arguments: list = [] ):
     global config;
@@ -77,9 +79,17 @@ def pre_log_channel( message: str, arguments: list = [] ):
 
 async def post_log_channel():
     global __pre_logs__;
+    string = '';
     while len( __pre_logs__ ) > 0:
-        await log_channel( __pre_logs__[0] );
-        __pre_logs__.pop( 0 );
+        if len( string ) + len( __pre_logs__[0] ) + 2 <= 2000: # Discord limit
+            string = '{}{}\n'.format( string, __pre_logs__[0] );
+            __pre_logs__.pop( 0 );
+        else:
+            await log_channel( string );
+            string = '';
+    if string != '':
+        await log_channel( string );
+        
 
 def get_time( seconds : int ) -> str:
     m = seconds // 60;
@@ -119,7 +129,12 @@ def jsonc( obj : list[str] | str ) -> dict | list:
         __line__ = __line__.strip();
         if __line__ and __line__ != '' and not __line__.startswith( '//' ):
             __js_split__ = f'{__js_split__}\n{__line__}';
-    return json.loads( __js_split__ );
+    try:
+        js = json.loads( __js_split__ );
+        return js;
+    except Exception as e:
+        print( 'Failed to open object {}'.format( obj ) );
+    return {};
 
 global abspath;
 abspath = os.path.abspath( "" );
@@ -141,9 +156,9 @@ class Bot(discord.Client):
 
     async def setup_hook(self):
         if gpGlobals.developer:
-            __MY_GUILD__ = discord.Object(id=744769532513615922)
-#            self.tree.clear_commands(guild=__MY_GUILD__)
-#            self.tree.copy_global_to(guild=__MY_GUILD__)
+            __MY_GUILD__ = discord.Object(id=__LP__)
+            self.tree.clear_commands(guild=__MY_GUILD__)
+            self.tree.copy_global_to(guild=__MY_GUILD__)
             await self.tree.sync(guild=__MY_GUILD__)
         else:
             await self.tree.sync()
@@ -153,9 +168,6 @@ bot: discord.Client = Bot(intents=discord.Intents.all())
 
 global modulos;
 plugins : dict = {};
-
-global commandos
-commandos: dict = {};
 
 class ReturnCode:
     Handled = 1;
@@ -176,7 +188,6 @@ class Hooks:
     on_message_edit = 'on_message_edit'
     on_reaction_add = 'on_reaction_add'
     on_reaction_remove = 'on_reaction_remove'
-    on_command = 'on_command'
 
 def RegisterHooks( plugin_name : str, hook_list : list[ Hooks ] ):
 
@@ -188,30 +199,6 @@ def RegisterHooks( plugin_name : str, hook_list : list[ Hooks ] ):
     plugins[ plugin_name ] =  hook_list;
     pre_log_channel( '**{}** Registered hooks: ``{}``', [ plugin_name, hook_list ] );
 
-class Commands:
-    plugin : str = None
-    '''Name of the plugin'''
-    function : str = None
-    information : str = None
-    '''Information display for this command (help)'''
-    command : str = None
-    '''Command show and arguments (help)'''
-    servers : list[int] = None
-    '''Servers-only command, leave empty for global'''
-    allowed : list[int] = None
-    '''List of roles that are allowed to use this command, if None = everyone'''
-
-def RegisterCommand( plugin_name : str, command_name : str, command_class : Commands ):
-
-    if plugin_name.endswith( '.py' ):
-        plugin_name = plugin_name[ : len( plugin_name ) - 3 ]
-        if plugin_name.find( '\\' ) != -1:
-            plugin_name = plugin_name[ plugin_name.rfind( '\\' ) + 1 : ];
-
-    command_class.plugin = plugin_name
-    commandos[ command_name ] = command_class;
-    pre_log_channel( '**{}** Registered command: ``{}``', [ plugin_name, command_name ] );
-
 class HookValue:
     class edited:
         before : discord.Message
@@ -221,14 +208,41 @@ class HookValue:
         user : discord.User
 
 class HookManager:
-    async def CallHook( hook_name, HookValue = None ):
+
+    module_cache = {}
+
+    @classmethod
+    async def CallHook( self, hook_name, HookValues = None ):
+
         for plugin, hooks in plugins.items():
+
             if f'{hook_name}' in hooks:
-                module = importlib.import_module( f'plugins.{plugin}' );
-                hook = getattr( module, hook_name );
+
                 try:
-                    hook_code = await hook( HookValue ) if HookValue is not None else await hook();
+
+                    module = self.module_cache[ plugin ];
+                    hook = getattr( module, hook_name );
+
+                    hook_code = await hook( HookValues ) if HookValues is not None else await hook();
+
+                    # Don't call anymore hooks
                     if hook_code == ReturnCode.Handled:
                         break;
+
                 except Exception as e:
-                    await log_channel( 'Exception on plugin ``{}`` at function ``{}`` error: ```{}```'.format( plugin, hook_name, e ) );
+
+                    str_except = 'Exception on plugin ``{}`` at function ``{}`` error: ```{}```'.format( plugin, hook_name, e );
+
+                    if HookValues:
+                        if isinstance( HookValues, discord.Message ) or isinstance( HookValues, HookValue.edited ):
+                            try:
+                                await HookValues.channel.send( str_except );
+                            except:
+                                await log_channel( str_except );
+                        elif isinstance( HookValues, HookValue.reaction ):
+                            try:
+                                await HookValues.message.channel.send( str_except );
+                            except:
+                                await log_channel( str_except );
+                    else:
+                        await log_channel( str_except );
