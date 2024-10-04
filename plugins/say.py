@@ -6,8 +6,11 @@ from plugins.main import *
 #    reply='Message link to reply',
     hidename='Hide who used the command, Only works for administrators',
 )
-async def pick( interaction: discord.Interaction, message: str, hidename: bool = True ):
+async def say( interaction: discord.Interaction, message: str, hidename: bool = True ):
     """Make the bot say something"""
+
+    await interaction.response.send_message( '<:walter_what:1278078147870331011>', ephemeral=True, delete_after=0.1 )
+
     try:
         if hidename and interaction.user.guild_permissions.administrator:
             await interaction.channel.send( message );

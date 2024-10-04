@@ -61,7 +61,6 @@ class gpGlobals:
     __iPlugins__ = 0;
 
 async def log_channel( message: str, arguments: list = [] ):
-    global config;
     if gpGlobals.Logger:
         for __arg__ in arguments:
             message = message.replace( "{}", str( __arg__ ), 1 )
@@ -138,12 +137,6 @@ def jsonc( obj : list[str] | str ) -> dict | list:
 
 global abspath;
 abspath = os.path.abspath( "" );
-
-global config
-config:dict = jsonc( '{}\\config.json'.format( abspath ) );
-
-if not config:
-    raise Exception( 'Can not open config.json!' )
 
 global __LP__;
 __LP__ = 744769532513615922;
@@ -233,16 +226,17 @@ class HookManager:
 
                     str_except = 'Exception on plugin ``{}`` at function ``{}`` error: ```{}```'.format( plugin, hook_name, e );
 
-                    if HookValues:
-                        if isinstance( HookValues, discord.Message ) or isinstance( HookValues, HookValue.edited ):
-                            try:
-                                await HookValues.channel.send( str_except );
-                            except:
-                                await log_channel( str_except );
-                        elif isinstance( HookValues, HookValue.reaction ):
-                            try:
-                                await HookValues.message.channel.send( str_except );
-                            except:
-                                await log_channel( str_except );
-                    else:
-                        await log_channel( str_except );
+                    #if HookValues:
+                    #    if isinstance( HookValues, discord.Message ) or isinstance( HookValues, HookValue.edited ):
+                    #        try:
+                    #            await HookValues.channel.send( str_except );
+                    #        except:
+                    #            await log_channel( str_except );
+                    #    elif isinstance( HookValues, HookValue.reaction ):
+                    #        try:
+                    #            await HookValues.message.channel.send( str_except );
+                    #        except:
+                    #            await log_channel( str_except );
+                    #else:
+                    #    await log_channel( str_except );
+                    await log_channel( str_except );

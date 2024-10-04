@@ -182,4 +182,6 @@ async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
 #================================================================================================
 # log in
 #================================================================================================
-bot.run( open( '{}\\{}.txt'.format( abspath, 'dev' if gpGlobals.developer else 'token' ), 'r' ) );
+TOKEN =  open( '{}\\{}.txt'.format( abspath, 'dev' if gpGlobals.developer else 'token' ), 'r' ).readlines()[0];
+print( TOKEN )
+bot.run( TOKEN );

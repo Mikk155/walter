@@ -7,7 +7,7 @@ from plugins.main import *
 async def update( interaction: discord.Interaction, git: bool = False ):
     """Update bot"""
 
-    await interaction.response.send_message( '<:walter_what:1278078147870331011>', ephemeral=True )
+    await interaction.response.send_message( '<:walter_what:1278078147870331011>', ephemeral=True, delete_after=0.1 )
 
     pull = False;
 

@@ -30,7 +30,7 @@ async def on_think():
         try:
             pActivity = discord.Activity(
                 type = discord.ActivityType.listening,
-                name = config[ "prefix" ],
+                name = Activity[ "Activity" ],
                 state = Activity[ "State" ][ LastState - 1 ],
             );
 
