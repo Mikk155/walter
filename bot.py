@@ -66,9 +66,8 @@ async def on_ready():
 
     await post_log_channel();
 
-    if not gpGlobals.developer:
-        i = gpGlobals.__iPlugins__;
-        await log_channel( '{} plugin{} were loaded'.format( 'No' if i <= 0 else 'One' if i == 1 else i, 's' if i > 1 else '' ) );
+    i = gpGlobals.__iPlugins__;
+    await log_channel( '{} plugin{} were loaded'.format( 'No' if i <= 0 else 'One' if i == 1 else i, 's' if i > 1 else '' ) );
 
     await bot.wait_until_ready();
 
