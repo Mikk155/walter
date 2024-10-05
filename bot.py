@@ -66,12 +66,14 @@ async def on_ready():
 
     await post_log_channel();
 
-    i = gpGlobals.__iPlugins__;
-    await log_channel( '{} plugin{} were loaded'.format( 'No' if i <= 0 else 'One' if i == 1 else i, 's' if i > 1 else '' ) );
+    if not gpGlobals.developer:
+        i = gpGlobals.__iPlugins__;
+        await log_channel( '{} plugin{} were loaded'.format( 'No' if i <= 0 else 'One' if i == 1 else i, 's' if i > 1 else '' ) );
 
     await bot.wait_until_ready();
 
-    await log_channel( 'Bot connected and logged as {0.user}{1}'.format( bot, " in developer mode" if gpGlobals.developer else '' ) )
+    if not gpGlobals.developer:
+        await log_channel( 'Bot connected and logged as {0.user}{1}'.format( bot, " in developer mode" if gpGlobals.developer else '' ) )
 
     await HookManager.CallHook( 'on_ready' );
 
