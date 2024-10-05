@@ -52,7 +52,7 @@ def get_r34_post( tags : list, page ):
     page='Page number',
 )
 async def r34( interaction: discord.Interaction, tags: str = None, page: int = 0 ):
-    """Re-post a random image from https://rule34.usMake the bot say something"""
+    """Re-post a random image from https://rule34.us"""
 
     if interaction.channel.is_nsfw():
         await interaction.response.send_message( '<:walter_what:1278078147870331011>', delete_after=0.1, ephemeral=True )
