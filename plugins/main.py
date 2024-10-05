@@ -36,6 +36,7 @@ import importlib
 from git import Repo
 import importlib.util
 from typing import Optional
+from datetime import datetime
 from discord import app_commands
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
@@ -190,7 +191,9 @@ def RegisterHooks( plugin_name : str, hook_list : list[ Hooks ] ):
             plugin_name = plugin_name[ plugin_name.rfind( '\\' ) + 1 : ];
 
     plugins[ plugin_name ] =  hook_list;
-    pre_log_channel( '**{}** Registered hooks: ``{}``', [ plugin_name, hook_list ] );
+
+    if not gpGlobals.developer:
+        pre_log_channel( '**{}** Registered hooks: ``{}``', [ plugin_name, hook_list ] );
 
 class HookValue:
     class edited:
@@ -240,3 +243,18 @@ class HookManager:
                     #else:
                     #    await log_channel( str_except );
                     await log_channel( str_except );
+
+MONTH_CHOICES = [
+    app_commands.Choice(name='January', value='1'),
+    app_commands.Choice(name='February', value='2'),
+    app_commands.Choice(name='March', value='3'),
+    app_commands.Choice(name='April', value='4'),
+    app_commands.Choice(name='May', value='5'),
+    app_commands.Choice(name='June', value='6'),
+    app_commands.Choice(name='July', value='7'),
+    app_commands.Choice(name='August', value='8'),
+    app_commands.Choice(name='September', value='9'),
+    app_commands.Choice(name='October', value='10'),
+    app_commands.Choice(name='November', value='11'),
+    app_commands.Choice(name='December', value='12'),
+]
