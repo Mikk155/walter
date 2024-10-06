@@ -1,6 +1,18 @@
 {
-    "Activity": "Wankers",
-    "State":
+    // unknown = -1
+    // playing = 0
+    // streaming = 1
+    // listening = 2
+    // watching = 3
+    // custom = 4
+    // competing = 5
+    "type": 2,
+
+    // Name (Listening to {})
+    "name": "Wankers",
+
+    // States
+    "state":
     [
         "Wiggles your balls",
         "No hablo espanol",
@@ -9,5 +21,7 @@
         "I like black cats, they're so tasty",
         "I live in your walls"
     ],
-    "IntervalUpdate": 5
+
+    // Update interval (in seconds)
+    "interval": 5
 }

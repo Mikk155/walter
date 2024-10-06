@@ -1,0 +1,87 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties":
+    {
+        "$schema":
+        {
+            "type": "string"
+        },
+        "plugins":
+        {
+            "type": "array",
+            "items":
+            {
+                "type": "object",
+                "properties":
+                {
+                    "Enable":
+                    {
+                        "type": "boolean",
+                        "description": "If false the plugin is not registered."
+                    },
+                    "File Name":
+                    {
+                        "type": "string",
+                        "description": "File name located in plugins/"
+                    },
+                    "Plugin Name":
+                    {
+                        "type": "string",
+                        "description": "Name of the plugin, if empty is \"File Name\""
+                    },
+                    "Author Name":
+                    {
+                        "type": "string",
+                        "description": "Name of the author, if empty is unset"
+                    },
+                    "Author Contact":
+                    {
+                        "type": "string",
+                        "description": "Contact of the author, if empty is unset"
+                    },
+                    "Description":
+                    {
+                        "type": "string",
+                        "description": "Description of the plugin, if empty is unset"
+                    },
+                    "Hooks":
+                    {
+                        "type": "array",
+                        "description": "Hooks to register",
+                        "items":
+                        {
+                            "type": "string",
+                            "enum":
+                            [
+                                "on_ready",
+                                "on_think",
+                                "on_member_join",
+                                "on_member_remove",
+                                "on_message",
+                                "on_message_delete",
+                                "on_message_edit",
+                                "on_reaction_add",
+                                "on_reaction_remove"
+                            ]
+                        },
+                        "additionalProperties": true
+                    }
+                },
+                "required":
+                [
+                    "Enable",
+                    "File Name"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "additionalProperties": true
+    },
+    "additionalProperties": false,
+    "required":
+    [
+        "plugins",
+        "$schema"
+    ]
+}

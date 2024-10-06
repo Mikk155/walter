@@ -1,41 +1,25 @@
 # discord-bot
 
+Template discord bot that supports a "Plugin" implementation with a hooking system
+
 ```
 pip install -r requirements.txt
 ```
 
-This bot template has a hooking system, Create your modules in ``plugins\`` to do your stuff.
+- When adding third-party library make sure to include them in [main](plugins/main.py) so it's accesible by all plugins
 
-# hooking system
+## Plugin system
+
+Create your python script in within ``./plugins/`` folder
 
 Import ``main``:
 ```python
 from plugins.main import *
 ```
 
-Initialise an array of Hooks:
-```python
-hooks = [
-    Hooks.on_think
-];
-```
+Register your plugin in [plugins.json](plugins.json) following the instructions provided by the json [schema](schema.json)
 
-Register these hooks:
-```python
-RegisterHooks( __file__, hook_list=hooks );
-```
+- Create a ``token.txt`` file in the main folder and put in it your Discord Application BOT Token
+    - Alternativelly you can create a ``dev.txt`` token for running the bot with the ``-dev`` argument
 
-Available hooks:
-```python
-async def on_ready():
-async def on_think():
-async def on_member_join( member : discord.Member ):
-async def on_member_remove( member : discord.Member ):
-async def on_message( message : discord.Message ):
-async def on_message_delete( message : discord.Message ):
-async def on_message_edit( Args : HookValue.message_delete ):
-async def on_reaction_add( Args : HookValue.reaction ):
-async def on_reaction_remove( Args : HookValue.reaction ):
-```
-
-#### Pull requests are welcome and encouraged.
+### Pull requests are welcome and encouraged.

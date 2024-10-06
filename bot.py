@@ -24,165 +24,54 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-#================================================================================================
-# Initialise plugins
-#================================================================================================
-
-def PluginsInit():
-
-    modulos_path = os.path.join( abspath, "plugins" );
-
-    for file in os.listdir( modulos_path ):
-
-        if file.endswith( ".py" ) and not file.endswith( 'main.py' ):
-
-            try:
-
-                modulo:str = file[ : len(file) - 3 ];
-
-                spec = importlib.util.spec_from_file_location( modulo, os.path.join( modulos_path, file ) );
-
-                obj = importlib.util.module_from_spec( spec );
-
-                spec.loader.exec_module( obj );
-
-                HookManager.module_cache[modulo] = obj
-
-                gpGlobals.__iPlugins__ += 1;
-
-            except Exception as e:
-
-                pre_log_channel( "Error importing plugin {}: {}", [ file, e ] );
-
-PluginsInit();
-
-
-#================================================================================================
-# on_ready
-#================================================================================================
 @bot.event
-
 async def on_ready():
-
-    await post_log_channel();
-
-    i = gpGlobals.__iPlugins__;
-    await log_channel( '{} plugin{} were loaded'.format( 'No' if i <= 0 else 'One' if i == 1 else i, 's' if i > 1 else '' ) );
-
+    await bot.post_log_channel( g_PluginManager.num_plugins() );
     await bot.wait_until_ready();
+    await g_PluginManager.CallHook( 'on_ready' );
+    if gpGlobals.time() == 0:
+        on_think.start()
 
-    if not gpGlobals.developer:
-        await log_channel( 'Bot connected and logged as {0.user}{1}'.format( bot, " in developer mode" if gpGlobals.developer else '' ) )
-
-    await HookManager.CallHook( 'on_ready' );
-
-    on_think.start()
-
-
-#================================================================================================
-# on_member_join
-#================================================================================================
 @bot.event
-
 async def on_member_join( member : discord.Member ):
+    await g_PluginManager.CallHook( 'on_member_join', member );
 
-    await HookManager.CallHook( 'on_member_join', member );
-
-
-#================================================================================================
-# on_think
-#================================================================================================
 @tasks.loop( seconds = 1 )
-
 async def on_think():
-
     await bot.wait_until_ready();
+    await g_PluginManager.CallHook( 'on_think' );
+    gpGlobals.__time__ += 1;
 
-    await HookManager.CallHook( 'on_think' );
-
-    gpGlobals.time += 1;
-
-
-#================================================================================================
-# on_member_remove
-#================================================================================================
 @bot.event
-
 async def on_member_remove( member : discord.Member ):
+    await g_PluginManager.CallHook( 'on_member_remove', member );
 
-    await HookManager.CallHook( 'on_member_remove', member );
-
-
-#================================================================================================
-# on_message
-#================================================================================================
 @bot.event
-
 async def on_message( message: discord.Message ):
+    await g_PluginManager.CallHook( 'on_message', message );
 
-    await HookManager.CallHook( 'on_message', message );
-
-#================================================================================================
-# on_message_delete
-#================================================================================================
 @bot.event
-
 async def on_message_delete( message: discord.Message ):
+    await g_PluginManager.CallHook( 'on_message_delete', message );
 
-    await HookManager.CallHook( 'on_message_delete', message );
-
-
-#================================================================================================
-# on_message_edit
-#================================================================================================
 @bot.event
-
 async def on_message_edit( before: discord.Message, after: discord.Message ):
+    await g_PluginManager.CallHook( 'on_message_edit', before, after );
 
-    Args = HookValue();
-
-    Args.edited.before = before;
-
-    Args.edited.after = after;
-
-    await HookManager.CallHook( 'on_message_edit', Args.edited );
-
-
-#================================================================================================
-# on_reaction_add
-#================================================================================================
 @bot.event
-
 async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
+    await g_PluginManager.CallHook( 'on_reaction_add', reaction, user );
 
-    Args = HookValue();
-
-    Args.reaction.reaction = reaction;
-
-    Args.reaction.user = user;
-
-    await HookManager.CallHook( 'on_reaction_add', Args.reaction );
-
-
-#================================================================================================
-# on_reaction_remove
-#================================================================================================
 @bot.event
-
 async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
+    await g_PluginManager.CallHook( 'on_reaction_remove', reaction, user  );
 
-    Args = HookValue();
+Token_Name = 'dev' if gpGlobals.developer() else 'token';
+Token_Path = '{}\\{}.txt'.format( gpGlobals.abs(), Token_Name );
 
-    Args.reaction.reaction = reaction;
+if not os.path.exists( Token_Path ):
+    print( 'File {} doesn\'t exists! Exiting...' );
+    exit(1);
 
-    Args.reaction.user = user;
-
-    await HookManager.CallHook( 'on_reaction_remove', Args.reaction );
-
-
-#================================================================================================
-# log in
-#================================================================================================
-TOKEN =  open( '{}\\{}.txt'.format( abspath, 'dev' if gpGlobals.developer else 'token' ), 'r' ).readlines()[0];
-print( TOKEN )
-bot.run( TOKEN );
+Token_File = open( Token_Path, 'r' ).readlines();
+bot.run( Token_File[0] );
