@@ -6,8 +6,6 @@
             "Enable": true,
             "File Name": "Activity.py",
             "Plugin Name": "Bot Activities",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
             "Description": "Updates the bot Activity description from time to time.",
             "Hooks":
             [
@@ -18,8 +16,6 @@
             "Enable": true,
             "File Name": "birthdays.py",
             "Plugin Name": "Members Birthdays",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
             "Description": "Reminder of member's birthdays",
             "Hooks":
             [
@@ -30,16 +26,12 @@
             "Enable": true,
             "File Name": "cm_update.py",
             "Plugin Name": "Bot updater",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
             "Description": "Updates the bot, Attempts to fetch and pull git commits"
         },
         {
             "Enable": true,
             "File Name": "count_together.py",
             "Plugin Name": "Count Together",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
             "Description": "Members counts all together in a channel",
             "Hooks":
             [
@@ -51,17 +43,13 @@
             "Enable": true,
             "File Name": "electrocute.py",
             "Plugin Name": "Electrocute a member",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
             "Description": "Sends a member to mimir electrocuting him"
         },
         {
             "Enable": true,
             "File Name": "fix_embeeds.py",
             "Plugin Name": "Fix X and Instagram",
-            "Author Name": "Mikk",
             "Description": "Fix twitter and instagram embeeds",
-            "Author Contact": "https://github.com/Mikk155/",
             "Hooks":
             [
                 "on_message"
@@ -74,25 +62,17 @@
         {
             "Enable": true,
             "File Name": "minesweeper.py",
-            "Plugin Name": "Mine Sweeper minigame",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
-            "Description": "Find out the emoji, if you touch a bomb you lose!"
+            "Description": "Mine Sweeper minigame, Find out the emoji, if you touch a bomb you lose!"
         },
         {
             "Enable": true,
             "File Name": "pick.py",
-            "Plugin Name": "Pick choices",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
             "Description": "Helps you deciding what choice to choose"
         },
         {
             "Enable": true,
             "File Name": "ping_counter.py",
-            "Plugin Name": "Count users pings",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
+            "Description": "Count users pings",
             "Hooks":
             [
                 "on_message"
@@ -105,9 +85,7 @@
         {
             "Enable": true,
             "File Name": "thecult_shared_role.py",
-            "Plugin Name": "Share a exclusive role in Limitless Potential for members in The Cult",
-            "Author Name": "Mikk",
-            "Author Contact": "https://github.com/Mikk155/",
+            "Description": "Share a exclusive role in Limitless Potential for members in The Cult",
             "Hooks":
             [
                 "on_ready",
@@ -118,6 +96,22 @@
         {
             "Enable": true,
             "File Name": "r34.py"
+        },
+        {
+            "Enable": true,
+            "File Name": "woman_moment.py",
+            "Hooks":
+            [
+                "on_message"
+            ]
+        },
+        {
+            "Enable": true,
+            "File Name": "message_reaction.py",
+            "Hooks":
+            [
+                "on_message"
+            ]
         }
     ],
     "$schema": "schema.json"
