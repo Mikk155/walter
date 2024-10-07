@@ -57,12 +57,14 @@ async def manage_role( member_id: int, ShouldAdd: bool = False ):
 
         await member.remove_roles( rol );
 
+        await bot.log_channel( f'{member.mention} is not a cult member anymore' );
+
 async def on_ready():
 
-    # Iterate through The cult as it have less members
     for miembro in bot.get_guild( TheCultSharedRole.TC ).members:
-
         await manage_role( miembro.id, TheCultSharedRole.iterate( miembro.id, TheCultSharedRole.LP ) );
+    for miembro in bot.get_guild( TheCultSharedRole.LP ).members:
+        await manage_role( miembro.id, TheCultSharedRole.iterate( miembro.id, TheCultSharedRole.TC ) );
 
     return Hook.Continue();
 
