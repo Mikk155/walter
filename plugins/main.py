@@ -54,12 +54,12 @@ class gpGlobals:
     @staticmethod
     def abs() -> str:
         '''Return absolute path value to the bot folder'''
-        return '{}\\'.format( os.path.abspath( "" ) );
+        return '{}/'.format( os.path.abspath( "" ) );
 
     @staticmethod
     def absp() -> str:
         '''Return absolute path value to the plugins folder'''
-        return '{}plugins\\'.format( gpGlobals.abs() );
+        return '{}plugins/'.format( gpGlobals.abs() );
 
     __time__ = 0;
     @staticmethod
@@ -72,6 +72,12 @@ class gpGlobals:
     def developer() -> bool:
         '''Returns **True** If the bot has been run by using the ``-dev`` argument'''
         return gpGlobals.__developer__;
+
+    __git_workflow__ = True if '-github' in sys.argv else False;
+    @staticmethod
+    def workflow() -> bool:
+        '''App has been run from Github's workflows'''
+        return gpGlobals.__git_workflow__;
 
     @staticmethod
     def should_think( var: int, next_think: int ) -> ( bool, int ): # type: ignore
@@ -160,6 +166,10 @@ class Bot(discord.Client):
         self.tree = app_commands.CommandTree(self)
 
     async def setup_hook(self):
+
+        if gpGlobals.workflow():
+            return;
+    
         if gpGlobals.developer():
             __MY_GUILD__ = discord.Object( id = self.LP() );
             self.tree.clear_commands(guild=__MY_GUILD__)
@@ -176,7 +186,12 @@ class Bot(discord.Client):
         '''Log to #bots-testing channel'''
         for __arg__ in arguments:
             message = message.replace( "{}", str( __arg__ ), 1 )
-        return await self.get_channel( 1211204941490688030 ).send( message );
+
+        if gpGlobals.workflow():
+            print( message );
+            await self.get_channel( 1065791552485605446 ).send( message );
+        else:
+            await self.get_channel( 1211204941490688030 ).send( message );
 
     __pre_logs__:list[dict] = [];
 
@@ -244,13 +259,19 @@ class CPluginManager:
 
     def __init__( self ):
 
-        PluginObject = gpUtils.jsonc( '{}\\plugins.json'.format( gpGlobals.abs() ) );
+        PluginObject = gpUtils.jsonc( '{}plugins.json'.format( gpGlobals.abs() ) );
         PluginData = PluginObject[ "plugins" ];
 
         for plugin in PluginData:
 
+            if not "Author Name" in plugin:
+                plugin[ "Author Name" ] = "Mikk"
+            if not "Author Contact" in plugin:
+                plugin[ "Author Contact" ] = "https://github.com/Mikk155/"
+
             if not plugin[ "Enable" ]:
-                bot.pre_log_channel( "Skipping disabled plugin \"{}\"".format( self.plugin_name( plugin ) ))
+                if not gpGlobals.developer():
+                    bot.pre_log_channel( "Skipping disabled plugin \"{}\"".format( self.plugin_name( plugin ) ))
                 continue;
 
             try:
@@ -277,7 +298,8 @@ class CPluginManager:
 
                         self.fnMethods[ hook ].append( modulo );
 
-                bot.pre_log_channel( msg );
+                if not gpGlobals.developer():
+                    bot.pre_log_channel( msg );
 
             except Exception as e:
 

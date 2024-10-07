@@ -29,7 +29,13 @@ async def on_ready():
     await bot.post_log_channel( g_PluginManager.num_plugins() );
     await bot.wait_until_ready();
     await g_PluginManager.CallHook( 'on_ready' );
-    if gpGlobals.time() == 0:
+
+    if gpGlobals.workflow():
+        await g_PluginManager.CallHook( 'on_think' ); # Call on_think once
+        await bot.log_channel( "All tests ended, Shutting down bot." );
+        await bot.close();
+        exit(0);
+    elif gpGlobals.time() == 0:
         on_think.start()
 
 @bot.event
@@ -66,12 +72,24 @@ async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
 async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
     await g_PluginManager.CallHook( 'on_reaction_remove', reaction, user  );
 
-Token_Name = 'dev' if gpGlobals.developer() else 'token';
-Token_Path = '{}\\{}.txt'.format( gpGlobals.abs(), Token_Name );
+Token: str;
 
-if not os.path.exists( Token_Path ):
-    print( 'File {} doesn\'t exists! Exiting...' );
-    exit(1);
+if gpGlobals.workflow():
 
-Token_File = open( Token_Path, 'r' ).readlines();
-bot.run( Token_File[0] );
+    Token = os.getenv( 'TOKEN' );
+
+else:
+
+    Token_Name = 'dev' if gpGlobals.developer() else 'token';
+
+    Token_Path = '{}{}.txt'.format( gpGlobals.abs(), Token_Name );
+
+    if not os.path.exists( Token_Path ):
+        print( 'File {} doesn\'t exists! Exiting...' );
+        exit(1);
+
+    Token_File = open( Token_Path, 'r' ).readlines();
+
+    Token = Token_File[0];
+
+bot.run( Token );
