@@ -34,17 +34,27 @@ async def on_ready():
 
     date = datetime.now()
 
-    for user, birthday in birthdays.items():
+    if str( date.month ) in birthdays:
 
-        if birthday[0] == date.month and birthday[1] == date.day:
+        month = birthdays[ str( date.month ) ];
 
-            try: # Prevent a deleted-channel from breaking the chain loop
+        if str( date.day ) in month:
 
-                await bot.get_channel( birthday[2] ).send( "Everyone wish a Happy Birthday to {}".format( user ) );
+            day = month[ str( date.day ) ];
 
-            except Exception as e:
+            for channel_id, userdata in day.items():
 
-                continue;
+                try: # Prevent a deleted-channel from breaking the chain loop
+
+                    channel = bot.get_channel( int( channel_id ) );
+
+                    for user_name, user_mention in userdata.items():
+
+                        await channel.send( "Everyone wish a Happy Birthday to {}! <:kaleun:1212181960890253372> :tada:".format( user_mention ) );
+
+                except Exception as e:
+
+                    continue;
 
     return Hook.Continue();
 
@@ -79,23 +89,25 @@ async def birthday( interaction: discord.Interaction, month: app_commands.Choice
 
             user = interaction.user;
 
-        else:
+        elif user.id != interaction.user.id and not interaction.user.guild_permissions.administrator:
 
-            if user != interaction.user and not interaction.user.guild_permissions.administrator:
+            await interaction.response.send_message( "Only administrators can set someone else's birthday", ephemeral=True );
 
-                await interaction.response.send_message( "Only administrators can set other's birthday", ephemeral=True );
+            return;
 
-                return;
+        birthday_list = gpUtils.jsonc( '{}birthdays.json'.format( gpGlobals.absp() ) );
 
-        mention = gpUtils.mention( user );
+        dmonth = birthday_list.get( month.value, {} )
+        dday = dmonth.get( str( day ), {} )
+        dchannel = dday.get( str( interaction.channel_id ), {} )
+        dchannel[ user.global_name ] = user.mention;
+        dday[ str( interaction.channel_id ) ] = dchannel;
+        dmonth[ str( day ) ] = dday;
+        birthday_list[ month.value ] = dmonth;
 
-        birthdays = gpUtils.jsonc( '{}birthdays.json'.format( gpGlobals.absp() ) );
+        open( '{}birthdays.json'.format( gpGlobals.absp() ), 'w' ).write( json.dumps( birthday_list, indent = 3, separators=( ',', ':' ) ) );
 
-        birthdays[ mention ] = [ int( month.value ), day, interaction.channel_id ];
-
-        open( '{}birthdays.json'.format( gpGlobals.absp() ), 'w' ).write( json.dumps( birthdays, indent = 0, separators=( ',', ':' ) ) );
-
-        await interaction.response.send_message( "The user {} birthday has been set {} {} in this channel".format( mention, month.name, day ) )
+        await interaction.response.send_message( "The user {} birthday has been set {} {} in this channel".format( user.global_name, month.name, day ) );
 
     except Exception as e:
 
