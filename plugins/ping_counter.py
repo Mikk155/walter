@@ -24,14 +24,9 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-async def on_message( message: discord.Message ):
+async def on_mention( message: discord.Message, mentions: list[ discord.Member | discord.User ] ):
 
-    if message.author.id == bot.user.id:
-        return Hook.Continue();
-
-    mentioned_users = message.mentions
-
-    for user in mentioned_users:
+    for user in mentions:
 
         mention = gpUtils.mention( user );
 

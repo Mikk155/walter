@@ -52,7 +52,7 @@
             "Description": "Fix twitter and instagram embeeds",
             "Hooks":
             [
-                "on_message"
+                "on_link"
             ]
         },
         {
@@ -75,7 +75,7 @@
             "Description": "Count users pings",
             "Hooks":
             [
-                "on_message"
+                "on_mention"
             ]
         },
         {

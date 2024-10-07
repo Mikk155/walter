@@ -33,7 +33,7 @@ fix_embeeds_kvp = {
     "https://x.com/": "https://fxtwitter.com/",
 };
 
-async def on_message( message: discord.Message ):
+async def on_link( message: discord.Message, urls: list[str] ):
 
     for link, replace in fix_embeeds_kvp.items():
 
