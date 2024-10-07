@@ -24,16 +24,16 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-memes = {
-    "argentina_lore": "https://cdn.discordapp.com/attachments/739984597114290196/1282781996258431006/FwGIbrAupXuBPAyW-1.mp4?ex=67023994&is=6700e814&hm=b5c8aac6999153d059b53d7dee42aed8d749d191bb6a825544e592798e0cafa5&",
-    "fantasia_peruana": "https://www.youtube.com/watch?v=vdF7ANlKjAk",
-    "trash_opinion": "https://cdn.discordapp.com/attachments/876568446039646289/1292180688543416363/aye_bruh_-_there_goes_your_opinion.mp4?ex=6702cc8b&is=67017b0b&hm=e7b7094efac8cbac2adc6461a8c203b7f6ebec21c14c9d2143a23c02b45d3bbe&",
-};
+memes = [
+    "https://cdn.discordapp.com/attachments/739984597114290196/1282781996258431006/FwGIbrAupXuBPAyW-1.mp4?ex=67023994&is=6700e814&hm=b5c8aac6999153d059b53d7dee42aed8d749d191bb6a825544e592798e0cafa5&",
+    "https://www.youtube.com/watch?v=vdF7ANlKjAk",
+    "https://cdn.discordapp.com/attachments/876568446039646289/1292180688543416363/aye_bruh_-_there_goes_your_opinion.mp4?ex=6702cc8b&is=67017b0b&hm=e7b7094efac8cbac2adc6461a8c203b7f6ebec21c14c9d2143a23c02b45d3bbe&",
+];
 
 meme_choic = {
-    "Fantasia peruana": "fantasia_peruana",
-    "Argentina lore": "argentina_lore",
-    "Trash Opinion": "trash_opinion",
+    "Fantasia peruana": "0",
+    "Argentina lore": "1",
+    "Trash Opinion": "2",
 }
 
 @bot.tree.command()
@@ -46,19 +46,14 @@ async def meme( interaction: discord.Interaction, meme: app_commands.Choice[str]
 
     try:
 
-        media = memes[ meme.value ] if meme.value in memes else None;
+        media = memes[ int( meme.value ) ];
 
-        if media:
+        text = '[media]({})'.format( media );
 
-            text = '[media]({})'.format( media );
+        if message:
+            text = '{} {}'.format( message, text );
 
-            if message:
-                text = '{} {}'.format( message, text );
-
-            await interaction.response.send_message( text );
-
-        else:
-            raise Exception( "No valid media selected" );
+        await interaction.response.send_message( text );
 
     except Exception as e:
 
