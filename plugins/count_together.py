@@ -51,7 +51,7 @@ async def cfg_counttogether( interaction: discord.Interaction ):
 
 async def on_message( message: discord.Message ):
 
-    if not message.author or message.author.id == bot.user.id or not message.guild or not str(message.guild.id) in count_together_channels:
+    if gpGlobals.developer() or not message.author or message.author.id == bot.user.id or not message.guild or not str(message.guild.id) in count_together_channels:
 
         return Hook.Continue();
 
@@ -99,6 +99,9 @@ async def on_message( message: discord.Message ):
 
 # -TODO on_daily
 async def on_ready():
+
+    if gpGlobals.developer():
+        return Hook.Continue();
 
     for guild, channel_id in count_together_channels.items():
 
