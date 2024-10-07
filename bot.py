@@ -54,6 +54,7 @@ async def on_member_remove( member : discord.Member ):
 
 @bot.event
 async def on_message( message: discord.Message ):
+    await bot.hook_on_message( message );
     await g_PluginManager.CallHook( 'on_message', message );
 
 @bot.event

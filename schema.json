@@ -55,12 +55,15 @@
                             "enum":
                             [
                                 "on_ready",
-                                "on_think",
                                 "on_member_join",
+                                "on_think",
                                 "on_member_remove",
                                 "on_message",
                                 "on_message_delete",
                                 "on_message_edit",
+                                "on_mention",
+                                "on_reply",
+                                "on_link",
                                 "on_reaction_add",
                                 "on_reaction_remove"
                             ]

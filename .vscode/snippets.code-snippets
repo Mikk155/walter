@@ -1,0 +1,144 @@
+{
+	"on_message":
+	{
+		"prefix": [ "event on_message", "on_message" ],
+		"body" : [
+			"async def on_message( message: discord.Message ):",
+			"\t'''",
+			"\tCalled when a Message is created and sent.\n",
+			"\tYour bot’s own messages and private messages are sent through this event.\n",
+			"\tThis can lead cases of ‘recursion’ depending on how your bot was programmed.\n",
+			"\tIf you want the bot to not reply to itself, consider checking the user IDs.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_ready":
+	{
+		"prefix": [ "event on_ready", "on_ready" ],
+		"body" : [
+			"async def on_ready():",
+			"\t'''",
+			"\tCalled when the client is done preparing the data received from Discord.\n",
+			"\tUsually after login is successful and the Client.guilds and co. are filled up.\n",
+			"\tThis function is not guaranteed to be the first event called. Likewise, this function is not guaranteed to only be called once.\n",
+			"\tThis library implements reconnection logic and thus will end up calling this event whenever a RESUME request fails.\n",
+			"\tAs a HACK for this, check if gpGlobals.time() == 0",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_member_join":
+	{
+		"prefix": [ "event on_member_join", "on_member_join" ],
+		"body" : [
+			"async def on_member_join( member : discord.Member ):",
+			"\t'''",
+			"\tCalled when a Member joins a Guild.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_member_remove":
+	{
+		"prefix": [ "event on_member_remove", "on_member_remove" ],
+		"body" : [
+			"async def on_member_remove( member : discord.Member ):",
+			"\t'''",
+			"\tCalled when a Member leaves a Guild.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_message_delete":
+	{
+		"prefix": [ "event on_message_delete", "on_message_delete" ],
+		"body" : [
+			"async def on_message_delete( message: discord.Message ):",
+			"\t'''",
+			"\tCalled when a Member leaves a Guild.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_message_edit":
+	{
+		"prefix": [ "event on_message_edit", "on_message_edit" ],
+		"body" : [
+			"async def on_message_edit( before: discord.Message, after: discord.Message ):",
+			"\t'''",
+			"\tCalled when a Message is edited.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_reaction_add":
+	{
+		"prefix": [ "event on_reaction_add", "on_reaction_add" ],
+		"body" : [
+			"async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):",
+			"\t'''",
+			"\tCalled when a Reaction is added.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_reaction_remove":
+	{
+		"prefix": [ "event on_reaction_remove", "on_reaction_remove" ],
+		"body" : [
+			"async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):",
+			"\t'''",
+			"\tCalled when a Reaction is removed.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_think":
+	{
+		"prefix": [ "event on_think", "on_think" ],
+		"body" : [
+			"async def on_think():",
+			"\t'''",
+			"\tCalled every 1 second, use gpGlobals.should_think()\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_mention":
+	{
+		"prefix": [ "event on_mention", "on_mention" ],
+		"body" : [
+			"async def on_mention( message: discord.Message, mentions: list[ discord.Member | discord.User ] ):",
+			"\t'''",
+			"\tCalled when a user is mentioned in a Message.\n",
+			"\t**NOTE**: this inherits from on_message and will call on_message after this method.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_reply":
+	{
+		"prefix": [ "event on_reply", "on_reply" ],
+		"body" : [
+			"async def on_reply( message: discord.Message, replied: discord.Message ):",
+			"\t'''",
+			"\tCalled when a user Message is a reply from another Message.\n",
+			"\t**NOTE**: this inherits from on_message and will call on_message after this method.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+	"on_link":
+	{
+		"prefix": [ "event on_link", "on_link" ],
+		"body" : [
+			"async def on_link( message: discord.Message, urls: list[str] ):",
+			"\t'''",
+			"\tCalled when Message contents a link.\n",
+			"\t**NOTE**: this inherits from on_message and will call on_message after this method.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		]
+	},
+}

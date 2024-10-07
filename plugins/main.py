@@ -81,7 +81,13 @@ class gpGlobals:
 
     @staticmethod
     def should_think( var: int, next_think: int ) -> ( bool, int ): # type: ignore
-        '''Returns whatever this is the time to think'''
+        '''
+        Returns whatever this is the time to think
+
+        ``var``: a global variable of your own for comparing
+
+        ``next_think``: cooldown in seconds till this function should return true
+        '''
         if var > gpGlobals.time():
             return False, var;
         var = gpGlobals.time() + next_think;
@@ -201,6 +207,32 @@ class Bot(discord.Client):
             message = message.replace( "{}", str( __arg__ ), 1 )
         self.__pre_logs__.append( message );
 
+    async def hook_on_message( self, message: discord.Message ):
+        '''on_message-based hooks'''
+
+        # on_mention
+        if message.mentions and len( message.mentions ) > 0:
+            await g_PluginManager.CallHook( "on_mention", message, message.mentions );
+
+        # on_reply
+        if message.reference and message.reference.message_id:
+            try:
+                replied_message = await message.channel.fetch_message( message.reference.message_id );
+                if replied_message:
+                    await g_PluginManager.CallHook( "on_reply", message, replied_message );
+            except discord.NotFound:
+                pass;
+
+        # on_link
+        if 'https://' in message.content or 'www.' in message.content:
+            contents = message.content.split();
+            urls=[]
+            for c in contents:
+                if c.startswith( 'https://' ) or c.startswith( 'www.' ):
+                    urls.append( c );
+            if len( urls ) > 0:
+                await g_PluginManager.CallHook( "on_link", message, urls );
+
     async def post_log_channel( self, num_plugins ):
         string = '';
         while len( self.__pre_logs__ ) > 0:
@@ -245,19 +277,22 @@ class CPluginManager:
     __PluginsData__ = {}
     __PluginsNames__ = {}
 
-    fnMethods = {
-        "on_ready": [],
-        "on_think": [],
-        "on_message": [],
-        "on_member_join": [],
-        "on_message_edit": [],
-        "on_reaction_add": [],
-        "on_member_remove": [],
-        "on_message_delete": [],
-        "on_reaction_remove": []
-    }
+    fnMethods = {};
+
+    def fnMethodsInit( self ):
+        try:
+            Schema = gpUtils.jsonc( '{}schema.json'.format( gpGlobals.abs() ) );
+            Enums = Schema["properties"]["plugins"]["items"]["properties"]["Hooks"]["items"]["enum"];
+            for hook in Enums:
+                self.fnMethods[ hook ] = [];
+            bot.pre_log_channel( "Registered Schemas ```json\n{}```".format( json.dumps( Enums, indent=0 ).replace( '\'on_', '' ) ) );
+        except Exception as e:
+            print( "Failed to load plugin schema: {}".format( e ) );
+            exit(1);
 
     def __init__( self ):
+
+        self.fnMethodsInit();
 
         PluginObject = gpUtils.jsonc( '{}plugins.json'.format( gpGlobals.abs() ) );
         PluginData = PluginObject[ "plugins" ];
@@ -296,7 +331,10 @@ class CPluginManager:
 
                     for hook in plugin[ "Hooks" ]:
 
-                        self.fnMethods[ hook ].append( modulo );
+                        if hook in self.fnMethods:
+                            self.fnMethods[ hook ].append( modulo );
+                        else:
+                            bot.pre_log_channel( "Undefined ``CPluginManager.fnMethods[ {} ]``".format( hook ) );
 
                 if not gpGlobals.developer():
                     bot.pre_log_channel( msg );
