@@ -285,7 +285,8 @@ class CPluginManager:
             Enums = Schema["properties"]["plugins"]["items"]["properties"]["Hooks"]["items"]["enum"];
             for hook in Enums:
                 self.fnMethods[ hook ] = [];
-            bot.pre_log_channel( "Registered Schemas ```json\n{}```".format( json.dumps( Enums, indent=0 ).replace( '\'on_', '' ) ) );
+            if gpGlobals.workflow():
+                bot.pre_log_channel( "Registered Schemas ```json\n{}```".format( json.dumps( Enums, indent=0 ).replace( '"on_', '"' ) ) );
         except Exception as e:
             print( "Failed to load plugin schema: {}".format( e ) );
             exit(1);
@@ -336,7 +337,7 @@ class CPluginManager:
                         else:
                             bot.pre_log_channel( "Undefined ``CPluginManager.fnMethods[ {} ]``".format( hook ) );
 
-                if not gpGlobals.developer():
+                if not gpGlobals.developer() and not gpGlobals.workflow():
                     bot.pre_log_channel( msg );
 
             except Exception as e:
