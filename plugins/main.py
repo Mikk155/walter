@@ -376,6 +376,11 @@ class CPluginManager:
             except Exception as e:
 
                 str_except = 'Exception on plugin ``{}`` at function ``{}`` error: ```{}```'.format( plugin, hook_name, e );
+
+                if str(e).find( 'has no attribute' ) != -1:
+                    self.module_cache.pop( plugin );
+                    str_except = "{}\nRemoving ``CPluginManager.module_cache[ {} ]`` to prevent recursion.".format( str_except, plugin );
+
                 await bot.log_channel( str_except );
 
 global g_PluginManager;
