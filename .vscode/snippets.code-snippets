@@ -11,7 +11,8 @@
 			"\tIf you want the bot to not reply to itself, consider checking the user IDs.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_ready":
 	{
@@ -26,7 +27,20 @@
 			"\tAs a HACK for this, check if gpGlobals.time() == 0",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
+	},
+	"on_daily":
+	{
+		"prefix": [ "event on_daily", "on_daily" ],
+		"body" : [
+			"async def on_daily():",
+			"\t'''",
+			"\tCalled Once a day.\n",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn Hook.Continue();\n"
+		],
+		"scope": "python"
 	},
 	"on_member_join":
 	{
@@ -37,7 +51,8 @@
 			"\tCalled when a Member joins a Guild.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_member_remove":
 	{
@@ -48,7 +63,8 @@
 			"\tCalled when a Member leaves a Guild.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_message_delete":
 	{
@@ -59,7 +75,8 @@
 			"\tCalled when a Member leaves a Guild.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_message_edit":
 	{
@@ -70,7 +87,8 @@
 			"\tCalled when a Message is edited.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_reaction_add":
 	{
@@ -81,7 +99,8 @@
 			"\tCalled when a Reaction is added.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_reaction_remove":
 	{
@@ -92,7 +111,8 @@
 			"\tCalled when a Reaction is removed.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_think":
 	{
@@ -103,7 +123,8 @@
 			"\tCalled every 1 second, use gpGlobals.should_think()\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_mention":
 	{
@@ -115,7 +136,8 @@
 			"\t**NOTE**: this inherits from on_message and will call on_message after this method.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_reply":
 	{
@@ -127,7 +149,8 @@
 			"\t**NOTE**: this inherits from on_message and will call on_message after this method.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 	"on_link":
 	{
@@ -139,6 +162,7 @@
 			"\t**NOTE**: this inherits from on_message and will call on_message after this method.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
-		]
+		],
+		"scope": "python"
 	},
 }
