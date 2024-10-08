@@ -51,9 +51,14 @@ async def ping_count( interaction: discord.Interaction, user: discord.Member ):
 
         counts = json.load( open( '{}ping_counter.json'.format( gpGlobals.absp() ), 'r' ) );
 
-        times = 0 if not user_mentioned in counts else counts[ user_mentioned ][ 0 ]
+        if user_mentioned in counts:
+            times = 0 if not user_mentioned in counts else counts[ user_mentioned ][ 0 ]
 
-        await interaction.response.send_message( "The user {} has been pinged {} times <:pingreee:911150900666572842>".format( counts[ user_mentioned ][ 1 ], times ))
+            await interaction.response.send_message( "The user {} has been pinged {} times <:pingreee:911150900666572842>".format( counts[ user_mentioned ][ 1 ], times ))
+
+        else:
+
+            await interaction.response.send_message( "The user {} has not been pinged yet, This is the first <:pingreee:911150900666572842>".format( user.mention ))
 
     except Exception as e:
 
