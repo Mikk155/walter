@@ -46,6 +46,7 @@ async def on_member_join( member : discord.Member ):
 async def on_think():
     await bot.wait_until_ready();
     await g_PluginManager.CallHook( 'on_think' );
+    await bot.hook_on_think();
     gpGlobals.__time__ += 1;
 
 @bot.event

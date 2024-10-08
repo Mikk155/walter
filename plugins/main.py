@@ -233,6 +233,20 @@ class Bot(discord.Client):
             if len( urls ) > 0:
                 await g_PluginManager.CallHook( "on_link", message, urls );
 
+    __fl_on_daily__ = 0;
+
+    async def hook_on_think( self ):
+        '''on_think-based hooks'''
+
+        bldaily, self.__fl_on_daily__ = gpGlobals.should_think( self.__fl_on_daily__, 3600 );
+        if bldaily:
+            cache = gpUtils.jsonc( '{}cache.json'.format( gpGlobals.abs() ) );
+            date = datetime.now();
+            if date.day != cache[ "current.day" ]:
+                await g_PluginManager.CallHook( "on_daily" );
+                cache[ "current.day" ] = date.day;
+                open( '{}cache.json'.format( gpGlobals.abs() ), 'w' ).write( json.dumps( cache, indent=0 ) );
+
     async def post_log_channel( self, num_plugins ):
         string = '';
         while len( self.__pre_logs__ ) > 0:

@@ -97,8 +97,7 @@ async def on_message( message: discord.Message ):
 
         return Hook.Handled();
 
-# -TODO on_daily
-async def on_ready():
+async def on_daily():
 
     if gpGlobals.developer():
         return Hook.Continue();

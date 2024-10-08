@@ -54,6 +54,7 @@
                             "type": "string",
                             "enum":
                             [
+                                "on_daily",
                                 "on_ready",
                                 "on_member_join",
                                 "on_think",

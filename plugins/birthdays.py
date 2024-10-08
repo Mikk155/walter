@@ -24,10 +24,9 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-# -TODO on_daily
-async def on_ready():
+async def on_daily():
 
-    if gpGlobals.developer(): # When testing i'd probably call this multiple times on a day
+    if gpGlobals.developer():
         return Hook.Continue();
 
     birthdays = gpUtils.jsonc( '{}birthdays.json'.format( gpGlobals.absp() ) );
