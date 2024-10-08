@@ -39,7 +39,7 @@ async def say( interaction: discord.Interaction, message: str, user: Optional[di
 
             await interaction.response.send_message( '<:walter_what:1278078147870331011>', ephemeral=True, delete_after=0.1 )
 
-            avatar = user.avatar.url;
+            avatar = user.avatar.url if user.avatar else None;
             username = user.display_name;
 
             webhook = await interaction.channel.create_webhook( name='say_cmd' );
