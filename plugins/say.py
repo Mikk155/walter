@@ -28,18 +28,25 @@ from plugins.main import *
 @app_commands.describe(
     message='Say something',
 #    reply='Message link to reply',
-    hidename='Hide who used the command, Only works for administrators',
+    user='User to stole identity (Administrator only)',
 )
-async def say( interaction: discord.Interaction, message: str, hidename: bool = True ):
+async def say( interaction: discord.Interaction, message: str, user: Optional[discord.Member] = None ):
     """Make the bot say something"""
 
     try:
 
-        if hidename and interaction.user.guild_permissions.administrator:
+        if user and interaction.user.guild_permissions.administrator:
 
             await interaction.response.send_message( '<:walter_what:1278078147870331011>', ephemeral=True, delete_after=0.1 )
 
-            await interaction.channel.send( message );
+            avatar = user.avatar.url;
+            username = user.display_name;
+
+            webhook = await interaction.channel.create_webhook( name='say_cmd' );
+
+            await webhook.send( content=message, username=username, avatar_url=avatar );
+
+            await webhook.delete()
 
         else:
 
