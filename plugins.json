@@ -112,6 +112,14 @@
             [
                 "on_message"
             ]
+        },
+        {
+            "Enable": true,
+            "File Name": "control_arase.py",
+            "Hooks":
+            [
+                "on_message"
+            ]
         }
     ],
     "$schema": "schema.json"
