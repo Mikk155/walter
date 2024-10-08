@@ -16,14 +16,14 @@ async def message_reaction( interaction: discord.Interaction, word: str = None, 
         if interaction.user.guild_permissions.manage_emojis:
 
             srv: dict = gpEmojis.get( str( interaction.guild_id ), {} );
-            
+
             if not word:
 
                 await interaction.response.send_message( '```json\n{}```'.format( json.dumps( srv, indent=0 ) ) );
 
             elif not emoji:
 
-                srv.pop( srv, '' );
+                srv.pop( word, '' );
 
                 gpEmojis[ str( interaction.guild_id ) ] = srv;
 
