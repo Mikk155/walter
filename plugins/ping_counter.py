@@ -32,7 +32,7 @@ async def on_mention( message: discord.Message, mentions: list[ discord.Member |
 
         counts = json.load( open( '{}ping_counter.json'.format( gpGlobals.absp() ), 'r' ) );
 
-        counts[ mention ] = [ counts[ mention ][ 0 ] + 1 if mention in counts else 1, user.name ];
+        counts[ mention ] = [ counts[ mention ][ 0 ] + 1 if mention in counts else 1, user.global_name ];
 
         open( '{}ping_counter.json'.format( gpGlobals.absp() ), 'w' ).write( json.dumps( counts, indent=1));
 
