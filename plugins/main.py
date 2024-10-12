@@ -90,12 +90,7 @@ class gpGlobals:
         ``next_think``: cooldown in seconds till this function should return true
         '''
 
-        if var > 1000: # This maybe is stupid.
-            var = var - 1000;
-        if gpGlobals.time() > 1000:
-            gpGlobals.__time__ = gpGlobals.time() - 1000;
-
-        if var > gpGlobals.time():
+        if var >= gpGlobals.time():
             return False, var;
         var = gpGlobals.time() + next_think;
         return True, var;
@@ -452,7 +447,7 @@ class CPluginManager:
             Enums = Schema["properties"]["plugins"]["items"]["properties"]["Hooks"]["items"]["enum"];
             for hook in Enums:
                 self.fnMethods[ hook ] = [];
-            if gpGlobals.workflow():
+            if not gpGlobals.developer():
                 bot.pre_log_channel( "Registered Schemas ```json\n{}```".format( json.dumps( Enums, indent=0 ).replace( '"on_', '"' ) ) );
         except Exception as e:
             print( "Failed to load plugin schema: {}".format( e ) );
@@ -511,7 +506,6 @@ class CPluginManager:
 
                 bot.pre_log_channel( "Error importing plugin {}: ``{}``", [ plugin[ "File Name" ], e ] );
 
-
             self.__PluginsData__[ modulo ] = plugin
             self.__PluginsNames__[ plugin[ "File Name" ] ] = modulo;
 
@@ -523,7 +517,7 @@ class CPluginManager:
 
             try:
 
-                if plugin in self.module_cache:
+                if not plugin in self.module_cache:
                     continue;
 
                 module = self.module_cache[ plugin ];
