@@ -89,6 +89,12 @@ class gpGlobals:
 
         ``next_think``: cooldown in seconds till this function should return true
         '''
+
+        if var > 1000: # This maybe is stupid.
+            var = var - 1000;
+        if gpGlobals.time() > 1000:
+            gpGlobals.__time__ = gpGlobals.time() - 1000;
+
         if var > gpGlobals.time():
             return False, var;
         var = gpGlobals.time() + next_think;
