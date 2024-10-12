@@ -523,6 +523,9 @@ class CPluginManager:
 
             try:
 
+                if plugin in self.module_cache:
+                    continue;
+
                 module = self.module_cache[ plugin ];
                 hook = getattr( module, hook_name );
 
