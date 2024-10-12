@@ -39,7 +39,7 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
         if link in message.content:
 
-            author = message.author.mention;
+            author = message.author;
 
             formatted = message.content.replace( link, replace );
 
