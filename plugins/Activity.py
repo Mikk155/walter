@@ -50,9 +50,11 @@ class Activity:
     def ShouldUpdate() -> int:
         '''Return whatever is time to update Activity'''
 
-        cache = cache = gpGlobals.cache.get();
+        cache = gpGlobals.cache.get();
 
-        Think, Activity.__time__ = gpGlobals.should_think( Activity.__time__, cache.get( 'interval', 5 ) );
+        interval = cache.get( 'interval', 5 );
+
+        Think, Activity.__time__ = gpGlobals.should_think( Activity.__time__, interval );
 
         return Think;
 
@@ -73,7 +75,7 @@ async def on_think():
 
         if Activity.ShouldUpdate():
 
-            cache = cache = gpGlobals.cache.get();
+            cache = gpGlobals.cache.get();
 
             pActivity = discord.Activity(
                 type = cache.get( 'activity', 1 ),
