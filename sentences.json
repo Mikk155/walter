@@ -1,0 +1,155 @@
+{
+    // Supported languages
+    "languages":
+    [
+        "english",
+        "spanish"
+    ],
+
+    // General
+    "language.updated":
+    {
+        "english": "I'll now reply in english on this server.",
+        "spanish": "Ahora respondere en español en este servidor."
+    },
+    "only.owner":
+    {
+        "english": "Only the bot's owner can do this task.",
+        "spanish": "Solo el propietario del bot puede efectuar esta accion."
+    },
+    "no.permission":
+    {
+        "english": "Missing permission \"{}\"",
+        "spanish": "Faltan permisos \"{}\""
+    },
+    "only.{}.is.permited":
+    {
+        "english": "Only {} is permited.",
+        "spanish": "Solo {} esta permitido."
+    },
+    "item.added":
+    {
+        "english": "Item {} added.",
+        "spanish": "Objeto {} agregado."
+    },
+    "item.removed":
+    {
+        "english": "Item {} removed.",
+        "spanish": "Objeto {} eliminado."
+    },
+    "item.set.to":
+    {
+        "english": "Item {} set to {}",
+        "spanish": "Objeto {} asignado a {}"
+    },
+
+    // Activity.py
+    "activity.updated":
+    {
+        "english": "Updated Activity {} to ``{}``",
+        "spanish": "Se actualizo {} de Activity a ``{}``"
+    },
+
+    // cache.py
+    "updating.cache":
+    {
+        "english": "Updating bot's cache...",
+        "spanish": "Actualizando la cache del bot..."
+    },
+    "updated.cache":
+    {
+        "english": "The bot cache was succesfuly updated and reloaded.",
+        "spanish": "La cache del bot fue subida y recargada exitosamente."
+    },
+    "packing.cache":
+    {
+        "english": "Packing the bot cache.",
+        "spanish": "Empaquetando la cache del bot."
+    },
+
+    // cm_update.py
+    "update.pull.commits":
+    {
+        "english": "The local repository is out of date. Pulling {} changes...",
+        "spanish": "El repositorio local esta desactualizado, Descargando {} cambios..."
+    },
+    "update.no.outdated":
+    {
+        "english": "The upstream repository is up to date.",
+        "spanish": "El repositorio ascendente está actualizado."
+    },
+    "update.restarting":
+    {
+        "english": "Restarting.. [gif](https://tenor.com/view/do-not-run-python-python-computer-python-coding-coding-funny-coding-meme-gif-10365831290651691441)",
+        "spanish": "Reiniciando.. [gif](https://cdn.discordapp.com/attachments/1211204941490688030/1294477757572583444/caption.gif?ex=670b27db&is=6709d65b&hm=b38c1ce3ebee1fa34249afe85febe069bdd5add7897045a6d2d98904a486c7c5&)"
+    },
+
+    // count_together.py
+    "count.set":
+    {
+        "english": "Set count-together channel to {}",
+        "spanish": "Se configuro {} como canal de contemos-juntos"
+    },
+    "count.only.count":
+    {
+        "english": "{} Only counting in this channel!",
+        "spanish": "{} Solo contamos en este canal!"
+    },
+    "count.wrong.count":
+    {
+        "english": "{} Don't you know how to count? :face_with_raised_eyebrow:",
+        "spanish": "{} No sabes como contar? :face_with_raised_eyebrow:"
+    },
+
+    // electrocute.py
+    "electrocute":
+    {
+        "english": "{} sent {} to {}",
+        "spanish": "{} envio a {} a {}}"
+    },
+    "electrocute.self":
+    {
+        "english": "{} goes to {}",
+        "spanish": "{} se fue a {}"
+    },
+    "electrocute.count":
+    {
+        "english": "{} has been electrocuted {} times",
+        "spanish": "{} ha sido electrocutado {} veces"
+    },
+
+    // meme.py
+    "meme.choose":
+    {
+        "english": "Choose a meme to re-post.",
+        "spanish": "Elige un meme para re-enviar."
+    },
+
+    // pick.py
+    "pick.option":
+    {
+        "english": "You have to provide at least two options separated by comas.",
+        "spanish": "Tienes que proveer al menos dos opciones separadas por comas."
+    },
+    "pick.done":
+    {
+        "english": "From ``{}``\nI choose ``{}``",
+        "spanish": "De ``{}``\nYo eligo ``{}``"
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "EOF": true
+}

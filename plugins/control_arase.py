@@ -1,5 +1,14 @@
 from plugins.main import *
 
+control_yourself = [
+    'mom',
+    'mama',
+    'sex',
+    'gf',
+    'feet',
+    'armpit',
+];
+
 async def on_message( message: discord.Message ):
 
     if message.author.id == 768337526888726548 and message.guild and message.guild.id == 744769532513615922:
@@ -12,7 +21,7 @@ async def on_message( message: discord.Message ):
 
             avatar = user.avatar.url;
 
-            for h in [ 'mommy', 'sex', 'gf', 'feet', 'armpit' ]:
+            for h in control_yourself:
 
                 if h in message.content:
 

@@ -35,7 +35,7 @@ class MineSweper:
             num_bombas = ( blocks * self.columns ) - 1;
 
         if not self.is_emote( objetive_emote ):
-            objetive_emote = '<:walter:808255870113939477>';
+            objetive_emote = '<:unity:1271653816537714793>';
 
         total_slots = ( blocks * self.columns ) - num_bombas - 1;
         bombas = [ ":bomb:" for _ in range( num_bombas ) ];
@@ -92,10 +92,10 @@ class MineSweper:
 @bot.tree.command()
 @app_commands.describe(
     bombs='Number of bombs',
-    blocks='Number of blocks',
+    blocks='Number of lines',
     emoji='Objetive emoji',
 )
-async def minesweeper( interaction: discord.Interaction, bombs: int = 6, blocks: int = 4, emoji:str = '<:walter:808255870113939477>' ):
+async def minesweeper( interaction: discord.Interaction, bombs: int = 6, blocks: int = 4, emoji:str = '<:unity:1271653816537714793>' ):
     """Mine sweeper minigame"""
 
     try:
@@ -106,4 +106,4 @@ async def minesweeper( interaction: discord.Interaction, bombs: int = 6, blocks:
 
     except Exception as e:
 
-        await interaction.response.send_message( "Exception: {}".format( e ) );
+        await bot.handle_exception( interaction, e );

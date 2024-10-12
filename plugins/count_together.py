@@ -24,116 +24,106 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-global count_together_channels;
-count_together_channels = gpUtils.jsonc( '{}count_together.json'.format( gpGlobals.absp() ) );
-
 @bot.tree.command()
-async def cfg_counttogether( interaction: discord.Interaction ):
-    """Configure this channel as a count-together channel"""
+async def cfg_counttogether( interaction: discord.Interaction, channel: discord.TextChannel ):
+    """Configure a channel as a count-together channel"""
 
     try:
 
         if interaction.user.guild_permissions.administrator:
 
-            count_together_channels[ str(interaction.guild_id) ] = interaction.channel_id;
+            cache = gpGlobals.cache.get();
 
-            open( '{}count_together.json'.format( gpGlobals.absp() ), 'w' ).write( json.dumps( count_together_channels, indent = 0 ) );
+            cache[ str(interaction.guild_id) ] = channel.id;
 
-            await interaction.response.send_message( "Configuration set, Now only counting on this channel." );
+            await interaction.response.send_message( AllocString( "count.set" , [ channel.name ], interaction.guild_id ) );
 
         else:
 
-            await interaction.response.send_message( "Only administrators can use this command.", ephemeral=True );
+            await interaction.response.send_message( AllocString( "no.permission", [ "administrator" ], interaction.guild_id ) );
 
     except Exception as e:
 
         await interaction.response.send_message( f"Exception: {e}" );
 
+def get_count_number( string: str ):
+
+    num = re.search( r'\b(\d+)\b', string );
+
+    if num:
+
+        return int( num.group(1) );
+
+    return 0;
+
 async def on_message( message: discord.Message ):
 
-    if gpGlobals.developer() or not message.author or message.author.id == bot.user.id or not message.guild or not str(message.guild.id) in count_together_channels:
-
+    if gpGlobals.developer():
         return Hook.Continue();
 
-    channel = bot.get_channel( int(count_together_channels[ str(message.guild.id) ]) );
+    if message.author.id == bot.user.id: # Nothing to do in this channel. Handle
+        return Hook.Handled();
 
-    if not channel or message.channel is not channel:
+    cache = gpGlobals.cache.get();
 
+    if not message.guild or not str( message.guild.id ) in cache:
         return Hook.Continue();
 
-    numero_actual = re.search( r'\b(\d+)\b', message.content )
+    channel_id = cache.get( str( message.guild.id ) );
 
-    if numero_actual:
+    if not message.channel or channel_id != message.channel.id:
+        return Hook.Continue();
 
-        numero_actual = int( numero_actual.group(1) )
+    numero_actual = get_count_number( message.content );
 
-    else:
+    if numero_actual <= 0:
 
-        await message.reply( f'{message.author.mention} Only counting on this channel!', delete_after = 5, silent=True, mention_author=False )
+        await message.reply( AllocString( "count.only.count", [ message.author.mention ], message.guild.id ), delete_after = 5, silent=True, mention_author=False );
 
-        await message.delete()
+        await message.delete();
 
         return Hook.Handled();
 
     async for old_message in message.channel.history( limit=10, before=message.created_at ):
 
-        if not old_message.content[0].isdigit():
+        if message.id == old_message.id:
+            continue;
 
-            continue
+        numero_anterior = get_count_number( old_message.content );
 
-        numero_anterior = re.search( r'\b(\d+)\b', old_message.content )
+        if numero_anterior > 0 and numero_actual - 1 != numero_anterior:
 
-        if numero_anterior:
+            await message.channel.send( AllocString( "count.wrong.count", [ message.author.mention ], message.guild.id ), delete_after = 5, silent=True, mention_author=False );
 
-            numero_anterior = int(numero_anterior.group(1))
+            await message.delete();
 
-            break
-
-    if numero_actual <= numero_anterior or numero_actual > numero_anterior + 1:
-
-        await message.channel.send( f'{message.author.mention}, do you know how to count? :face_with_raised_eyebrow:', delete_after = 5, silent=True, mention_author=False )
-
-        await message.delete()
-
-        return Hook.Handled();
+            return Hook.Handled();
 
 async def on_daily():
 
     if gpGlobals.developer():
         return Hook.Continue();
 
-    for guild, channel_id in count_together_channels.items():
+    cache = gpGlobals.cache.get();
+
+    for guild, channel_id in cache.items():
 
         channel = bot.get_channel( channel_id );
 
         if not channel:
-
+            cache.pop( guild, '' ); # Pop out
             continue;
-
-        numero_anterior = None;
 
         async for old_message in channel.history( limit=10 ):
 
             if old_message.author == bot.user:
 
-                numero_anterior = None;
-
                 break;
 
-            if numero_anterior:
+            numero_anterior = get_count_number( old_message.content )
 
-                continue
+            if numero_anterior > 0:
 
-            if not old_message.content[0].isdigit():
+                msg = str( numero_anterior + 1 );
 
-                continue
-
-            numero_anterior = re.search( r'\b(\d+)\b', old_message.content )
-
-            if numero_anterior:
-
-                numero_anterior = int(numero_anterior.group(1)) + 1
-
-        if numero_anterior:
-
-            await channel.send( f'{numero_anterior}')
+                await channel.send( msg );

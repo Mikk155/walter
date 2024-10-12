@@ -28,13 +28,19 @@ async def on_mention( message: discord.Message, mentions: list[ discord.Member |
 
     for user in mentions:
 
-        mention = gpUtils.mention( user );
+        if user:
 
-        counts = json.load( open( '{}ping_counter.json'.format( gpGlobals.absp() ), 'r' ) );
+            cache = gpGlobals.cache.get();
 
-        counts[ mention ] = [ counts[ mention ][ 0 ] + 1 if mention in counts else 1, user.global_name ];
+            mention = gpUtils.mention( user );
 
-        open( '{}ping_counter.json'.format( gpGlobals.absp() ), 'w' ).write( json.dumps( counts, indent=1));
+            counts = cache.get( mention, [ 0, user.global_name ] );
+
+            counts[1] = user.global_name;
+
+            counts[0] = counts[0] + 1;
+
+            cache[ mention ] = counts;
 
     return Hook.Continue();
 
@@ -47,19 +53,20 @@ async def ping_count( interaction: discord.Interaction, user: discord.Member ):
 
     try:
 
-        user_mentioned = gpUtils.mention( user );
+        cache = gpGlobals.cache.get();
 
-        counts = json.load( open( '{}ping_counter.json'.format( gpGlobals.absp() ), 'r' ) );
+        mention = gpUtils.mention( user );
 
-        if user_mentioned in counts:
-            times = 0 if not user_mentioned in counts else counts[ user_mentioned ][ 0 ]
+        counts = cache.get( mention, [ 0, user.global_name ] );
 
-            await interaction.response.send_message( "The user {} has been pinged {} times <:pingreee:911150900666572842>".format( counts[ user_mentioned ][ 1 ], times ))
+        if counts[0] > 0:
+
+            await interaction.response.send_message( "The user {} has been pinged {} times <:pingreee:911150900666572842>".format( counts[1], counts[0] ))
 
         else:
 
-            await interaction.response.send_message( "The user {} has not been pinged yet, This is the first <:pingreee:911150900666572842>".format( user.mention ))
+            await interaction.response.send_message( "The user {} has not been pinged yet, This is his first <:pingreee:911150900666572842>".format( user.mention ))
 
     except Exception as e:
 
-        await interaction.response.send_message( f"Exception {e}", ephemeral=True );
+        await bot.handle_exception( interaction, e );

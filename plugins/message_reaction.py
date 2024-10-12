@@ -1,59 +1,92 @@
 from plugins.main import *
 
-global gpEmojis;
-gpEmojis = gpUtils.jsonc( "{}message_reaction.json".format( gpGlobals.absp() ) );
-
 @bot.tree.command()
 @app_commands.describe(
     word='Word to match',
     emoji='Emoji name, leave empty for removing a word reaction, or use a space to set multiple emojis',
+    file='Optional a whole json object containing the reactions cache.',
 )
-async def message_reaction( interaction: discord.Interaction, word: str = None, emoji: str = None ):
+async def cfg_message_reaction( interaction: discord.Interaction, word: str = None, emoji: str = None, file: Optional[discord.Attachment] = None ):
     """Configure message reactions, run w/o arguments to get a list"""
 
     try:
 
         if interaction.user.guild_permissions.manage_emojis:
 
-            srv: dict = gpEmojis.get( str( interaction.guild_id ), {} );
+            cache = gpGlobals.cache.get();
 
-            if not word:
+            srv: dict = cache.get( str( interaction.guild_id ), {} );
 
-                await interaction.response.send_message( '```json\n{}```'.format( json.dumps( srv, indent=0 ) ) );
+            if file:
+
+                try:
+                    async with aiohttp.ClientSession() as session:
+
+                        async with session.get( file.url ) as response:
+
+                            if response.status == 200:
+
+                                data = await response.read();
+
+                                srv = json.loads( data );
+
+                                cache[ str( interaction.guild_id ) ] = srv;
+
+                                await interaction.channel.send( AllocString( "updated.cache", [], interaction.guild_id ) );
+
+                            else:
+
+                                raise Exception( "Couldn't download the file." );
+
+                except Exception as e:
+
+                    await interaction.channel.send( "Exception: {}".format( e ) );
+
+            elif not word:
+
+                emoji_list = json.dumps( srv, indent=0 );
+
+                buffer = io.BytesIO( emoji_list.encode( 'utf-8' ) );
+
+                buffer.seek(0);
+
+                await interaction.response.send_message( 'json', file=discord.File( buffer, "reactions.json" ) );
 
             elif not emoji:
 
                 srv.pop( word, '' );
 
-                gpEmojis[ str( interaction.guild_id ) ] = srv;
+                cache[ str( interaction.guild_id ) ] = srv;
 
-                open( '{}message_reaction.json'.format( gpGlobals.absp() ), 'w' ).write( json.dumps( gpEmojis, indent=0 ) );
-
-                await interaction.response.send_message( 'Removed {}'.format( word ) );
+                await interaction.response.send_message( AllocString( "item.removed" , [ word ], interaction.guild_id ) );
 
             else:
 
                 srv[ word ] = emoji;
 
-                gpEmojis[ str( interaction.guild_id ) ] = srv;
+                cache[ str( interaction.guild_id ) ] = srv;
 
-                open( '{}message_reaction.json'.format( gpGlobals.absp() ), 'w' ).write( json.dumps( gpEmojis, indent=0 ) );
+                await interaction.response.send_message( AllocString( "item.set.to" , [ word, emoji ], interaction.guild_id ) );
 
-                await interaction.response.send_message( 'Updated word ``{}`` to {}'.format( word, emoji ) );
         else:
 
-            await interaction.response.send_message( 'You need "Manage emoji" permission to use this command.' );
+            await interaction.response.send_message( AllocString( "no.permission", [ "manage_emojis" ], interaction.guild_id ) );
 
     except Exception as e:
 
-        await interaction.response.send_message( 'Exception: {}'.format( e ) );
+        await bot.handle_exception( interaction, e );
 
 async def on_message( message: discord.Message ):
 
-    if not message.guild or not str( message.guild.id ) in gpEmojis or message.author.id == bot.user.id:
+    if not message.guild or message.author.id == bot.user.id:
         return Hook.Continue();
 
-    message_reactions = gpEmojis[ str( message.guild.id ) ];
+    cache = gpGlobals.cache.get();
+
+    if not str( message.guild.id ) in cache:
+        return Hook.Continue();
+
+    message_reactions = cache.get( str( message.guild.id ), {} );
 
     for keyword, emotes in message_reactions.items():
 

@@ -43,8 +43,16 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
             formatted = message.content.replace( link, replace );
 
-            await message.channel.send(  '{}: {}'.format( author, formatted ) );
+            avatar = author.avatar.url if author.avatar else None;
+
+            username = author.display_name;
+
+            webhook = await message.channel.create_webhook(name='fixembed_cmd')
+
+            await webhook.send( content=formatted, username=username, avatar_url=avatar );
 
             await message.delete();
+
+            await webhook.delete();
 
     return Hook.Continue();

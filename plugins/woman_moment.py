@@ -26,22 +26,28 @@ from plugins.main import *
 
 async def on_message( message: discord.Message ):
 
-    if message.guild and message.guild.id == 744769532513615922 and 'woman moment' in message.content:
+    if message.guild and message.guild.id == 744769532513615922:
 
-        bunnt: discord.User = bot.get_guild( 744769532513615922 ).get_member( 740196277844967458 );
+        if 'woman moment' in message.content or 'woman unmoment' in message.content:
 
-        if bunnt:
+            bunnt: discord.User = bot.get_guild( 744769532513615922 ).get_member( 740196277844967458 );
 
-            number = str( int( open( '{}woman_moment.txt'.format( gpGlobals.absp() ), 'r' ).readline() ) + 1 );
+            if bunnt:
 
-            nombre_actual = bunnt.display_name;
+                cache = gpGlobals.cache.get();
 
-            moment = re.sub( r'\d+', str(number), nombre_actual )
+                number = cache.get( "moment", 0 );
 
-            if not str(number) in moment:
+                number = ( number + 1 ) if 'woman moment' in message.content else ( number - 1 );
 
-                moment = '{} {}'.format( moment, number );
+                nombre_actual = bunnt.display_name;
 
-            await bunnt.edit( nick=moment)
+                moment = re.sub( r'\d+', str(number), nombre_actual )
 
-            open( '{}woman_moment.txt'.format( gpGlobals.absp()  ), 'w' ).write( number );
+                if not str(number) in moment:
+
+                    moment = '{} {}'.format( moment, number );
+
+                await bunnt.edit( nick=moment)
+
+                cache[ "moment" ] = number;

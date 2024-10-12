@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 #=======================================================================================
 # All the libraries being used for either this main script or plugins
 #=======================================================================================
+import io
 import os
 import re
 import sys
@@ -32,6 +33,8 @@ import time
 import json
 import random
 import asyncio
+import inspect
+import aiohttp
 import discord
 import requests
 import subprocess
@@ -44,6 +47,9 @@ from discord import app_commands
 from discord.ext import commands, tasks
 from bs4 import BeautifulSoup
 
+if not os.path.exists( '{}/cache.json'.format( os.path.abspath("") ) ):
+    open( '{}/cache.json'.format( os.path.abspath("") ), 'w' ).write( '{\n}' )
+
 #=======================================================================================
 # Global Public variables
 #=======================================================================================
@@ -54,12 +60,7 @@ class gpGlobals:
     @staticmethod
     def abs() -> str:
         '''Return absolute path value to the bot folder'''
-        return '{}/'.format( os.path.abspath( "" ) );
-
-    @staticmethod
-    def absp() -> str:
-        '''Return absolute path value to the plugins folder'''
-        return '{}plugins/'.format( gpGlobals.abs() );
+        return os.path.abspath( "" );
 
     __time__ = 0;
     @staticmethod
@@ -93,6 +94,77 @@ class gpGlobals:
         var = gpGlobals.time() + next_think;
         return True, var;
 
+    class CCacheManager():
+
+        __cache__: dict
+
+        def __init__( self, obj ):
+            self.__cache__ = obj;
+
+        class CCacheDictionary( dict ):
+
+            def update( self, custom = None ):
+                '''
+                Update value to the cache\n
+                This is only necesary when using self.pop or something else than indexing-value-set (__setitem__)
+                '''
+
+                frame = inspect.stack()[1]; # Get caller plugin name
+
+                n = custom.filename if custom else frame.filename;
+
+                for s in [ '\\', '/' ]:
+                    if s in n:
+                        n = n[ n.rfind( s ) + 1 if n.rfind( s ) != -1 else 0 : len( n ) ];
+
+                if n in [ 'main.py', 'bot.py' ]:
+                    n = '__main__';
+
+                gpGlobals.cache.__cache__[ n ] = self; # Update cache context
+
+                try: # Store cache context
+                    obj = json.dumps( gpGlobals.cache.__cache__, indent=4 );
+                    if obj:
+                        open( '{}/cache.json'.format( gpGlobals.abs() ), 'w' ).write( obj );
+                    else:
+                        raise Exception( "Failed to store cache." );
+                except: # There's nothing to do so pass.
+                    pass;
+
+            def __setitem__(self, key, value):
+                super().__setitem__( key, value );
+                self.update( inspect.stack()[1] );
+
+        def get( self ) -> CCacheDictionary:
+            '''Return a dict which automatically stores into the cache.json when setting variables to it'''
+            frame = inspect.stack()[1]; # Get caller plugin name
+            n = frame.filename;
+            for s in [ '\\', '/' ]:
+                if s in n:
+                    n = n[ n.rfind( s ) + 1 if n.rfind( s ) != -1 else 0 : len( n ) ];
+            if n in [ 'main.py', 'bot.py' ]:
+                n = '__main__';
+            return self.CCacheDictionary( self.__cache__.get( n,  { } ) );
+
+    
+    cache = CCacheManager( json.load( open( '{}/cache.json'.format( os.path.abspath("") ), 'r' ) ) );
+    '''Access to the bot cache'''
+
+    class LimitlessPotential:
+        '''Limitless Potential Server stuff'''
+
+        server_id = 744769532513615922;
+        '''Server ID'''
+
+        github_id = 1065791552485605446;
+        '''Github webhook channel ID'''
+
+        log_id = 1211204941490688030;
+        '''#bots-testing channel ID'''
+
+        mikk_id = 744768007892500481;
+        '''Owner ID, must have total authority over the bot code'''
+
 #=======================================================================================
 # Global Public Utilities
 #=======================================================================================
@@ -109,6 +181,13 @@ class gpUtils:
     
         return mention;
 
+    def mention( user: discord.Member ) -> str:
+        '''
+        Return a fixed ``discord.Member.mention`` string for globalization\n
+        nsince a leading characters are added when the user has a nickname
+        '''
+        return f"<@{user.id}>"
+
     def get_time( seconds : int ) -> str:
         '''Get time in a ``hh:mm:ss`` format'''
         m = seconds // 60;
@@ -118,13 +197,14 @@ class gpUtils:
     def jsonc( obj : list[str] | str ) -> dict | list:
         '''Open a json file ignoring single-line commentary\n
         Returns empty dict if an Exception is thrown\n
-        **obj** list of lines or either a path to a json file'''
+        **obj** list of lines or either a path to a json file\n
+        This functions is delimited to the absolute path of the bot.py folder and subfolders'''
         __js_split__ = '';
         __lines__: list[str];
         if isinstance( obj, list ):
             __lines__ = obj;
         else:
-            __lines__ = open( obj, 'r' ).readlines();
+            __lines__ = open( '{}/{}'.format( gpGlobals.abs(), obj ), 'r' ).readlines();
         for __line__ in __lines__:
             __line__ = __line__.strip();
             if __line__ and __line__ != '' and not __line__.startswith( '//' ):
@@ -136,11 +216,15 @@ class gpUtils:
             print( 'Failed to open object {}'.format( obj ) );
         return {};
 
-    def to_command_choices( obj: dict[str, str] ) -> list[app_commands.Choice]:
+    def to_command_choices( obj: dict[str, str] | list[str] ) -> list[app_commands.Choice]:
         '''Converts a dictionary to a list of app_commands.Choice'''
         app_commands_choices = []
-        for k, v in obj.items():
-            app_commands_choices.append( app_commands.Choice( name=k, value=v ) );
+        if isinstance( obj, dict ):
+            for k, v in obj.items():
+                app_commands_choices.append( app_commands.Choice( name=k, value=v ) );
+        else:
+            for i, k in enumerate(obj):
+                app_commands_choices.append( app_commands.Choice( name=k, value=str(i) ) );
         return app_commands_choices;
 
     def emote_number( number : str | int = None ) -> str | dict:
@@ -165,6 +249,42 @@ class gpUtils:
 
         return numbers if number is None else ':' + numbers[ number if isinstance( number, str ) else str( number ) ] + ':';
 
+#=======================================================================================
+# Translations
+#=======================================================================================
+global sentences;
+sentences = gpUtils.jsonc( 'sentences.json' )
+def AllocString( message: str, arguments: list = [], server_id: int = None ):
+    '''
+    **message**: A dict name key located in sentences.json.
+
+    **arguments**: Arguments to replace brackets in the messages.
+
+    **server_id**: Server id so we pick the proper language.
+    '''
+
+    msg_dict = sentences.get( message, {} );
+
+    cache = gpGlobals.cache.get();
+
+    language = 'english';
+
+    if str( server_id ) in cache:
+        srvcache = cache[ str( server_id ) ];
+        language = srvcache.get( 'language', 'english' );
+
+    msg = '';
+
+    if language in msg_dict:
+        msg = msg_dict[ language ];
+    else:
+        msg = msg_dict[ 'english' ];
+
+    for __arg__ in arguments:
+        msg = msg.replace( "{}", str( __arg__ ), 1 );
+
+    return msg;
+
 # https://github.com/Rapptz/discord.py/blob/master/examples/app_commands/basic.py
 class Bot(discord.Client):
     def __init__(self, *, intents: discord.Intents):
@@ -175,18 +295,14 @@ class Bot(discord.Client):
 
         if gpGlobals.workflow():
             return;
-    
+
         if gpGlobals.developer():
-            __MY_GUILD__ = discord.Object( id = self.LP() );
+            __MY_GUILD__ = discord.Object( id = gpGlobals.LimitlessPotential.server_id );
             self.tree.clear_commands(guild=__MY_GUILD__)
             self.tree.copy_global_to(guild=__MY_GUILD__)
             await self.tree.sync(guild=__MY_GUILD__)
         else:
-            await self.tree.sync()
-
-    def LP( self ) -> int:
-        '''Limitless Potential server ID'''
-        return 744769532513615922;
+            await self.tree.sync();
 
     async def log_channel( self, message: str, arguments: list = [] ):
         '''Log to #bots-testing channel'''
@@ -195,9 +311,41 @@ class Bot(discord.Client):
 
         if gpGlobals.workflow():
             print( message );
-            await self.get_channel( 1065791552485605446 ).send( message );
+            await self.get_channel( gpGlobals.LimitlessPotential.github_id ).send( message );
         else:
-            await self.get_channel( 1211204941490688030 ).send( message );
+            await self.get_channel( gpGlobals.LimitlessPotential.log_id ).send( message );
+
+    async def handle_exception( self, __type__: ( discord.Interaction | discord.Message ), exception = 'unknown', additional = {} ):
+        '''
+        Handles and log an Exception
+        
+        **__type__**: Instance to identify the exception, from which server, channel etc
+
+        **exception**: Exception instance
+
+        **additional**: Additional parameters to show to the developer
+        '''
+        try:
+            if isinstance( __type__, discord.Interaction ) or isinstance( __type__, discord.TextChannel ):
+                await __type__.channel.send( "Something went wrong, an Exception log has been submitted to my developers." );
+                additional[ "server_id" ] = __type__.guild_id;
+                if __type__.guild:
+                    additional[ "server_name" ] = __type__.guild.name;
+        except:
+            pass;
+        try:
+            frame = inspect.stack()[1];
+
+            message = '- ``[{}]`` **Exception:** ``{}`` from function ``{}``{}'.format(
+                frame.filename[ frame.filename.rfind( '/' ) + 1 if frame.filename.rfind( '/' ) != -1 else 0 : len( frame.filename ) ],
+                str(exception),
+                frame.function,
+                '\n```json\n{}```'.format( json.dumps( additional, indent=1 ) ) if len( additional ) > 0 else ''
+            );
+
+            await self.log_channel( message );
+        except:
+            pass;
 
     __pre_logs__:list[dict] = [];
 
@@ -240,12 +388,11 @@ class Bot(discord.Client):
 
         bldaily, self.__fl_on_daily__ = gpGlobals.should_think( self.__fl_on_daily__, 3600 );
         if bldaily:
-            cache = gpUtils.jsonc( '{}cache.json'.format( gpGlobals.abs() ) );
             date = datetime.now();
-            if date.day != cache[ "current.day" ]:
+            gdate = gpGlobals.cache.get();
+            if date.day != gdate.get( "current.day", 0 ):
                 await g_PluginManager.CallHook( "on_daily" );
-                cache[ "current.day" ] = date.day;
-                open( '{}cache.json'.format( gpGlobals.abs() ), 'w' ).write( json.dumps( cache, indent=0 ) );
+                gdate[ "current.day" ] = date.day;
 
     async def post_log_channel( self, num_plugins ):
         string = '';
@@ -295,7 +442,7 @@ class CPluginManager:
 
     def fnMethodsInit( self ):
         try:
-            Schema = gpUtils.jsonc( '{}schema.json'.format( gpGlobals.abs() ) );
+            Schema = gpUtils.jsonc( 'schema.json' );
             Enums = Schema["properties"]["plugins"]["items"]["properties"]["Hooks"]["items"]["enum"];
             for hook in Enums:
                 self.fnMethods[ hook ] = [];
@@ -309,7 +456,7 @@ class CPluginManager:
 
         self.fnMethodsInit();
 
-        PluginObject = gpUtils.jsonc( '{}plugins.json'.format( gpGlobals.abs() ) );
+        PluginObject = gpUtils.jsonc( 'plugins.json' );
         PluginData = PluginObject[ "plugins" ];
 
         for plugin in PluginData:
@@ -319,7 +466,7 @@ class CPluginManager:
             if not "Author Contact" in plugin:
                 plugin[ "Author Contact" ] = "https://github.com/Mikk155/"
 
-            if not plugin[ "Enable" ]:
+            if "Disable" in plugin and not plugin[ "Disable" ]:
                 if not gpGlobals.developer():
                     bot.pre_log_channel( "Skipping disabled plugin \"{}\"".format( self.plugin_name( plugin ) ))
                 continue;
@@ -328,7 +475,7 @@ class CPluginManager:
 
                 modulo:str = plugin[ "File Name" ][ : len(plugin[ "File Name" ]) - 3 ];
 
-                spec = importlib.util.spec_from_file_location( modulo, '{}{}'.format( gpGlobals.absp(), plugin[ "File Name" ] ) );
+                spec = importlib.util.spec_from_file_location( modulo, '{}/plugins/{}'.format( gpGlobals.abs(), plugin[ "File Name" ] ) );
 
                 obj = importlib.util.module_from_spec( spec );
 
@@ -400,28 +547,3 @@ class CPluginManager:
 
 global g_PluginManager;
 g_PluginManager = CPluginManager();
-
-@bot.tree.command()
-@app_commands.describe( plugin='Plugin' )
-@app_commands.choices( plugin = gpUtils.to_command_choices( g_PluginManager.__PluginsNames__ ) )
-async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Choice[str] ):
-    """Show plugins information"""
-    try:
-        info = g_PluginManager.__PluginsData__[ plugin.value ];
-
-        msg = 'Plugin: ``{}``\n'.format( info[ "File Name" ] )
-        msg += 'Active: ``{}``\n'.format( '✅' if info[ "Enable" ] else '❌' );
-        if 'Plugin Name' in info:
-            msg += 'Name: ``{}``\n'.format( info[ "Plugin Name" ] );
-        if 'Author Name' in info:
-            msg += 'Author: ``{}``\n'.format( info[ "Author Name" ] );
-        if 'Author Contact' in info:
-            msg += 'Contact: {}\n'.format( info[ "Author Contact" ] );
-        if 'Description' in info:
-            msg += 'Description: ``{}``\n'.format( info[ "Description" ] );
-        if 'Hooks' in info:
-            msg += 'Hooks: ``{}``\n'.format( info[ "Hooks" ] );
-
-        await interaction.response.send_message( msg );
-    except Exception as e:
-        await interaction.response.send_message( "Exception {}".format( e ) );

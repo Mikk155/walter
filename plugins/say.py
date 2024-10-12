@@ -54,4 +54,4 @@ async def say( interaction: discord.Interaction, message: str, user: Optional[di
 
     except Exception as e:
 
-        await interaction.response.send_message( "Exception: {}".format( e ), ephemeral=True );
+        await bot.handle_exception( interaction, e );

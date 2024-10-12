@@ -3,7 +3,6 @@
     [
         // Top plugins takes priority over bellow plugins when calling hooks
         {
-            "Enable": true,
             "File Name": "Activity.py",
             "Plugin Name": "Bot Activities",
             "Description": "Updates the bot Activity description from time to time.",
@@ -13,23 +12,23 @@
             ]
         },
         {
-            "Enable": true,
-            "File Name": "birthdays.py",
-            "Plugin Name": "Members Birthdays",
-            "Description": "Reminder of member's birthdays",
+            "File Name": "cache.py",
+            "Plugin Name": "Bot cache manipulator",
+            "Description": "Allows for manipulating the bot cache."
+        },
+        {
+            "File Name": "cm_update.py",
+            "Plugin Name": "Bot updater",
+            "Description": "Restarts the bot, This is usually done for updating purposes, the bot can fetch and pull git commits from the upstream repository."
+        },
+        {
+            "File Name": "control_arase.py",
             "Hooks":
             [
-                "on_daily"
+                "on_message"
             ]
         },
         {
-            "Enable": true,
-            "File Name": "cm_update.py",
-            "Plugin Name": "Bot updater",
-            "Description": "Updates the bot, Attempts to fetch and pull git commits"
-        },
-        {
-            "Enable": true,
             "File Name": "count_together.py",
             "Plugin Name": "Count Together",
             "Description": "Members counts all together in a channel",
@@ -40,13 +39,11 @@
             ]
         },
         {
-            "Enable": true,
             "File Name": "electrocute.py",
             "Plugin Name": "Electrocute a member",
             "Description": "Sends a member to mimir electrocuting him"
         },
         {
-            "Enable": true,
             "File Name": "fix_embeeds.py",
             "Plugin Name": "Fix X and Instagram",
             "Description": "Fix twitter and instagram embeeds",
@@ -56,21 +53,26 @@
             ]
         },
         {
-            "Enable": true,
-            "File Name": "meme.py"
+            "File Name": "meme.py",
+            "Description": "Get a meme interface to repost"
         },
         {
-            "Enable": true,
+            "File Name": "message_reaction.py",
+            "Description": "Reacts to a specific-set of keywords",
+            "Hooks":
+            [
+                "on_message"
+            ]
+        },
+        {
             "File Name": "minesweeper.py",
             "Description": "Mine Sweeper minigame, Find out the emoji, if you touch a bomb you lose!"
         },
         {
-            "Enable": true,
             "File Name": "pick.py",
             "Description": "Helps you deciding what choice to choose"
         },
         {
-            "Enable": true,
             "File Name": "ping_counter.py",
             "Description": "Count users pings",
             "Hooks":
@@ -79,11 +81,10 @@
             ]
         },
         {
-            "Enable": true,
-            "File Name": "say.py"
+            "File Name": "say.py",
+            "Description": "Make the bot or someone else say something"
         },
         {
-            "Enable": true,
             "File Name": "thecult_shared_role.py",
             "Description": "Share a exclusive role in Limitless Potential for members in The Cult",
             "Hooks":
@@ -94,28 +95,7 @@
             ]
         },
         {
-            "Enable": true,
-            "File Name": "r34.py"
-        },
-        {
-            "Enable": true,
             "File Name": "woman_moment.py",
-            "Hooks":
-            [
-                "on_message"
-            ]
-        },
-        {
-            "Enable": true,
-            "File Name": "message_reaction.py",
-            "Hooks":
-            [
-                "on_message"
-            ]
-        },
-        {
-            "Enable": true,
-            "File Name": "control_arase.py",
             "Hooks":
             [
                 "on_message"

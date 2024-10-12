@@ -15,10 +15,10 @@
                 "type": "object",
                 "properties":
                 {
-                    "Enable":
+                    "Disable":
                     {
                         "type": "boolean",
-                        "description": "If false the plugin is not registered."
+                        "description": "If true, the plugin is not registered."
                     },
                     "File Name":
                     {
@@ -74,7 +74,6 @@
                 },
                 "required":
                 [
-                    "Enable",
                     "File Name"
                 ],
                 "additionalProperties": false

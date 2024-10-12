@@ -39,12 +39,12 @@ async def pick( interaction: discord.Interaction, options: str ):
 
             option = str( items[ random.randint( 0, len( items ) - 1 ) ] );
 
-            await interaction.response.send_message( "From {}\nI choose.... {}".format( options, option.strip( " " ) ) );
+            await interaction.response.send_message( AllocString( "pick.done", [ options, option.strip( " " ) ], interaction.guild_id ), ephemeral=True );
 
         else:
 
-            await interaction.response.send_message( "You have to provide at least two options", ephemeral=True );
+            await interaction.response.send_message( AllocString( "pick.option", [], interaction.guild_id ), ephemeral=True );
 
     except Exception as e:
 
-        await interaction.response.send_message( "Exception: {}".format( e ), ephemeral=True );
+        await bot.handle_exception( interaction, e );

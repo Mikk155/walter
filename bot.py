@@ -24,6 +24,69 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
+@bot.tree.command()
+@app_commands.describe( plugin='Plugin' )
+@app_commands.choices( plugin = gpUtils.to_command_choices( g_PluginManager.__PluginsNames__ ) )
+async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Choice[str] ):
+    """Show plugins information"""
+
+    try:
+
+        info = g_PluginManager.__PluginsData__[ plugin.value ];
+
+        msg = 'Plugin: ``{}``\n'.format( info[ "File Name" ] )
+
+        msg += 'Active: ``{}``\n'.format( '❌' if info.get( "Disable", False ) else '✅' );
+
+        if 'Plugin Name' in info:
+            msg += 'Name: ``{}``\n'.format( info[ "Plugin Name" ] );
+
+        if 'Author Name' in info:
+            msg += 'Author: ``{}``\n'.format( info[ "Author Name" ] );
+
+        if 'Author Contact' in info:
+            msg += 'Contact: {}\n'.format( info[ "Author Contact" ] );
+
+        if 'Description' in info:
+            msg += 'Description: ``{}``\n'.format( info[ "Description" ] );
+
+        if 'Hooks' in info:
+            msg += 'Hooks: ``{}``\n'.format( info[ "Hooks" ] );
+
+        await interaction.response.send_message( msg );
+
+    except Exception as e:
+
+        await interaction.response.send_message( "Exception {}".format( e ) );
+
+@bot.tree.command()
+@app_commands.describe( language='Language' )
+@app_commands.choices( language = gpUtils.to_command_choices( sentences[ "languages" ] ) )
+async def cfg_language( interaction: discord.Interaction, language: app_commands.Choice[str] ):
+    """Set bot language for this server"""
+
+    try:
+
+        if interaction.user.guild_permissions.administrator:
+
+            cache = gpGlobals.cache.get();
+
+            server_cache = cache.get( str( interaction.guild_id ), {} );
+
+            server_cache[ "language" ] = language.name
+
+            cache[ str( interaction.guild_id ) ] = server_cache;
+
+            await interaction.response.send_message( AllocString( "language.updated", [ language.name ], interaction.guild_id ) );
+    
+        else:
+
+            await interaction.response.send_message( AllocString( "no.permission", [ "administrator" ], interaction.guild_id ) );
+
+    except Exception as e:
+
+        await interaction.response.send_message( "Exception {}".format( e ) );
+
 @bot.event
 async def on_ready():
     await bot.post_log_channel( g_PluginManager.num_plugins() );
@@ -84,7 +147,7 @@ else:
 
     Token_Name = 'dev' if gpGlobals.developer() else 'token';
 
-    Token_Path = '{}{}.txt'.format( gpGlobals.abs(), Token_Name );
+    Token_Path = '{}/{}.txt'.format( gpGlobals.abs(), Token_Name );
 
     if not os.path.exists( Token_Path ):
         print( 'File {} doesn\'t exists! Exiting...' );

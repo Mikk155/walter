@@ -24,37 +24,99 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-memes = [
-    "https://cdn.discordapp.com/attachments/739984597114290196/1282781996258431006/FwGIbrAupXuBPAyW-1.mp4?ex=67023994&is=6700e814&hm=b5c8aac6999153d059b53d7dee42aed8d749d191bb6a825544e592798e0cafa5&",
-    "https://www.youtube.com/watch?v=vdF7ANlKjAk",
-    "https://cdn.discordapp.com/attachments/876568446039646289/1292180688543416363/aye_bruh_-_there_goes_your_opinion.mp4?ex=6702cc8b&is=67017b0b&hm=e7b7094efac8cbac2adc6461a8c203b7f6ebec21c14c9d2143a23c02b45d3bbe&",
-];
-
-meme_choic = {
-    "Fantasia peruana": "0",
-    "Argentina lore": "1",
-    "Trash Opinion": "2",
-}
-
-@bot.tree.command()
+@bot.tree.command( guild=bot.get_guild( gpGlobals.LimitlessPotential.server_id ) )
 @app_commands.describe(
-    meme='Meme',
+    title='Meme Title',
+    url='Meme url (Leave empty for removing a meme from the list)',
 )
-@app_commands.choices( meme=gpUtils.to_command_choices( meme_choic ) )
-async def meme( interaction: discord.Interaction, meme: app_commands.Choice[str], message: str = None ):
+async def cfg_meme( interaction: discord.Interaction, title: str, url: str = None ):
     """Reposts a meme"""
 
     try:
 
-        media = memes[ int( meme.value ) ];
+        if interaction.user.guild_permissions.administrator:
 
-        text = '[media]({})'.format( media );
+            cache = gpGlobals.cache.get();
 
-        if message:
-            text = '{} {}'.format( message, text );
+            if url:
 
-        await interaction.response.send_message( text );
+                cache[ title ] = url;
+
+                await interaction.response.send_message( AllocString( "item.added" , [ url ], interaction.guild_id ) );
+
+            else:
+
+                cache.pop( title, '' )
+                cache.update();
+
+                await interaction.response.send_message( AllocString( "item.removed" , [ url ], interaction.guild_id ) );
+
+        else:
+
+            await interaction.response.send_message( AllocString( "no.permission", [ "administrator" ], interaction.guild_id ) );
 
     except Exception as e:
 
-        await interaction.response.send_message( "Exception: {}".format( e ), ephemeral=True );
+        await interaction.response.send_message( f"Exception: {e}" );
+
+class MemeDropdown( discord.ui.Select ):
+
+    message = '';
+
+    def __init__( self, server_id, message ):
+
+        self.message = message;
+
+        cache = gpGlobals.cache.get();
+
+        options = [ discord.SelectOption( label=meme ) for meme in cache.keys() ];
+
+        super().__init__( placeholder=AllocString( "meme.choose", [], server_id ), min_values=1, max_values=1, options=options );
+
+    async def callback( self, interaction: discord.Interaction ):
+
+        try:
+            cache = gpGlobals.cache.get();
+
+            choice = self.values[0];
+
+            meme_url = cache[ choice ];
+
+            avatar = interaction.user.avatar.url if interaction.user.avatar else None;
+            username = interaction.user.display_name;
+
+            webhook = await interaction.channel.create_webhook( name='meme_interface' );
+
+            await interaction.response.send_message( choice, ephemeral=True, delete_after=0.1 );
+
+            await webhook.send( content="[{}]({})".format( self.message if self.message else choice, meme_url ), username=username, avatar_url=avatar );
+
+            await webhook.delete()
+
+        except:
+            pass
+
+class MemeView( discord.ui.View ):
+
+    def __init__( self, server_id, message ):
+
+        super().__init__();
+
+        self.add_item( MemeDropdown( server_id, message ) );
+
+@bot.tree.command()
+@app_commands.describe(
+    message='Additional optional message',
+)
+async def meme( interaction: discord.Interaction, message:str = None ):
+    """Open the memes interface"""
+
+    try:
+
+        embed = discord.Embed( title="Meme Interface", description=AllocString( "meme.choose", [], interaction.guild_id ) );
+
+        await interaction.response.send_message( embed=embed, view=MemeView( interaction.guild_id, message ), ephemeral=True );
+
+    except Exception as e:
+
+        await bot.handle_exception( interaction, e );
