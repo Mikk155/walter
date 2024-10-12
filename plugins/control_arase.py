@@ -1,7 +1,7 @@
 from plugins.main import *
 
 control_yourself = [
-    'mom',
+    'mommy',
     'mama',
     'sex',
     'gf',
