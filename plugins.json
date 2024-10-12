@@ -44,6 +44,22 @@
             "Description": "Sends a member to mimir electrocuting him"
         },
         {
+            "File Name": "feliz_jueves.py",
+            "Plugin Name": "Wish a happy thursday",
+            "Hooks":
+            [
+                "on_daily"
+            ]
+        },
+        {
+            "File Name": "hoy_es_viernes.py",
+            "Plugin Name": "Reminder when friday",
+            "Hooks":
+            [
+                "on_daily"
+            ]
+        },
+        {
             "File Name": "fix_embeeds.py",
             "Plugin Name": "Fix X and Instagram",
             "Description": "Fix twitter and instagram embeeds",

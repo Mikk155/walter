@@ -137,19 +137,19 @@
         "spanish": "De ``{}``\nYo eligo ``{}``"
     },
 
+    // feliz_jueves.py
+    "feliz_jueves.set":
+    {
+        "english": "I'll wish you all a happy Thursday in {}",
+        "spanish": "Ahora les deseare un feliz jueves en {}"
+    },
 
-
-
-
-
-
-
-
-
-
-
-
-
+    // hoy_es_viernes.py
+    "viernes.set":
+    {
+        "english": "I'll remind all of you in {} when it's friday.",
+        "spanish": "Ahora les recordare en {} cuando sea viernes."
+    },
 
     "EOF": true
 }
