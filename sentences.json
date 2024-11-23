@@ -151,5 +151,12 @@
         "spanish": "Ahora les recordare en {} cuando sea viernes."
     },
 
+    // LoggerChannel.py
+    "logger.set":
+    {
+        "english": "Set logger channel to {}",
+        "spanish": "Se configuro {} como historial de cambios"
+    },
+
     "EOF": true
 }
