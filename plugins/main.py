@@ -443,7 +443,7 @@ bot: discord.Client | Bot = Bot(intents=discord.Intents.all())
 
 class Query:
     '''Tasks query'''
-    deleted_messages: list[str];
+    deleted_messages: list[str] = [];
     '''List of messages ID that this bot has personally deleted'''
 
 class Hook:
