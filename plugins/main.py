@@ -32,6 +32,7 @@ import sys
 import time
 import json
 import random
+import difflib
 import asyncio
 import inspect
 import aiohttp
@@ -51,7 +52,7 @@ if not os.path.exists( '{}/cache.json'.format( os.path.abspath("") ) ):
     open( '{}/cache.json'.format( os.path.abspath("") ), 'w' ).write( '{\n}' )
 
 global plugin_object
-plugin_object: dict = {};
+plugin_object: dict = json.load( open( '{}/plugins.json'.format( os.path.abspath( "" ) ), 'r' ) )
 
 #=======================================================================================
 # Global Public variables
@@ -323,6 +324,24 @@ class Bot(discord.Client):
         else:
             await self.get_channel( gpGlobals.LimitlessPotential.log_id() ).send( message );
 
+    async def log_server_set( self, guildid: int, channelid: int ):
+        cache = gpGlobals.cache.get();
+        Loggers = cache.get( "Loggers", {} );
+        Loggers[ str(guildid) ] = channelid;
+        cache[ "Loggers" ] = Loggers;
+
+    async def log_server( self, message:str, server_id: int, arguments: list = [] ):
+        '''Log to the server's logger channel'''
+        for __arg__ in arguments:
+            message = message.replace( "{}", str( __arg__ ), 1 );
+
+        cache = gpGlobals.cache.get();
+        Loggers = cache.get( "Loggers", {} );
+        if str( server_id ) in Loggers:
+            channel = bot.get_channel( int( Loggers[ str( server_id ) ] ) );
+            if channel:
+                await channel.send( message);
+
     async def handle_exception( self, __type__: ( discord.Interaction | discord.Message ), exception = 'unknown', additional = {} ):
         '''
         Handles and log an Exception
@@ -469,7 +488,6 @@ class CPluginManager:
 
         self.fnMethodsInit();
 
-        plugin_object = gpUtils.jsonc( 'plugins.json' );
         PluginData = plugin_object[ "plugins" ];
 
         for plugin in PluginData:

@@ -5,7 +5,6 @@
     "github_id": 1065791552485605446,
     "plugins":
     [
-        // Top plugins takes priority over bellow plugins when calling hooks
         {
             "File Name": "Activity.py",
             "Plugin Name": "Bot Activities",
