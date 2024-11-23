@@ -27,30 +27,29 @@ from plugins.main import *
 @bot.tree.command()
 @app_commands.describe(
     message='Say something',
-#    reply='Message link to reply',
-    user='User to stole identity (Administrator only)',
+    user='User to use identity',
 )
 async def say( interaction: discord.Interaction, message: str, user: Optional[discord.Member] = None ):
     """Make the bot say something"""
 
     try:
 
-        if user and interaction.user.guild_permissions.administrator:
+        await interaction.response.send_message( '<:walter_what:1278078147870331011>', ephemeral=True, delete_after=0.1 )
 
-            await interaction.response.send_message( '<:walter_what:1278078147870331011>', ephemeral=True, delete_after=0.1 )
+        if not user:
+            user = bot.user;
 
-            avatar = user.avatar.url if user.avatar else None;
-            username = user.display_name;
+        avatar = user.avatar.url if user.avatar else None;
+        username = user.display_name;
 
-            webhook = await interaction.channel.create_webhook( name='say_cmd' );
+        webhook = await interaction.channel.create_webhook( name='say_cmd' );
 
-            await webhook.send( content=message, username=username, avatar_url=avatar );
+        said = await webhook.send( content=message, username=username, avatar_url=avatar );
 
-            await webhook.delete()
+        await webhook.delete()
 
-        else:
-
-            await interaction.response.send_message( message );
+        if said:
+            await bot.log_server( 'Member {} used /say at {}'.format( interaction.user.global_name, said.jump_url ), interaction.guild_id );
 
     except Exception as e:
 
