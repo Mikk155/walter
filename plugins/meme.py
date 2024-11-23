@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-@bot.tree.command( guild=bot.get_guild( gpGlobals.LimitlessPotential.server_id ) )
+@bot.tree.command( guild=bot.get_guild( gpGlobals.LimitlessPotential.server_id() ) )
 @app_commands.describe(
     title='Meme Title',
     url='Meme url (Leave empty for removing a meme from the list)',

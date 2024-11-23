@@ -1,4 +1,8 @@
 {
+    "server_id": 744769532513615922,
+    "log_id": 1211204941490688030,
+    "owner_id": 744768007892500481,
+    "github_id": 1065791552485605446,
     "plugins":
     [
         // Top plugins takes priority over bellow plugins when calling hooks
@@ -115,6 +119,14 @@
             "Hooks":
             [
                 "on_message"
+            ]
+        },
+        {
+            "File Name": "LoggerChannel.py",
+            "Hooks":
+            [
+                "on_message_delete",
+                "on_message_edit"
             ]
         }
     ],

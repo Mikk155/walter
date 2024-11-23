@@ -7,6 +7,26 @@
         {
             "type": "string"
         },
+        "server_id":
+        {
+            "type": "integer",
+            "description": "The ID of your main server"
+        },
+        "log_id":
+        {
+            "type": "integer",
+            "description": "The Channel ID of your main server for output debugging messages"
+        },
+        "owner_id":
+        {
+            "type": "integer",
+            "description": "The owner ID. This user will have total authority over the bot code"
+        },
+        "github_id":
+        {
+            "type": "integer",
+            "description": "Github webhook channel ID, This is only required if you'd do use of github's workflows"
+        },
         "plugins":
         {
             "type": "array",
@@ -85,6 +105,8 @@
     "required":
     [
         "plugins",
+        "server_id",
+        "log_id",
         "$schema"
     ]
 }

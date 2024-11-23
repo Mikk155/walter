@@ -50,6 +50,9 @@ from bs4 import BeautifulSoup
 if not os.path.exists( '{}/cache.json'.format( os.path.abspath("") ) ):
     open( '{}/cache.json'.format( os.path.abspath("") ), 'w' ).write( '{\n}' )
 
+global plugin_object
+plugin_object: dict = {};
+
 #=======================================================================================
 # Global Public variables
 #=======================================================================================
@@ -154,17 +157,21 @@ class gpGlobals:
     class LimitlessPotential:
         '''Limitless Potential Server stuff'''
 
-        server_id = 744769532513615922;
-        '''Server ID'''
+        def server_id() -> int:
+            '''Server ID'''
+            return plugin_object[ "server_id" ];
 
-        github_id = 1065791552485605446;
-        '''Github webhook channel ID'''
+        def github_id() -> int:
+            '''Github webhook channel ID'''
+            return plugin_object[ "github_id" ];
 
-        log_id = 1211204941490688030;
-        '''#bots-testing channel ID'''
+        def log_id() -> int:
+            '''#bots-testing channel ID'''
+            return plugin_object[ "log_id" ];
 
-        mikk_id = 744768007892500481;
-        '''Owner ID, must have total authority over the bot code'''
+        def owner_id() -> int:
+            '''Owner ID, must have total authority over the bot code'''
+            return plugin_object[ "owner_id" ];
 
 #=======================================================================================
 # Global Public Utilities
@@ -298,7 +305,7 @@ class Bot(discord.Client):
             return;
 
         if gpGlobals.developer():
-            __MY_GUILD__ = discord.Object( id = gpGlobals.LimitlessPotential.server_id );
+            __MY_GUILD__ = discord.Object( id = gpGlobals.LimitlessPotential.server_id() );
             self.tree.clear_commands(guild=__MY_GUILD__)
             self.tree.copy_global_to(guild=__MY_GUILD__)
             await self.tree.sync(guild=__MY_GUILD__)
@@ -308,13 +315,13 @@ class Bot(discord.Client):
     async def log_channel( self, message: str, arguments: list = [] ):
         '''Log to #bots-testing channel'''
         for __arg__ in arguments:
-            message = message.replace( "{}", str( __arg__ ), 1 )
+            message = message.replace( "{}", str( __arg__ ), 1 );
 
         if gpGlobals.workflow():
             print( message );
-            await self.get_channel( gpGlobals.LimitlessPotential.github_id ).send( message );
+            await self.get_channel( gpGlobals.LimitlessPotential.github_id() ).send( message );
         else:
-            await self.get_channel( gpGlobals.LimitlessPotential.log_id ).send( message );
+            await self.get_channel( gpGlobals.LimitlessPotential.log_id() ).send( message );
 
     async def handle_exception( self, __type__: ( discord.Interaction | discord.Message ), exception = 'unknown', additional = {} ):
         '''
@@ -457,8 +464,8 @@ class CPluginManager:
 
         self.fnMethodsInit();
 
-        PluginObject = gpUtils.jsonc( 'plugins.json' );
-        PluginData = PluginObject[ "plugins" ];
+        plugin_object = gpUtils.jsonc( 'plugins.json' );
+        PluginData = plugin_object[ "plugins" ];
 
         for plugin in PluginData:
 

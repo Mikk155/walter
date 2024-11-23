@@ -93,7 +93,7 @@ async def on_think():
 
     return Hook.Continue();
 
-@bot.tree.command( guild=bot.get_guild( gpGlobals.LimitlessPotential.server_id ) )
+@bot.tree.command( guild=bot.get_guild( gpGlobals.LimitlessPotential.server_id() ) )
 @app_commands.choices( activity=gpUtils.to_command_choices( Activity.choices ) )
 @app_commands.describe(
     body_entries='Modify body entries, json-object-list ``[ "message1", "message2", "etc" ]``',
@@ -114,7 +114,7 @@ async def cfg_activity(
 
     try:
 
-        if interaction.user.id != gpGlobals.LimitlessPotential.mikk_id:
+        if interaction.user.id != gpGlobals.LimitlessPotential.owner_id():
             await interaction.response.send_message( AllocString( "only.owner", [], interaction.guild_id ) );
 
         else:

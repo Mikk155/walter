@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 from plugins.main import *
 
-@bot.tree.command( guild=bot.get_guild( gpGlobals.LimitlessPotential.server_id ) )
+@bot.tree.command( guild=bot.get_guild( gpGlobals.LimitlessPotential.server_id() ) )
 @app_commands.describe(
     file='json object containing the cache to upload.',
 )
@@ -41,7 +41,7 @@ async def cache( interaction: discord.Interaction, file: Optional[discord.Attach
 
             else:
 
-                if interaction.user.id != gpGlobals.LimitlessPotential.mikk_id:
+                if interaction.user.id != gpGlobals.LimitlessPotential.owner_id():
 
                     await interaction.response.send_message( AllocString( "only.owner", [], interaction.guild_id ) );
 

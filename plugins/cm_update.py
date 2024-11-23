@@ -37,7 +37,7 @@ async def update( interaction: discord.Interaction, git: bool = False ):
     restart = False;
 
     # Always set git if non-mikk.
-    if interaction.user.id != gpGlobals.LimitlessPotential.mikk_id:
+    if interaction.user.id != gpGlobals.LimitlessPotential.owner_id():
         git = True;
     # Always set restart if mikk.
     else:
