@@ -315,14 +315,17 @@ class Bot(discord.Client):
 
     async def log_channel( self, message: str, arguments: list = [] ):
         '''Log to #bots-testing channel'''
-        for __arg__ in arguments:
-            message = message.replace( "{}", str( __arg__ ), 1 );
+        try:
+            for __arg__ in arguments:
+                message = message.replace( "{}", str( __arg__ ), 1 );
 
-        if gpGlobals.workflow():
-            print( message );
-            await self.get_channel( gpGlobals.LimitlessPotential.github_id() ).send( message );
-        else:
-            await self.get_channel( gpGlobals.LimitlessPotential.log_id() ).send( message );
+            if gpGlobals.workflow():
+                print( message );
+                await self.get_channel( gpGlobals.LimitlessPotential.github_id() ).send( message );
+            else:
+                await self.get_channel( gpGlobals.LimitlessPotential.log_id() ).send( message );
+        except Exception as e:
+            print(e);
 
     async def log_server_set( self, guildid: int, channelid: int ):
         cache = gpGlobals.cache.get();
