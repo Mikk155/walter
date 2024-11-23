@@ -51,6 +51,7 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
             await webhook.send( content=formatted, username=username, avatar_url=avatar );
 
+            Query.deleted_messages.append( str( message.id ) );
             await message.delete();
 
             await webhook.delete();

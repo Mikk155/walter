@@ -422,6 +422,11 @@ class Bot(discord.Client):
 global bot
 bot: discord.Client | Bot = Bot(intents=discord.Intents.all())
 
+class Query:
+    '''Tasks query'''
+    deleted_messages: list[str];
+    '''List of messages ID that this bot has personally deleted'''
+
 class Hook:
     @staticmethod
     def Handled():
@@ -523,6 +528,10 @@ class CPluginManager:
         for plugin in self.fnMethods[ hook_name ]:
 
             try:
+
+                if g1 is not None and isinstance( g1, discord.Message ) and str(g1.id) in Query.deleted_messages:
+                    Query.deleted_messages.remove( str(g1.id));
+                    break;
 
                 if not plugin in self.module_cache:
                     continue;

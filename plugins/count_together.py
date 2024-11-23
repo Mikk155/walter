@@ -80,6 +80,7 @@ async def on_message( message: discord.Message ):
 
         await message.reply( AllocString( "count.only.count", [ message.author.mention ], message.guild.id ), delete_after = 5, silent=True, mention_author=False );
 
+        Query.deleted_messages.append( str( message.id ) );
         await message.delete();
 
         return Hook.Handled();
@@ -95,6 +96,7 @@ async def on_message( message: discord.Message ):
 
             await message.channel.send( AllocString( "count.wrong.count", [ message.author.mention ], message.guild.id ), delete_after = 5, silent=True, mention_author=False );
 
+            Query.deleted_messages.append( str( message.id ) );
             await message.delete();
 
             return Hook.Handled();
