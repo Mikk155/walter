@@ -72,7 +72,7 @@
 		"body" : [
 			"async def on_message_delete( message: discord.Message ):",
 			"\t'''",
-			"\tCalled when a Member leaves a Guild.\n",
+			"\tCalled when a message is deleted.\n",
 			"\t'''\n",
 			"\t${1:}\n\n\treturn Hook.Continue();\n"
 		],
