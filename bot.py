@@ -31,6 +31,7 @@ from src.main import *
 def initialize() -> None:
 
     g_Config.initialize();
+    g_Sentences.initialize();
 
 #=======================================================================================
 # END

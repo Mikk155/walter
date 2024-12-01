@@ -22,8 +22,6 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from src.main import *
-
 class g_Path:
     '''
     Directories for this workspace
@@ -36,7 +34,9 @@ class g_Path:
         Returns the absolute path to the workspace (where bot.py is located)
         '''
 
-        return os.path.abspath( '' );
+        from os.path import abspath;
+
+        return abspath( '' );
 
     @staticmethod
     def join( directory: str ) -> str:
@@ -46,6 +46,8 @@ class g_Path:
 
         **directory**: Path starting from this workspace i.e ``src/test/main.py``
         '''
+
+        from os.path import join;
 
         __destination__ = g_Path.workspace();
 
@@ -57,6 +59,6 @@ class g_Path:
 
             if __dir__:
 
-                __destination__ = os.path.join( __destination__, __dir__ );
+                __destination__ = join( __destination__, __dir__ );
 
         return __destination__;

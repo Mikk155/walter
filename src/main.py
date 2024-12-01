@@ -45,11 +45,21 @@ import json
 # This Source's libraries
 #=======================================================================================
 
+class snippet:
+    '''
+    Snippets
+
+    When a function asks for this variable type it means that the alternative variable type is expected.
+
+    But you can write the variable name so snippets.code-snippets recomends you specific values the function accepts.
+    '''
+
 from src.constdef import *
 
 from src.utils.Path import g_Path
 from src.utils.CLogger import CLogger
 from src.utils.CJsonCommentary import jsonc
+from src.utils.CSentences import g_Sentences
 from src.utils.CConfigSystem import g_Config
 
 #=======================================================================================

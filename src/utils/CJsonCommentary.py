@@ -22,18 +22,19 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from src.main import *
-
 class jsonc:
 
     '''
     Json Commentary
     '''
 
+    from src.utils.CLogger import CLogger;
     m_Logger = CLogger( "Json" );
 
     @staticmethod
     def __format__( object : list[str] | str ) -> dict | list:
+
+        from json import loads
 
         __js_split__ = '';
 
@@ -53,7 +54,7 @@ class jsonc:
 
         try:
 
-            js = json.loads( __js_split__ );
+            js = loads( __js_split__ );
 
             return js;
 
@@ -74,9 +75,11 @@ class jsonc:
         **object** Path to a json file or a string with json format
         '''
 
+        from os.path import exists;
+
         if object.endswith( '.json' ):
 
-            if os.path.exists( object ):
+            if exists( object ):
 
                 with open( object, 'r' ) as __file__:
         
@@ -84,7 +87,11 @@ class jsonc:
         
             else:
 
-                __e__ = jsonc.m_Logger.critical( "File plugins.json doesn't exists!" );
+                __Logger__ = {
+                    "sentence": "sentence name",
+                    "print console": True,
+                }
+                __e__ = jsonc.m_Logger.critical( "file.not.exists" );
                 return jsonc.__format__( ["{}"] );
 
         return jsonc.__format__(object);

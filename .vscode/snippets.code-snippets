@@ -11,6 +11,17 @@
 		],
 		"scope": "python"
 	},
+	"Logger":
+	{
+		"prefix": [ "Logger" ],
+		"body" : [
+			"__Logger__ = {",
+			"\t\"sentence\": \"${1:sentence name}\",",
+			"\t\"print console\": ${2:True},",
+			"}",
+		],
+		"scope": "python"
+	},
 	"on_message":
 	{
 		"prefix": [ "event on_message", "on_message" ],

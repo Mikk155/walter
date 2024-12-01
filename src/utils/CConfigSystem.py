@@ -22,14 +22,13 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from src.main import *
-
 class g_Config:
     
     '''
     Configuration System
     '''
 
+    from src.utils.CLogger import CLogger
     m_Logger = CLogger( "Configuration System" );
 
     configuration: dict = {};
@@ -40,6 +39,10 @@ class g_Config:
 
     @staticmethod
     def initialize() -> None:
+
+        from src.utils.Path import g_Path;
+        from src.utils.CJsonCommentary import jsonc;
+        from src.constdef import INVALID_INDEX;
 
         __plugins__ = jsonc.load( g_Path.join( "plugins.json" ) )
 

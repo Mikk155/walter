@@ -22,13 +22,13 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from src.main import *
-
 class CLogger:
 
     '''
     Class Logger instance
     '''
+
+    from src.main import snippet;
 
     __logger__: str = None;
 
@@ -49,31 +49,44 @@ class CLogger:
 
         self.__logger__ = logger;
 
-    def __print__( self, type: str, message ) -> str:
+    def __print__(self, message: str, Logger: snippet | dict = {}) -> str:
 
-        if type:
+        from src.utils.CSentences import g_Sentences;
 
-            message = f'[{type}] {message}';
+        sentence = g_Sentences.get( message );
+
+        __type__ = Logger.get( "type", "UNKNOWN" );
+
+        sentence = f'[{__type__}] {sentence}';
 
         if self.__logger__:
 
-            message = f'[{self.__logger__}] {message}';
+            sentence = f'[{self.__logger__}]{sentence}';
 
 
-        print( message );
-        return message;
+        if Logger.get( "print console", True ):
 
-    def warn(self, message) -> str:
-        return self.__print__( "warning", message );
+            print( sentence );
 
-    def error(self, message) -> str:
-        return self.__print__( "error", message );
+        return sentence;
 
-    def debug(self, message) -> str:
-        return self.__print__( "debug", message );
+    def warn(self, message, Logger: snippet | dict = {}) -> str:
+        Logger["type"] = "warning";
+        return self.__print__( message, Logger );
 
-    def information(self, message) -> str:
-        return self.__print__( "information", message );
+    def error(self, message, Logger: snippet | dict = {}) -> str:
+        Logger["type"] = "error";
+        return self.__print__( message, Logger );
 
-    def critical(self, message) -> str:
-        return self.__print__( "critical", message );
+    def debug(self, message, Logger: snippet | dict = {}) -> str:
+        Logger["type"] = "debug";
+        return self.__print__( message, Logger );
+
+    def information(self, message, Logger: snippet | dict = {}) -> str:
+        Logger["type"] = "information";
+        return self.__print__( message, Logger );
+
+    def critical(self, message, Logger: snippet | dict = {}) -> str:
+        Logger["type"] = "critical";
+        return self.__print__( message, Logger );
+
