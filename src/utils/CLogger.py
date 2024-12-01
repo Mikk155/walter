@@ -63,10 +63,29 @@ class CLogger:
 
             sentence = f'[{self.__logger__}]{sentence}';
 
+        if "arguments" in Logger:
+
+            for __arg__ in Logger[ "arguments" ]:
+
+                sentence = sentence.replace( "{}", str( __arg__ ), 1 );
 
         if Logger.get( "print console", True ):
 
             print( sentence );
+
+        #if Logger.get( "print dev", False ):
+
+            # -TODO Print to test server's log channel
+
+        from src.constdef import INVALID_INDEX;
+
+        #if Logger.get( "print channel", INVALID_INDEX() ) != INVALID_INDEX():
+
+            # -TODO Print to this provived channel
+
+        #if Logger.get( "print server", INVALID_INDEX() ) != INVALID_INDEX():
+
+            # -TODO Print to this server's log channel
 
         return sentence;
 

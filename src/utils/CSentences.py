@@ -28,6 +28,9 @@ class g_Sentences:
     Sentences
     '''
 
+    from src.utils.CLogger import CLogger
+    m_Logger = CLogger( "Sentences" );
+
     sentences: dict[dict] = {};
     '''Dict of sentences'''
 
@@ -42,7 +45,7 @@ class g_Sentences:
 
         g_Sentences.sentences = __plugins__;
 
-        print(g_Sentences.sentences)
+        g_Sentences.m_Logger.information( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
 
     @staticmethod
     def push_back( file_dir: str ) -> None:
@@ -58,7 +61,7 @@ class g_Sentences:
     from src.constdef import INVALID_INDEX;
 
     @staticmethod
-    def get(name: str, server_id: int = INVALID_INDEX() ):
+    def get(name: str, server_id: int = INVALID_INDEX() ) -> str:
         
         '''
         Gets a sentence from the sentences json
@@ -72,21 +75,25 @@ class g_Sentences:
             __sslot__ = g_Sentences.sentences[ name ];
 
             # -TODO Get from cache system
-            __language__ = "english"
+            __language__ = "english";
 
             from src.constdef import INVALID_INDEX;
 
             if server_id != INVALID_INDEX():
 
                 # -TODO Get from cache system for this specific server
-                __language__ = "english"
+                __language__ = "english";
 
             if __language__ in __sslot__:
 
                 __sentence__ = __sslot__[ __language__ ];
 
+            else:
+
+                __sentence__ = __sslot__[ 'english' ];
+
         if __sentence__ is None:
 
             return f"#{name}";
-    
+
         return __sentence__;

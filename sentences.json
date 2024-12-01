@@ -26,6 +26,12 @@
     },
 
 
+    "object.initialized":
+    {
+        "english": "Object ``{}`` initialized!",
+        "spanish": "Objeto ``{}`` inicializado!"
+    },
+
     // End of file, helps while this is being created yet :p
     "EOF": true
 }
