@@ -47,7 +47,7 @@ class g_Path:
         **directory**: Path starting from this workspace i.e ``src/test/main.py``
         '''
 
-        __destination__ = Path.workspace();
+        __destination__ = g_Path.workspace();
 
         __directories__ = directory.split( '/' );
 
