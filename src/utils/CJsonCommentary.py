@@ -30,6 +30,8 @@ class jsonc:
     Json Commentary
     '''
 
+    m_Logger = CLogger( "JsonCommentary" );
+
     @staticmethod
     def __format__( object : list[str] | str ) -> dict | list:
 
@@ -57,7 +59,7 @@ class jsonc:
 
         except Exception as e:
 
-            print( 'Failed to open jsonc object: {}'.format( e ) );
+            debug = jsonc.m_Logger.error( 'Failed to open jsonc object: {}'.format( e ) );
 
         return {};
 
