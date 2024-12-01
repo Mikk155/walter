@@ -74,9 +74,16 @@ def get_token() -> str:
 
         else:
 
-            bot.m_Logger.critical( "bot.run.notoken", { "arguments": tokens } );
+            bot.m_Logger.critical( "file.not.exists", { "arguments": [ tokens ] } );
+            exit(0)
 
-    return __token__[ 1 if '-dev' in sys.argv else 0 ];
+    token = __token__[ 1 if '-dev' in sys.argv else 0 ];
+
+    if not isinstance( token, str ):
+
+        token = str(token);
+
+    return token;
 
 try:
 
