@@ -30,7 +30,7 @@ class jsonc:
     Json Commentary
     '''
 
-    m_Logger = CLogger( "JsonCommentary" );
+    m_Logger = CLogger( "Json" );
 
     @staticmethod
     def __format__( object : list[str] | str ) -> dict | list:
@@ -64,7 +64,7 @@ class jsonc:
         return {};
 
     @staticmethod
-    def load( self, object: str ) -> dict | list:
+    def load( object: str ) -> dict | list:
 
         '''
         Open a json file ignoring single-line commentary
@@ -76,8 +76,15 @@ class jsonc:
 
         if object.endswith( '.json' ):
 
-            with open( object, 'r' ) as __file__:
-    
-                object = __file__.readlines();
+            if os.path.exists( object ):
+
+                with open( object, 'r' ) as __file__:
+        
+                    object = __file__.readlines();
+        
+            else:
+
+                __e__ = jsonc.m_Logger.critical( "File plugins.json doesn't exists!" );
+                return jsonc.__format__( ["{}"] );
 
         return jsonc.__format__(object);
