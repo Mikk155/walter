@@ -37,3 +37,12 @@ def HOOK_HANDLED() -> int:
     '''
 
     return 1;
+
+
+def INVALID_INDEX() -> int:
+
+    '''
+    Returns an invalid index for integer comparations
+    '''
+
+    return -1;

@@ -1,4 +1,16 @@
 {
+	"on_initialization":
+	{
+		"prefix": [ "event on_initialization", "on_initialization" ],
+		"body" : [
+			"def on_initialization():",
+			"\t'''",
+			"\tCalled when the script is executed, this is the first hook ever called, the bot is not even online yet.",
+			"\t'''\n",
+			"\t${1:}\n\n\treturn HOOK_CONTINUE();\n"
+		],
+		"scope": "python"
+	},
 	"on_message":
 	{
 		"prefix": [ "event on_message", "on_message" ],

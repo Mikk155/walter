@@ -59,6 +59,8 @@ class CLogger:
 
             message = f'[{self.__logger__}] {message}';
 
+
+        print( message );
         return message;
 
     def warn(self, message) -> str:

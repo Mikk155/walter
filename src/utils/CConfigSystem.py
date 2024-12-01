@@ -24,16 +24,32 @@ DEALINGS IN THE SOFTWARE.
 
 from src.main import *
 
-#=======================================================================================
-# Start initialization of required libraries
-#=======================================================================================
+class g_Config:
+    
+    '''
+    Configuration System
+    '''
 
-def initialize() -> None:
+    m_Logger = CLogger( "Configuration System" );
 
-    g_Config.initialize();
+    configuration: dict = {};
+    '''General configuration'''
 
-#=======================================================================================
-# END
-#=======================================================================================
+    plugins: dict = {};
+    '''Loaded plugins'''
 
-initialize();
+    @staticmethod
+    def initialize() -> None:
+
+        __plugins__ = jsonc.load( g_Path.join( "plugins.json" ) )
+
+        g_Config.configuration[ "server_id" ]  = __plugins__.get( "server_id", INVALID_INDEX() );
+        g_Config.configuration[ "log_id" ]     = __plugins__.get( "log_id", INVALID_INDEX() );
+        g_Config.configuration[ "owner_id" ]   = __plugins__.get( "owner_id", INVALID_INDEX() );
+        g_Config.configuration[ "github_id" ]  = __plugins__.get( "github_id", INVALID_INDEX() );
+
+        g_Config.plugins = __plugins__.get( "plugins", [] );
+
+        g_Config.m_Logger.information( "g_Config initialised!" );
+        g_Config.m_Logger.debug( "Config:\n" );
+        g_Config.m_Logger.debug( "Plugins:\n" );
