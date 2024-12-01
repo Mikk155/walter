@@ -33,4 +33,4 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
-          python bot.py -github
+          python bot.py -github -repository ${{ github.repository }}

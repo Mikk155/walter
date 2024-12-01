@@ -22,38 +22,41 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from plugins.main import *
+from src.main import *
 
-global fix_embeeds_kvp;
-fix_embeeds_kvp = {
-    # https://github.com/Wikidepia/InstaFix
-    "www.instagram.com": "www.ddinstagram.com",
+class Path:
+    '''
+    Directories for this workspace
+    '''
 
-    # https://github.com/FixTweet/FxTwitter
-    "https://x.com/": "https://fxtwitter.com/",
-};
+    @staticmethod
+    def workspace() -> str:
 
-async def on_link( message: discord.Message, urls: list[str] ):
+        '''
+        Returns the absolute path to the workspace (where bot.py is located)
+        '''
 
-    for link, replace in fix_embeeds_kvp.items():
+        return os.path.abspath( '' );
 
-        if link in message.content:
+    @staticmethod
+    def join( directory: str ) -> str:
 
-            author = message.author;
+        '''
+        Returns the absolute path to the provided directory
 
-            formatted = message.content.replace( link, replace );
+        **directory**: Path starting from this workspace i.e ``src/test/main.py``
+        '''
 
-            avatar = author.avatar.url if author.avatar else None;
+        __destination__ = Path.workspace();
 
-            username = author.display_name;
+        __directories__ = directory.split( '/' );
 
-            webhook = await message.channel.create_webhook(name='fixembed_cmd')
+        for __dir__ in __directories__:
 
-            await webhook.send( content=formatted, username=username, avatar_url=avatar );
+            __dir__ = __dir__.strip();
 
-            Query.deleted_messages.append( str( message.id ) );
-            await message.delete();
+            if __dir__:
 
-            await webhook.delete();
+                __destination__ = os.path.join( __destination__, __dir__ );
 
-    return Hook.Continue();
+        return __destination__;

@@ -22,32 +22,9 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from plugins.main import *
+#=======================================================================================
+# Default libraries
+#=======================================================================================
+import os
 
-async def on_message( message: discord.Message ):
-
-    if message.guild and message.guild.id == 744769532513615922:
-
-        if 'woman moment' in message.content or 'woman unmoment' in message.content:
-
-            bunnt: discord.User = bot.get_guild( 744769532513615922 ).get_member( 740196277844967458 );
-
-            if bunnt:
-
-                cache = gpGlobals.cache.get();
-
-                number = cache.get( "moment", 0 );
-
-                number = ( number + 1 ) if 'woman moment' in message.content else ( number - 1 );
-
-                nombre_actual = bunnt.display_name;
-
-                moment = re.sub( r'\d+', str(number), nombre_actual )
-
-                if not str(number) in moment:
-
-                    moment = '{} {}'.format( moment, number );
-
-                await bunnt.edit( nick=moment)
-
-                cache[ "moment" ] = number;
+from src.utils.Path import Path
