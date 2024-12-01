@@ -7,6 +7,16 @@
         {
             "type": "string"
         },
+        "token":
+        {
+            "type": "string",
+            "description": "The Discord application BOT Token"
+        },
+        "token dev":
+        {
+            "type": "string",
+            "description": "The Discord application BOT Token for using -dev argument"
+        },
         "server_id":
         {
             "type": "integer",
@@ -58,6 +68,7 @@
     "additionalProperties": false,
     "required":
     [
+        "token",
         "plugins",
         "$schema"
     ]

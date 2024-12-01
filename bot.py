@@ -38,3 +38,44 @@ def initialize() -> None:
 #=======================================================================================
 
 initialize();
+
+bot = Bot();
+
+@bot.event
+async def on_ready():
+
+    await bot.wait_until_ready();
+
+    print( "Connected and ready as {}".format( bot.user.name ) );
+
+    if os.getenv( 'github' ):
+
+        print( "Run from {}".format( os.getenv( 'github' ) ) );
+
+        await bot.close();
+
+        exit(0);
+
+def get_token() -> str:
+    
+    __token__: str;
+
+    if os.getenv( 'github' ):
+
+        __token__ = os.getenv( 'token' );
+
+    else:
+
+        __label__ = 'token{}'.format( ' dev' if '-dev' in sys.argv else '' )
+
+        __token__ = g_Config.configuration[ __label__ ];
+
+    return __token__;
+
+try:
+
+    bot.run( token = get_token(), reconnect = True );
+
+except Exception as e:
+
+    bot.m_Logger.critical( e );

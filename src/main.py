@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #=======================================================================================
 
 import os
+import sys
 import json
 
 #=======================================================================================
@@ -36,6 +37,8 @@ import json
 #=======================================================================================
 # Third party libraries
 #=======================================================================================
+
+import discord
 
 #=======================================================================================
 # END
@@ -61,6 +64,10 @@ from src.utils.CLogger import CLogger
 from src.utils.CJsonCommentary import jsonc
 from src.utils.CSentences import g_Sentences
 from src.utils.CConfigSystem import g_Config
+from src.Bot import Bot
+
+global bot
+bot: discord.Client | Bot;
 
 #=======================================================================================
 # END

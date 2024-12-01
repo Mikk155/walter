@@ -52,6 +52,11 @@
         "english": "Object ``{}`` initialized!",
         "spanish": "Objeto ``{}`` inicializado!"
     },
+    "bot.run.devmode":
+    {
+        "english": "BOT trying to run in -dev mode but has no argument for \"{}\"",
+        "spanish": "El BOT intento correr en modo -dev pero no tiene argumento en \"{}\""
+    },
 
     // End of file, helps while this is being created yet :p
     "EOF": true

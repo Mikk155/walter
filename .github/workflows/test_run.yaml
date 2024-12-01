@@ -31,6 +31,7 @@ jobs:
 
       - name: Run bot.py
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN }}
+          github: ${{ github.repository }}
         run: |
-          python bot.py -github -repository ${{ github.repository }}
+          python bot.py

@@ -22,37 +22,50 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-class g_Config:
-    
+import discord
+from discord import app_commands
+
+class Bot( discord.Client ):
+
     '''
-    Configuration System
+    Discord BOT instance
     '''
 
     from src.utils.CLogger import CLogger
-    m_Logger = CLogger( "Configuration System" );
+    m_Logger = CLogger( "BOT" );
 
-    configuration: dict = {};
-    '''General configuration'''
+    def __init__( self ):
 
-    plugins: dict = {};
-    '''Loaded plugins'''
+        # Plugins may need all of them, too lazy to create a system for automatizing this.
+        super().__init__( intents = discord.Intents.all() )
 
-    @staticmethod
-    def initialize() -> None:
+        self.tree = app_commands.CommandTree( self )
 
-        from src.utils.Path import g_Path;
-        from src.utils.CJsonCommentary import jsonc;
+    async def setup_hook(self):
+
+        from os import getenv;
+        from sys import argv as args;
+        from src.utils.CConfigSystem import g_Config;
         from src.constdef import INVALID_INDEX;
 
-        __plugins__ = jsonc.load( g_Path.join( "plugins.json" ) )
+        # Don't create commands on github's workflow test run
+        if getenv( 'github' ):
+            return;
 
-        g_Config.configuration[ "token dev" ]  = __plugins__.get( "token dev", INVALID_INDEX() );
-        g_Config.configuration[ "token" ]  = __plugins__.get( "token", INVALID_INDEX() );
-        g_Config.configuration[ "server_id" ]  = __plugins__.get( "server_id", INVALID_INDEX() );
-        g_Config.configuration[ "log_id" ]     = __plugins__.get( "log_id", INVALID_INDEX() );
-        g_Config.configuration[ "owner_id" ]   = __plugins__.get( "owner_id", INVALID_INDEX() );
-        g_Config.configuration[ "github_id" ]  = __plugins__.get( "github_id", INVALID_INDEX() );
+        if '-dev' in args:
 
-        g_Config.plugins = __plugins__.get( "plugins", [] );
+            server_id: int = g_Config.configuration[ "server_id" ];
 
-        g_Config.m_Logger.information( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+            if server_id == INVALID_INDEX():
+                _e_ = self.m_Logger.critical( "bot.run.devmode", { "arguments": [ "server_id" ] } );
+                raise _e_;
+
+            __MY_GUILD__ = discord.Object( id = server_id );
+
+            self.tree.clear_commands( guild=__MY_GUILD__ )
+            self.tree.copy_global_to( guild=__MY_GUILD__ )
+            await self.tree.sync( guild=__MY_GUILD__ )
+
+        else:
+
+            await self.tree.sync();

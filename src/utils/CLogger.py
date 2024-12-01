@@ -54,7 +54,7 @@ class CLogger:
         from src.utils.CSentences import g_Sentences;
         from src.constdef import INVALID_INDEX;
 
-        sentence = g_Sentences.get( message );
+        sentence = g_Sentences.get( message, message ); ## Fallback OG string
 
         __type__ = Logger.get( "type", INVALID_INDEX() );
 
