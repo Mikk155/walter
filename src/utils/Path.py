@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 
 from src.main import *
 
-class Path:
+class g_Path:
     '''
     Directories for this workspace
     '''
