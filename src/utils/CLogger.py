@@ -52,10 +52,15 @@ class CLogger:
     def __print__(self, message: str, Logger: snippet | dict = {}) -> str:
 
         from src.utils.CSentences import g_Sentences;
+        from src.constdef import INVALID_INDEX;
 
         sentence = g_Sentences.get( message );
 
-        __type__ = Logger.get( "type", "UNKNOWN" );
+        __type__ = Logger.get( "type", INVALID_INDEX() );
+
+        if __type__ != INVALID_INDEX():
+
+            __type__ = g_Sentences.get(f"logger.{__type__}");
 
         sentence = f'[{__type__}] {sentence}';
 
@@ -76,8 +81,6 @@ class CLogger:
         #if Logger.get( "print dev", False ):
 
             # -TODO Print to test server's log channel
-
-        from src.constdef import INVALID_INDEX;
 
         #if Logger.get( "print channel", INVALID_INDEX() ) != INVALID_INDEX():
 

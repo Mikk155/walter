@@ -17,15 +17,36 @@
         "english": "Spanish",
         "spanish": "Español"
     },
-
-
+    "logger.warning":
+    {
+        "english": "Warning",
+        "spanish": "Advertencia"
+    },
+    "logger.error":
+    {
+        "english": "Error",
+        "spanish": "Error"
+    },
+    "logger.debug":
+    {
+        "english": "Debug",
+        "spanish": "Depurado"
+    },
+    "logger.information":
+    {
+        "english": "Information",
+        "spanish": "Información"
+    },
+    "logger.critical":
+    {
+        "english": "CRITICAL",
+        "spanish": "CRITICO"
+    },
     "file.not.exists":
     {
         "english": "File {} doesn't exists!",
         "spanish": "El archivo {} no existe!"
     },
-
-
     "object.initialized":
     {
         "english": "Object ``{}`` initialized!",
