@@ -40,73 +40,25 @@
                         "type": "boolean",
                         "description": "If true, the plugin is not registered."
                     },
-                    "File Name":
+                    "script":
                     {
                         "type": "string",
-                        "description": "File name located in plugins/"
-                    },
-                    "Plugin Name":
-                    {
-                        "type": "string",
-                        "description": "Name of the plugin, if empty is \"File Name\""
-                    },
-                    "Author Name":
-                    {
-                        "type": "string",
-                        "description": "Name of the author, if empty is unset"
-                    },
-                    "Author Contact":
-                    {
-                        "type": "string",
-                        "description": "Contact of the author, if empty is unset"
-                    },
-                    "Description":
-                    {
-                        "type": "string",
-                        "description": "Description of the plugin, if empty is unset"
-                    },
-                    "Hooks":
-                    {
-                        "type": "array",
-                        "description": "Hooks to register",
-                        "items":
-                        {
-                            "type": "string",
-                            "enum":
-                            [
-                                "on_daily",
-                                "on_ready",
-                                "on_member_join",
-                                "on_think",
-                                "on_member_remove",
-                                "on_message",
-                                "on_message_delete",
-                                "on_message_edit",
-                                "on_mention",
-                                "on_reply",
-                                "on_link",
-                                "on_reaction_add",
-                                "on_reaction_remove"
-                            ]
-                        },
-                        "additionalProperties": true
+                        "description": "Script directory starting from (workspace)/plugins/"
                     }
                 },
                 "required":
                 [
-                    "File Name"
+                    "script"
                 ],
                 "additionalProperties": false
             }
         },
-        "additionalProperties": true
+        "additionalProperties": false
     },
     "additionalProperties": false,
     "required":
     [
         "plugins",
-        "server_id",
-        "log_id",
         "$schema"
     ]
 }
