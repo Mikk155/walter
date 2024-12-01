@@ -46,8 +46,6 @@ class g_Config:
 
         __plugins__ = jsonc.load( g_Path.join( "plugins.json" ) )
 
-        g_Config.configuration[ "token dev" ]  = __plugins__.get( "token dev", INVALID_INDEX() );
-        g_Config.configuration[ "token" ]  = __plugins__.get( "token", INVALID_INDEX() );
         g_Config.configuration[ "server_id" ]  = __plugins__.get( "server_id", INVALID_INDEX() );
         g_Config.configuration[ "log_id" ]     = __plugins__.get( "log_id", INVALID_INDEX() );
         g_Config.configuration[ "owner_id" ]   = __plugins__.get( "owner_id", INVALID_INDEX() );

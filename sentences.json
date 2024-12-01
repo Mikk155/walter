@@ -52,6 +52,11 @@
         "english": "Object ``{}`` initialized!",
         "spanish": "Objeto ``{}`` inicializado!"
     },
+    "bot.run.notoken":
+    {
+        "english": "File \"{}\" doesn't exist for retrieving the BOT Token!",
+        "spanish": "El archivo \"{}\" no existe para obtener el Token del BOT!"
+    },
     "bot.run.devmode":
     {
         "english": "BOT trying to run in -dev mode but has no argument for \"{}\"",

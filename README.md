@@ -19,7 +19,7 @@ from plugins.main import *
 
 Register your plugin in [plugins.json](plugins.json) following the instructions provided by the json [schema](schema.json)
 
-- Create a ``token.txt`` file in the main folder and put in it your Discord Application BOT Token
-    - Alternativelly you can create a ``dev.txt`` token for running the bot with the ``-dev`` argument
+- Create a ``tokens.txt`` file in the main folder and put in it your Discord Application BOT Token
+    - Alternativelly you can add a second line with the token for running the bot with the ``-dev`` argument
 
 ### Pull requests are welcome and encouraged.

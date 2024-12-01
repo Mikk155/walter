@@ -4,8 +4,7 @@ wip/*
 cache.json
 
 # Bot tokens
-token.txt
-dev.txt
+tokens.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

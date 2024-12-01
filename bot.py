@@ -57,20 +57,26 @@ async def on_ready():
         exit(0);
 
 def get_token() -> str:
-    
-    __token__: str;
+
+    __token__: list[str] = [ INVALID_INDEX(), INVALID_INDEX() ];
 
     if os.getenv( 'github' ):
 
-        __token__ = os.getenv( 'token' );
+        __token__[0] = os.getenv( 'token' );
 
     else:
 
-        __label__ = 'token{}'.format( ' dev' if '-dev' in sys.argv else '' )
+        tokens: str = g_Path.join( 'tokens.txt' );
 
-        __token__ = g_Config.configuration[ __label__ ];
+        if os.path.exists( tokens ):
 
-    return __token__;
+            __token__ = open( tokens, 'r' ).readlines();
+
+        else:
+
+            bot.m_Logger.critical( "bot.run.notoken", { "arguments": tokens } );
+
+    return __token__[ 1 if '-dev' in sys.argv else 0 ];
 
 try:
 
