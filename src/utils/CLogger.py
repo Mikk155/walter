@@ -49,7 +49,16 @@ class CLogger:
 
         self.__logger__ = logger;
 
-    def __print__( type: str, message ) -> str:
+    def __print__( self, type: str, message ) -> str:
+
+        if type:
+
+            message = f'[{type}] {message}';
+
+        if self.__logger__:
+
+            message = f'[{self.__logger__}] {message}';
+
         return message;
 
     def warn(self, message) -> str:
