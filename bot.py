@@ -51,7 +51,14 @@ async def on_ready():
 
     await bot.wait_until_ready();
 
-    bot.m_Logger.info( 'bot.on.ready', { "arguments": [ bot.user.name, bot.user.discriminator ], "print dev": True } );
+    bot.m_Logger.info(
+        'bot.on.ready',
+        [
+            bot.user.name,
+            bot.user.discriminator
+        ],
+        dev=True
+    );
 
     if os.getenv( 'github' ):
 
@@ -105,7 +112,8 @@ def get_token() -> str:
 
         else:
 
-            bot.m_Logger.critical( "file.not.exists", { "arguments": [ tokens ] } );
+            bot.m_Logger.critical( "file.not.exists", [ tokens ] );
+
             exit(0)
 
     token = __token__[ 1 if '-dev' in sys.argv else 0 ];

@@ -47,6 +47,11 @@
         "english": "File ``{}`` doesn't exists!",
         "spanish": "El archivo ``{}`` no existe!"
     },
+    "can.not.open":
+    {
+        "english": "Can not open ``{}`` {}",
+        "spanish": "No se pudo abrir ``{}`` {}"
+    },
     "object.initialized":
     {
         "english": "Object ``{}`` initialized!",
@@ -85,8 +90,8 @@
     },
     "plugin.manager.requirements":
     {
-        "english": "Plugin has requirements ```m\n{}```",
-        "spanish": "Complemento tiene requisitos ```m\n{}```"
+        "english": "Plugin has requirements ``{}``:```m\n{}```",
+        "spanish": "Complemento tiene requisitos ``{}``:```m\n{}```"
     },
     
 

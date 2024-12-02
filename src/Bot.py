@@ -41,7 +41,13 @@ class Bot( discord.Client ):
 
         self.tree = app_commands.CommandTree( self )
 
-        self.m_Logger.info( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+        self.m_Logger.info(
+            "object.initialized",
+            [
+                __name__
+            ],
+            dev=True
+        );
 
     async def setup_hook(self):
 
@@ -59,7 +65,7 @@ class Bot( discord.Client ):
             server_id: int = g_Config.configuration[ "server_id" ];
 
             if server_id == INVALID_INDEX():
-                _e_ = self.m_Logger.critical( "bot.run.devmode", { "arguments": [ "server_id" ] } );
+                _e_ = self.m_Logger.critical( "bot.run.devmode", [ "server_id" ] );
                 raise _e_;
 
             __MY_GUILD__ = discord.Object( id = server_id );

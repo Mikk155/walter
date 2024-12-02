@@ -60,7 +60,7 @@ class jsonc:
 
         except Exception as e:
 
-            debug = jsonc.m_Logger.error( 'Failed to open jsonc object: {}'.format( e ) );
+            jsonc.m_Logger.error( 'can.not.open', [ e ], dev=True );
 
         return {};
 
@@ -87,11 +87,7 @@ class jsonc:
         
             else:
 
-                __Logger__ = {
-                    "sentence": "sentence name",
-                    "print console": True,
-                }
-                __e__ = jsonc.m_Logger.critical( "file.not.exists" );
+                jsonc.m_Logger.critical( "file.not.exists", [ object ], dev=True );
                 return jsonc.__format__( ["{}"] );
 
         return jsonc.__format__(object);

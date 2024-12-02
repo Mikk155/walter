@@ -45,7 +45,7 @@ class g_PluginManager:
     };
 
     @staticmethod
-    def install_requirements( requirements: str ) -> None:
+    def install_requirements( requirements: str, plugin:str ) -> None:
 
         '''
         Install requirements
@@ -63,16 +63,17 @@ class g_PluginManager:
             for l in f:
                 r=f'{r}\n{l}';
 
-            __Logger__ = {
-                "arguments": [ r ],
-                "print dev": True,
-            };
-
-            g_PluginManager.m_Logger.info( "plugin.manager.requirements", __Logger__ );
+            g_PluginManager.m_Logger.debug(
+                "plugin.manager.requirements",
+                [
+                    plugin.replace( '.py', '.txt' ), r
+                ],
+                dev=True
+            );
 
         except CalledProcessError as e:
 
-            g_PluginManager.m_Logger.error( e );
+            g_PluginManager.m_Logger.critical( e );
 
     @staticmethod
     def initialize() -> None:
@@ -91,12 +92,13 @@ class g_PluginManager:
 
             if plugin.get( 'Disable', False ):
 
-                __Logger__ = {
-                    "arguments": [ plugin[ "script" ] ],
-                    "print dev": True
-                };
-
-                g_PluginManager.m_Logger.info( "plugin.manager.disabled", __Logger__ );
+                g_PluginManager.m_Logger.info(
+                    "plugin.manager.disabled",
+                    [
+                        plugin[ "script" ]
+                    ],
+                    dev=True
+                );
 
                 continue;
 
@@ -112,12 +114,14 @@ class g_PluginManager:
 
                     not_exist_fmt = g_Format.brackets( not_exist_sentence, [ pyfile ] );
 
-                    __Logger__ = {
-                        "arguments": [ plugin[ "script" ], not_exist_fmt ],
-                        "print dev": True,
-                    };
-
-                    g_PluginManager.m_Logger.warn( "plugin.manager.exception", __Logger__ );
+                    g_PluginManager.m_Logger.warn(
+                        "plugin.manager.exception",
+                        [
+                            plugin[ "script" ],
+                            not_exist_fmt
+                        ],
+                        dev=True
+                    );
 
                     continue;
 
@@ -125,7 +129,7 @@ class g_PluginManager:
 
                 if exists( requirements ):
 
-                    g_PluginManager.install_requirements( requirements );
+                    g_PluginManager.install_requirements( requirements, plugin[ "script" ] );
 
                 spec = lib.spec_from_file_location( modulo, pyfile );
 
@@ -147,13 +151,13 @@ class g_PluginManager:
 
                     plugin_data[ "name" ] = plugin[ "script" ];
 
-                __Logger__ = {
-                    "arguments": [ plugin_data[ "name" ] ],
-                    "print console": True,
-                    "print dev": True,
-                };
-
-                g_PluginManager.m_Logger.info( "plugin.manager.register", __Logger__ );
+                g_PluginManager.m_Logger.info(
+                    "plugin.manager.register",
+                    [
+                        plugin_data[ "name" ]
+                    ],
+                    dev=True
+                );
 
                 g_PluginManager.m_Logger.debug( f"```json\n{dumps( plugin_data, indent=1 )}```" );
 
@@ -169,12 +173,14 @@ class g_PluginManager:
 
                     else:
 
-                        __Logger__ = {
-                            "arguments": [ plugin[ "script" ], hook ],
-                            "print dev": True,
-                        };
-
-                        g_PluginManager.m_Logger.warn( "plugin.manager.hook.undefined", __Logger__ );
+                        g_PluginManager.m_Logger.warn(
+                            "plugin.manager.hook.undefined",
+                            [
+                                plugin[ "script" ],
+                                hook
+                            ],
+                            dev=True
+                        );
 
                 g_PluginManager.plugins[ plugin[ "script" ] ] = plugin_data;
 
@@ -182,11 +188,19 @@ class g_PluginManager:
 
             except Exception as e:
 
-                __Logger__ = {
-                    "arguments": [ plugin[ "script" ], e ],
-                    "print dev": True,
-                };
+                g_PluginManager.m_Logger.error(
+                    "plugin.manager.exception",
+                    [
+                        plugin[ "script" ],
+                        e
+                    ],
+                    dev=True
+                );
 
-                g_PluginManager.m_Logger.error( "plugin.manager.exception", __Logger__ );
-
-        g_PluginManager.m_Logger.info( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+        g_PluginManager.m_Logger.info(
+            "object.initialized",
+            [
+                __name__
+            ],
+            dev=True
+        );

@@ -45,7 +45,13 @@ class g_Sentences:
 
         g_Sentences.sentences = __plugins__;
 
-        g_Sentences.m_Logger.info( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+        g_Sentences.m_Logger.info(
+            "object.initialized",
+            [
+                __name__
+            ],
+            dev=True
+        );
 
     @staticmethod
     def push_back( file_dir: str ) -> None:
@@ -79,7 +85,7 @@ class g_Sentences:
 
             from src.constdef import INVALID_INDEX;
 
-            if server_id != INVALID_INDEX():
+            if server_id and server_id != INVALID_INDEX():
 
                 # -TODO Get from cache system for this specific server
                 __language__ = "english";
@@ -94,6 +100,6 @@ class g_Sentences:
 
         if __sentence__ is None:
 
-            return f"#{name}";
+            return f"{name}";
 
         return __sentence__;

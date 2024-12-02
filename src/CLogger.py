@@ -115,78 +115,60 @@ class CLogger:
 
         self.__logger__ = logger;
 
-    def __print__(self, message: str, Logger: snippet | dict = {}) -> str:
+    def __print__(self, message:str, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
 
         from src.CSentences import g_Sentences;
-        from src.constdef import INVALID_INDEX;
-        from src.CConfigSystem import g_Config
 
-        sentence = g_Sentences.get( message, message ); ## Fallback OG string
+        sentence = g_Sentences.get( message, server );
 
-        __type__ = Logger.get( "type", INVALID_INDEX() );
+        if type:
 
-        if __type__ != INVALID_INDEX():
-
-            is_type = g_Sentences.get(f"logger.{__type__}");
-
-            sentence = f'[**{is_type}**] {sentence}';
+            sentence = f'[**{type}**] {sentence}';
 
         if self.__logger__:
 
             sentence = f'[``{self.__logger__}``]{sentence}';
 
-        __emoji__ = Logger.get( "emoji", INVALID_INDEX() );
+        if emoji:
 
-        if __emoji__ != INVALID_INDEX():
+            sentence = f'{emoji}{sentence}';
 
-            sentence = f'{__emoji__}{sentence}';
+        if args:
 
-        if "arguments" in Logger:
-
-            for __arg__ in Logger[ "arguments" ]:
+            for __arg__ in args:
 
                 sentence = sentence.replace( "{}", str( __arg__ ), 1 );
 
-        if Logger.get( "print console", True ):
+        if cmd:
 
             print( sentence );
 
-        if Logger.get( "print dev", False ):
+        if dev:
 
             g_DelayedLog.delay( sentence, is_log_server=True );
 
-        if Logger.get( "print channel", INVALID_INDEX() ) != INVALID_INDEX():
+        if channel:
 
-            g_DelayedLog.delay( sentence, channel_id=Logger[ "print channel" ] );
+            g_DelayedLog.delay( sentence, channel_id=channel );
 
-        if Logger.get( "print server", INVALID_INDEX() ) != INVALID_INDEX():
+        if server:
 
-            g_DelayedLog.delay( sentence, is_server_id=Logger[ "print server" ] );
+            g_DelayedLog.delay( sentence, is_server_id=server );
 
         return sentence;
 
-    def warn(self, message, Logger: snippet | dict = {}) -> str:
-        Logger["type"] = "warning";
-        Logger["emoji"] = "⚠️";
-        return self.__print__( message, Logger );
+    def warn(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
+        return self.__print__( message, args, cmd, dev, channel, server, "warning", "⚠️" );
 
-    def error(self, message, Logger: snippet | dict = {}) -> str:
-        Logger["type"] = "error";
-        Logger["emoji"] = "‼️";
-        return self.__print__( message, Logger );
+    def error(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
+        return self.__print__( message, args, cmd, dev, channel, server, "error", "‼️" );
 
-    def debug(self, message, Logger: snippet | dict = {}) -> str:
-        Logger["type"] = "debug";
-        Logger["emoji"] = "📝";
-        return self.__print__( message, Logger );
+    def debug(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
+        return self.__print__( message, args, cmd, dev, channel, server, "debug", "📝" );
 
-    def info(self, message, Logger: snippet | dict = {}) -> str:
-        Logger["type"] = "info";
-        Logger["emoji"] = "❕";
-        return self.__print__( message, Logger );
+    def info(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
+        return self.__print__( message, args, cmd, dev, channel, server, "info", "❕" );
 
-    def critical(self, message, Logger: snippet | dict = {}) -> str:
-        Logger["type"] = "critical";
-        Logger["emoji"] = "⛔";
-        return self.__print__( message, Logger );
+    def critical(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
+        return self.__print__( message, args, cmd, dev, channel, server, "critical", "⛔" );
 
