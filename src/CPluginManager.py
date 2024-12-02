@@ -78,10 +78,10 @@ class Hooks:
 	Called when a Reaction is removed.
     '''
 
-    on_think = 'on_think';
-    '''
-	Called every 1 second
-    '''
+    # on_think = 'on_think';
+    # '''
+	# Called every 1 second
+    # '''
 
     on_mention = 'on_mention';
     '''
@@ -104,38 +104,31 @@ class Hooks:
     **NOTE**: this inherits from on_message and will call on_message after this method.
     '''
 
-    on_embeed = 'on_embeed';
-    '''
-	Called when Message contents a embeed.
+    # on_daily = 'on_daily';
+    # '''
+	# Called every day
+    # '''
 
-    **NOTE**: this inherits from on_message and will call on_message after this method.
-    '''
-
-    on_daily = 'on_daily';
-    '''
-	Called every day
-    '''
-
-    on_typing = 'on_typing';
-    on_error = 'on_error';
-    on_command_error = 'on_command_error';
-    on_private_message = 'on_private_message';
-    on_reaction_clear = 'on_reaction_clear';
-    on_raw_reaction_add = 'on_raw_reaction_add';
-    on_raw_reaction_remove = 'on_raw_reaction_remove';
-    on_voice_state_update = 'on_voice_state_update';
-    on_member_update = 'on_member_update';
-    on_presence_update = 'on_presence_update';
-    on_connect = 'on_connect';
-    on_disconnect = 'on_disconnect';
-    on_resumed = 'on_resumed';
-    on_guild_emojis_update = 'on_guild_emojis_update';
-    on_guild_stickers_update = 'on_guild_stickers_update';
-    on_audit_log_entry_create = 'on_audit_log_entry_create';
-    on_invite_create = 'on_invite_create';
-    on_user_update = 'on_user_update';
-    on_poll_vote_add = 'on_poll_vote_add';
-    on_poll_vote_remove = 'on_poll_vote_remove';
+    # on_typing = 'on_typing';
+    # on_error = 'on_error';
+    # on_command_error = 'on_command_error';
+    # on_private_message = 'on_private_message';
+    # on_reaction_clear = 'on_reaction_clear';
+    # on_raw_reaction_add = 'on_raw_reaction_add';
+    # on_raw_reaction_remove = 'on_raw_reaction_remove';
+    # on_voice_state_update = 'on_voice_state_update';
+    # on_member_update = 'on_member_update';
+    # on_presence_update = 'on_presence_update';
+    # on_connect = 'on_connect';
+    # on_disconnect = 'on_disconnect';
+    # on_resumed = 'on_resumed';
+    # on_guild_emojis_update = 'on_guild_emojis_update';
+    # on_guild_stickers_update = 'on_guild_stickers_update';
+    # on_audit_log_entry_create = 'on_audit_log_entry_create';
+    # on_invite_create = 'on_invite_create';
+    # on_user_update = 'on_user_update';
+    # on_poll_vote_add = 'on_poll_vote_add';
+    # on_poll_vote_remove = 'on_poll_vote_remove';
 
 class g_PluginManager:
     
@@ -186,6 +179,8 @@ class g_PluginManager:
         except CalledProcessError as e:
 
             g_PluginManager.m_Logger.critical( e );
+
+    module_cache: dict = {}
 
     @staticmethod
     def initialize() -> None:
@@ -248,6 +243,8 @@ class g_PluginManager:
                 obj = lib.module_from_spec( spec );
 
                 spec.loader.exec_module( obj );
+
+                g_PluginManager.module_cache[modulo] = obj
 
                 plugin_data = obj.on_initialization();
 
@@ -324,3 +321,67 @@ class g_PluginManager:
             ],
             dev=True
         );
+
+    @staticmethod
+    async def callhook( hook_name: str, g1 = None, g2 = None, g3 = None ) -> None:
+        '''
+        Hook all functions with the given name
+        '''
+
+        from src.constdef import HOOK_HANDLED;
+
+        for plugin in g_PluginManager.fnMethods[ hook_name ]:
+
+            try:
+
+                if not plugin in g_PluginManager.module_cache:
+                    continue;
+
+                module = g_PluginManager.module_cache[ plugin ];
+                hook = getattr( module, hook_name );
+
+                hook_code: int;
+
+                if g3 is not None:
+
+                    hook_code = await hook( g1, g2, g3 );
+
+                elif g2 is not None:
+
+                    hook_code = await hook( g1, g2 );
+
+                elif g1 is not None:
+
+                    hook_code = await hook( g1 );
+
+                else:
+
+                    hook_code = await hook();
+
+                # Don't call any more hooks
+                if hook_code == HOOK_HANDLED():
+
+                    break;
+
+            except Exception as e:
+
+                __attribute__ = ''
+
+                if str(e).find( 'has no attribute' ) != -1:
+
+                    g_PluginManager.module_cache.pop( plugin );
+
+                    from src.CSentences import g_Sentences
+
+                    __attribute__ = g_Sentences.get( 'plugin.manager.callhook.attribute' )
+
+                g_PluginManager.m_Logger.error(
+                    'plugin.manager.callhook.exception',
+                    [
+                        plugin,
+                        hook_name,
+                        e,
+                        __attribute__
+                    ],
+                    dev=True
+                );

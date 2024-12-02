@@ -93,6 +93,16 @@
         "english": "Plugin has requirements ``{}``:```m\n{}```",
         "spanish": "Complemento tiene requisitos ``{}``:```m\n{}```"
     },
+    "plugin.manager.callhook.exception":
+    {
+        "english": "Exception on plugin ``{}`` at function ``{}`` error: ```{}```{}",
+        "spanish": "Excepción en complemento ``{}`` en la función ``{}`` error: ```{}```{}"
+    },
+    "plugin.manager.callhook.attribute":
+    {
+        "english": "Removing ``{}`` to prevent recursion.",
+        "spanish": "Quitando ``{}`` para prevenir recursión."
+    },
     
 
 

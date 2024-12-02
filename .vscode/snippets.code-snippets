@@ -102,12 +102,6 @@
 		"body" : "async def on_link( message: discord.Message, urls: list[str] ) -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
 		"scope": "python"
 	},
-	"on_embeed":
-	{
-		"prefix": "on_embeed",
-		"body" : "async def on_embeed( message: discord.Message ) -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
-		"scope": "python"
-	},
 	"on_daily":
 	{
 		"prefix": "on_daily",
