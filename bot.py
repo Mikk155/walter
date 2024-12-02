@@ -47,7 +47,13 @@ initialize();
 
 async def on_start():
 
-    await g_PluginManager.callhook( Hooks.on_start );
+    try:
+
+        await g_PluginManager.callhook( Hooks.on_start );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
     if os.getenv( 'github' ):
 
@@ -85,7 +91,13 @@ async def on_ready():
 
         await on_start();
 
-    await g_PluginManager.callhook( Hooks.on_ready );
+    try:
+
+        await g_PluginManager.callhook( Hooks.on_ready );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
     if not on_think.is_running():
 
@@ -108,7 +120,13 @@ async def on_message( message: discord.Message ):
 
     if message.mentions and len( message.mentions ) > 0:
 
-        await g_PluginManager.callhook( "on_mention", message, message.mentions );
+        try:
+
+            await g_PluginManager.callhook( "on_mention", message, message.mentions, guild=message.guild );
+
+        except Exception as e:
+
+            bot.m_Logger.error( e );
 
     #=======================================================================================
     # END
@@ -126,7 +144,13 @@ async def on_message( message: discord.Message ):
 
             if replied_message:
 
-                await g_PluginManager.callhook( "on_reply", message, replied_message );
+                try:
+    
+                    await g_PluginManager.callhook( "on_reply", message, replied_message, guild=message.guild );
+
+                except Exception as e:
+
+                    bot.m_Logger.error( e );
 
         except discord.NotFound:
 
@@ -154,13 +178,25 @@ async def on_message( message: discord.Message ):
 
         if len( urls ) > 0:
 
-            await g_PluginManager.callhook( "on_link", message, urls );
+            try:
+
+                await g_PluginManager.callhook( "on_link", message, urls, guild=message.guild );
+
+            except Exception as e:
+
+                bot.m_Logger.error( e );
 
     #=======================================================================================
     # END
     #=======================================================================================
 
-    await g_PluginManager.callhook( 'on_message', message );
+    try:
+
+        await g_PluginManager.callhook( 'on_message', message, guild=message.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -173,7 +209,13 @@ async def on_message( message: discord.Message ):
 @bot.event
 async def on_member_join( member : discord.Member ):
 
-    await g_PluginManager.callhook( 'on_member_join', member );
+    try:
+
+        await g_PluginManager.callhook( 'on_member_join', member, guild=member.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -186,7 +228,13 @@ async def on_member_join( member : discord.Member ):
 @bot.event
 async def on_member_remove( member : discord.Member ):
 
-    await g_PluginManager.callhook( 'on_member_remove', member );
+    try:
+
+        await g_PluginManager.callhook( 'on_member_remove', member, guild=member.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -199,7 +247,13 @@ async def on_member_remove( member : discord.Member ):
 @bot.event
 async def on_message_delete( message: discord.Message ):
 
-    await g_PluginManager.callhook( 'on_message_delete', message );
+    try:
+
+        await g_PluginManager.callhook( 'on_message_delete', message, guild=message.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -212,7 +266,13 @@ async def on_message_delete( message: discord.Message ):
 @bot.event
 async def on_message_edit( before: discord.Message, after: discord.Message ):
 
-    await g_PluginManager.callhook( 'on_message_edit', before, after );
+    try:
+
+        await g_PluginManager.callhook( 'on_message_edit', before, after, guild=before.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -225,7 +285,13 @@ async def on_message_edit( before: discord.Message, after: discord.Message ):
 @bot.event
 async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
 
-    await g_PluginManager.callhook( 'on_reaction_add', reaction, user );
+    try:
+
+        await g_PluginManager.callhook( 'on_reaction_add', reaction, user, guild=reaction.message.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -238,7 +304,13 @@ async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
 @bot.event
 async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
 
-    await g_PluginManager.callhook( 'on_reaction_remove', reaction, user );
+    try:
+
+        await g_PluginManager.callhook( 'on_reaction_remove', reaction, user, guild=reaction.message.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -251,7 +323,13 @@ async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
 @bot.event
 async def on_typing( channel: discord.TextChannel | discord.GroupChannel | discord.DMChannel, user: discord.Member | discord.User, when: datetime.datetime ):
     
-    await g_PluginManager.callhook( 'on_typing', channel, user, when );
+    try:
+
+        await g_PluginManager.callhook( 'on_typing', channel, user, when, guild=channel.guild );
+
+    except Exception as e:
+
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
@@ -320,7 +398,7 @@ async def on_think():
 
     except Exception as e:
 
-        bot.m_Logger.debug( e );
+        bot.m_Logger.error( e );
 
 #=======================================================================================
 # END
