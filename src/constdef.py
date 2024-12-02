@@ -46,3 +46,10 @@ def INVALID_INDEX() -> int:
     '''
 
     return -1;
+
+def CHARACTER_LIMIT() -> int:
+    '''
+    Returns the Discord's character limits per discord.Message's content
+    '''
+
+    return 2000;
