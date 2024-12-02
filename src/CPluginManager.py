@@ -45,6 +45,36 @@ class g_PluginManager:
     };
 
     @staticmethod
+    def install_requirements( requirements: str ) -> None:
+
+        '''
+        Install requirements
+        '''
+
+        from sys import executable;
+        from subprocess import check_call, CalledProcessError;
+
+        try:
+
+            check_call( [ executable, "-m", "pip", "install", "-r", requirements ] );
+
+            r = '';
+            f = open( requirements, 'r' ).readlines();
+            for l in f:
+                r=f'{r}\n{l}';
+
+            __Logger__ = {
+                "arguments": [ r ],
+                "print dev": True,
+            };
+
+            g_PluginManager.m_Logger.info( "plugin.manager.requirements", __Logger__ );
+
+        except CalledProcessError as e:
+
+            g_PluginManager.m_Logger.error( e );
+
+    @staticmethod
     def initialize() -> None:
 
         from json import dumps;
@@ -66,7 +96,7 @@ class g_PluginManager:
                     "print dev": True
                 };
 
-                g_PluginManager.m_Logger.information( "plugin.manager.disabled", __Logger__ );
+                g_PluginManager.m_Logger.info( "plugin.manager.disabled", __Logger__ );
 
                 continue;
 
@@ -91,13 +121,19 @@ class g_PluginManager:
 
                     continue;
 
+                requirements = pyfile.replace( '.py', '.txt' );
+
+                if exists( requirements ):
+
+                    g_PluginManager.install_requirements( requirements );
+
                 spec = lib.spec_from_file_location( modulo, pyfile );
 
                 obj = lib.module_from_spec( spec );
 
                 spec.loader.exec_module( obj );
 
-                plugin_data = obj.on_initialization()
+                plugin_data = obj.on_initialization();
 
                 if not "author" in plugin_data:
 
@@ -112,11 +148,14 @@ class g_PluginManager:
                     plugin_data[ "name" ] = plugin[ "script" ];
 
                 __Logger__ = {
-                    "arguments": [ plugin_data[ "name" ], dumps( plugin_data, indent=1 ) ],
+                    "arguments": [ plugin_data[ "name" ] ],
                     "print console": True,
                     "print dev": True,
                 };
-                g_PluginManager.m_Logger.information( "plugin.manager.register", __Logger__ );
+
+                g_PluginManager.m_Logger.info( "plugin.manager.register", __Logger__ );
+
+                g_PluginManager.m_Logger.debug( f"```json\n{dumps( plugin_data, indent=1 )}```" );
 
                 for hook in plugin_data.get( "hooks", [] ):
 
@@ -150,4 +189,4 @@ class g_PluginManager:
 
                 g_PluginManager.m_Logger.error( "plugin.manager.exception", __Logger__ );
 
-        g_PluginManager.m_Logger.information( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+        g_PluginManager.m_Logger.info( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );

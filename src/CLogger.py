@@ -180,8 +180,8 @@ class CLogger:
         Logger["emoji"] = "📝";
         return self.__print__( message, Logger );
 
-    def information(self, message, Logger: snippet | dict = {}) -> str:
-        Logger["type"] = "information";
+    def info(self, message, Logger: snippet | dict = {}) -> str:
+        Logger["type"] = "info";
         Logger["emoji"] = "❕";
         return self.__print__( message, Logger );
 

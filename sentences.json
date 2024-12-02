@@ -32,7 +32,7 @@
         "english": "Debug",
         "spanish": "Depurado"
     },
-    "logger.information":
+    "logger.info":
     {
         "english": "Information",
         "spanish": "Información"
@@ -75,13 +75,18 @@
     },
     "plugin.manager.register":
     {
-        "english": "Registered plugin ``{}``:\n{}",
-        "spanish": "Registrado complemento ``{}``:\n{}"
+        "english": "Registered plugin ``{}``",
+        "spanish": "Registrado complemento ``{}``"
     },
     "plugin.manager.hook.undefined":
     {
         "english": "Undefined hook ``{}`` on plugin ``{}``",
         "spanish": "Hook sin definir ``{}`` en el complemento ``{}``"
+    },
+    "plugin.manager.requirements":
+    {
+        "english": "Plugin has requirements ```m\n{}```",
+        "spanish": "Complemento tiene requisitos ```m\n{}```"
     },
     
 

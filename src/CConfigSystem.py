@@ -53,4 +53,4 @@ class g_Config:
 
         g_Config.plugins = __plugins__.get( "plugins", [] );
 
-        g_Config.m_Logger.information( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+        g_Config.m_Logger.info( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );

@@ -51,7 +51,7 @@ async def on_ready():
 
     await bot.wait_until_ready();
 
-    bot.m_Logger.information( 'bot.on.ready', { "arguments": [ bot.user.name, bot.user.discriminator ], "print dev": True } );
+    bot.m_Logger.info( 'bot.on.ready', { "arguments": [ bot.user.name, bot.user.discriminator ], "print dev": True } );
 
     if os.getenv( 'github' ):
 

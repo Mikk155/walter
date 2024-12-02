@@ -41,6 +41,8 @@ class Bot( discord.Client ):
 
         self.tree = app_commands.CommandTree( self )
 
+        self.m_Logger.info( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+
     async def setup_hook(self):
 
         from os import getenv;

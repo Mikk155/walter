@@ -45,7 +45,7 @@ class g_Sentences:
 
         g_Sentences.sentences = __plugins__;
 
-        g_Sentences.m_Logger.information( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
+        g_Sentences.m_Logger.info( "object.initialized", { "arguments": [ __name__ ], "print dev": True, } );
 
     @staticmethod
     def push_back( file_dir: str ) -> None:
