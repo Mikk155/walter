@@ -60,6 +60,12 @@ async def on_ready():
         dev=True
     );
 
+    if not bot.__on_start_called__:
+
+        # -TODO Call on_start
+
+        bot.__on_start_called__ = True;
+
     if os.getenv( 'github' ):
 
         print( "Run from {}".format( os.getenv( 'github' ) ) );

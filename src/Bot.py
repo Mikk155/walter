@@ -31,6 +31,8 @@ class Bot( discord.Client ):
     Discord BOT instance
     '''
 
+    __on_start_called__: bool = False
+
     from src.CLogger import CLogger
     m_Logger = CLogger( "BOT" );
 
