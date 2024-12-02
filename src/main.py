@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 #=======================================================================================
 
 import os
+import re
 import sys
 import json
 import asyncio
@@ -74,7 +75,7 @@ from src.CCacheManager import g_Cache
 from src.Bot import Bot
 
 global bot
-bot: discord.Client | Bot;
+bot: discord.Client | Bot = Bot();
 
 #=======================================================================================
 # END

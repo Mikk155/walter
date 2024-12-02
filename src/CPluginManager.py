@@ -276,7 +276,7 @@ class g_PluginManager:
                     dev=True
                 );
 
-                g_PluginManager.m_Logger.debug( f"```json\n{dumps( plugin_data, indent=1 )}```", dev=True );
+                g_PluginManager.m_Logger.trace( f"```json\n{dumps( plugin_data, indent=1 )}```", dev=True );
 
                 for hook in plugin_data.get( "hooks", [] ):
 
@@ -322,7 +322,7 @@ class g_PluginManager:
             dev=True
         );
 
-        g_PluginManager.m_Logger.debug(
+        g_PluginManager.m_Logger.info(
             "Hooks:```json\n{}```",
             [
                 dumps(g_PluginManager.fnMethods, indent=2)
