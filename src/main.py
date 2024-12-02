@@ -39,6 +39,8 @@ import json
 #=======================================================================================
 
 import discord
+from discord import app_commands
+from discord.ext import commands, tasks
 
 #=======================================================================================
 # END
@@ -60,10 +62,10 @@ class snippet:
 from src.constdef import *
 
 from src.utils.Path import g_Path
-from src.utils.CLogger import CLogger
 from src.utils.CJsonCommentary import jsonc
-from src.utils.CSentences import g_Sentences
 from src.utils.CConfigSystem import g_Config
+from src.utils.CLogger import CLogger, g_DelayedLog
+from src.utils.CSentences import g_Sentences
 from src.Bot import Bot
 
 global bot

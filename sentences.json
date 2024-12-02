@@ -57,6 +57,11 @@
         "english": "BOT trying to run in -dev mode but has no argument for \"{}\"",
         "spanish": "El BOT intento correr en modo -dev pero no tiene argumento en \"{}\""
     },
+    "bot.on.ready":
+    {
+        "english": "BOT connected as \"{}#{}\"",
+        "spanish": "BOT conectado como \"{}#{}\""
+    },
 
     // End of file, helps while this is being created yet :p
     "EOF": true

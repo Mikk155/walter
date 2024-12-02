@@ -46,7 +46,7 @@ async def on_ready():
 
     await bot.wait_until_ready();
 
-    print( "Connected and ready as {}".format( bot.user.name ) );
+    bot.m_Logger.information( 'bot.on.ready', { "arguments": [ bot.user.name, bot.user.discriminator ], "print dev": True } );
 
     if os.getenv( 'github' ):
 
@@ -55,6 +55,18 @@ async def on_ready():
         await bot.close();
 
         exit(0);
+
+    on_think.start()
+
+@tasks.loop( seconds = 1 )
+async def on_think():
+
+    await bot.wait_until_ready();
+
+    if g_DelayedLog.should_print():
+        await g_DelayedLog.print_server(bot);
+
+
 
 def get_token() -> str:
 
