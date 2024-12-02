@@ -137,12 +137,6 @@ class Hooks:
     on_poll_vote_add = 'on_poll_vote_add';
     on_poll_vote_remove = 'on_poll_vote_remove';
 
-fnMethods: dict[str, list[str]] = {
-    value: [] for name, value in vars(Hooks).items() if not name.startswith("__") and isinstance(value, str)
-};
-import json
-print( json.dumps(fnMethods, indent=2))
-exit(0)
 class g_PluginManager:
     
     '''
@@ -277,7 +271,7 @@ class g_PluginManager:
                     dev=True
                 );
 
-                g_PluginManager.m_Logger.debug( f"```json\n{dumps( plugin_data, indent=1 )}```" );
+                g_PluginManager.m_Logger.debug( f"```json\n{dumps( plugin_data, indent=1 )}```", dev=True );
 
                 for hook in plugin_data.get( "hooks", [] ):
 
@@ -319,6 +313,14 @@ class g_PluginManager:
             "object.initialized",
             [
                 __name__
+            ],
+            dev=True
+        );
+
+        g_PluginManager.m_Logger.debug(
+            "Hooks:```json\n{}```",
+            [
+                dumps(g_PluginManager.fnMethods, indent=2)
             ],
             dev=True
         );

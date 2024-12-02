@@ -10,7 +10,7 @@
 			"def on_initialization() -> dict:",
 			"\t'''",
 			"\tCalled when the script is executed, this is the first hook ever called.\n",
-			"\tThe bot is not even initialized yet.",
+			"\tThe bot is not even initialized yet.\n",
 			"\tThis hook is required on all plugins and must return data.",
 			"\t'''\n",
 			"\t__data__: dict = {};",

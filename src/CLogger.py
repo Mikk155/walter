@@ -123,15 +123,17 @@ class CLogger:
 
         if type:
 
-            sentence = f'[**{type}**] {sentence}';
+            type_sentence = g_Sentences.get( f'logger.{type}', server );
+
+            sentence = f'[**{type_sentence}**] {sentence}';
 
         if self.__logger__:
 
             sentence = f'[``{self.__logger__}``]{sentence}';
 
-        if emoji:
+        else:
 
-            sentence = f'{emoji}{sentence}';
+            sentence = f'[``{__name__}``]{sentence}';
 
         if args:
 
@@ -139,21 +141,29 @@ class CLogger:
 
                 sentence = sentence.replace( "{}", str( __arg__ ), 1 );
 
-        if cmd:
+        from src.CConfigSystem import g_Config;
 
-            print( sentence );
+        if type in g_Config.configuration.get( "loggers", [] ):
 
-        if dev:
+            if cmd:
 
-            g_DelayedLog.delay( sentence, is_log_server=True );
+                print( sentence );
 
-        if channel:
+            if emoji:
 
-            g_DelayedLog.delay( sentence, channel_id=channel );
+                sentence = f'{emoji}{sentence}';
 
-        if server:
+            if dev:
 
-            g_DelayedLog.delay( sentence, is_server_id=server );
+                g_DelayedLog.delay( sentence, is_log_server=True );
+
+            if channel:
+
+                g_DelayedLog.delay( sentence, channel_id=channel );
+
+            if server:
+
+                g_DelayedLog.delay( sentence, is_server_id=server );
 
         return sentence;
 
@@ -172,3 +182,5 @@ class CLogger:
     def critical(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
         return self.__print__( message, args, cmd, dev, channel, server, "critical", "⛔" );
 
+g_Logger = CLogger(None);
+'''Global logger, the caller script will be passed on as a name'''

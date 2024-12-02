@@ -3,11 +3,24 @@
     "log_id": 1211204941490688030,
     "owner_id": 744768007892500481,
     "github_id": 1065791552485605446,
+    "loggers":
+    [
+        "debug",
+        "warning",
+        "info"
+    ],
     "plugins":
     [
         {
-            "script": "Activity.py",
-            "Disable": false
+            "script": "thecult_shared_role.py",
+            "Disable": false,
+            "servers":
+            [
+                // Limitless Potential
+                744769532513615922,
+                // The Cult
+                1216162825307820042
+            ]
         }
     ],
     "$schema": "schema.json"

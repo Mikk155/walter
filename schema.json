@@ -27,6 +27,23 @@
             "type": "integer",
             "description": "Github webhook channel ID, This is only required if you'd do use of github's workflows"
         },
+        "loggers":
+        {
+            "type": "array",
+            "items":
+            {
+                "type": "string",
+                "enum":
+                [
+                    "warning",
+                    "debug",
+                    "info"
+                ],
+                "uniqueItems": true
+            },
+            "additionalProperties": false,
+            "description": "Logging system, Loggers to display, note \"critical\" and \"error\" will be always shown"
+        },
         "plugins":
         {
             "type": "array",
@@ -44,6 +61,17 @@
                     {
                         "type": "string",
                         "description": "Script directory starting from (workspace)/plugins/"
+                    },
+                    "servers":
+                    {
+                        "type": "array",
+                        "items":
+                        {
+                            "type": "integer"
+                        },
+                        "uniqueItems": true,
+                        "additionalProperties": true,
+                        "description": "ID of servers that this plugin will work only, leave empty for not limiting to any"
                     }
                 },
                 "required":
