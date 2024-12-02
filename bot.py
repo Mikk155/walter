@@ -32,6 +32,7 @@ def initialize() -> None:
 
     g_Sentences.initialize();
     g_Config.initialize();
+    g_PluginManager.initialize();
 
 initialize();
 

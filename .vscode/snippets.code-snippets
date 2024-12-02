@@ -3,11 +3,20 @@
 	{
 		"prefix": [ "event on_initialization", "on_initialization" ],
 		"body" : [
-			"def on_initialization():",
+			"def on_initialization() -> dict:",
 			"\t'''",
-			"\tCalled when the script is executed, this is the first hook ever called, the bot is not even online yet.",
+			"\tCalled when the script is executed, this is the first hook ever called.\n",
+			"\tThe bot is not even initialized yet.",
+			"\tThis hook is required on all plugins and must return data.",
 			"\t'''\n",
-			"\t${1:}\n\n\treturn HOOK_CONTINUE();\n"
+			"\t__data__: dict = {};",
+			"\t__data__[\"author\"] = \"${1:Author name}\";",
+			"\t__data__[\"contact\"] = \"${2:Author contact url}\";",
+			"\t__data__[\"name\"] = \"${3:Plugin's Name}\";",
+			"\t__data__[\"description\"] = \"${4:Plugin's Description}\";",
+			"\t__hooks__: list[Hooks] = [ ${5:Hooks.variables} ];",
+			"\t__data__[\"hooks\"] = __hooks__;",
+			"\n\treturn __data__;\n"
 		],
 		"scope": "python"
 	},

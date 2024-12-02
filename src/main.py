@@ -62,11 +62,12 @@ class snippet:
 from src.constdef import *
 
 from src.utils.Path import g_Path
+from src.utils.format import g_Format
 from src.utils.CJsonCommentary import jsonc
 from src.CConfigSystem import g_Config
 from src.CLogger import CLogger, g_DelayedLog
 from src.CSentences import g_Sentences
-from src.CPluginManager import g_PluginManager
+from src.CPluginManager import g_PluginManager, Hooks
 from src.Bot import Bot
 
 global bot

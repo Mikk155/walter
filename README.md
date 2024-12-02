@@ -14,7 +14,7 @@ Create your python script in within ``./plugins/`` folder
 
 Import ``main``:
 ```python
-from plugins.main import *
+from src.main import *
 ```
 
 Register your plugin in [plugins.json](plugins.json) following the instructions provided by the json [schema](schema.json)

@@ -127,9 +127,9 @@ class CLogger:
 
         if __type__ != INVALID_INDEX():
 
-            __type__ = g_Sentences.get(f"logger.{__type__}");
+            is_type = g_Sentences.get(f"logger.{__type__}");
 
-        sentence = f'[**{__type__}**] {sentence}';
+            sentence = f'[**{is_type}**] {sentence}';
 
         if self.__logger__:
 

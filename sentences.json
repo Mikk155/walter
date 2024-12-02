@@ -44,8 +44,8 @@
     },
     "file.not.exists":
     {
-        "english": "File {} doesn't exists!",
-        "spanish": "El archivo {} no existe!"
+        "english": "File ``{}`` doesn't exists!",
+        "spanish": "El archivo ``{}`` no existe!"
     },
     "object.initialized":
     {
@@ -62,6 +62,29 @@
         "english": "BOT connected as \"{}#{}\"",
         "spanish": "BOT conectado como \"{}#{}\""
     },
+
+    "plugin.manager.disabled":
+    {
+        "english": "Skipping disabled plugin ``{}``",
+        "spanish": "Saltando complemento desactivado ``{}``"
+    },
+    "plugin.manager.exception":
+    {
+        "english": "Failed to import plugin ``{}`` Exception: {}",
+        "spanish": "Fallo en importar complemento ``{}`` Excepción: {}"
+    },
+    "plugin.manager.register":
+    {
+        "english": "Registered plugin ``{}``:\n{}",
+        "spanish": "Registrado complemento ``{}``:\n{}"
+    },
+    "plugin.manager.hook.undefined":
+    {
+        "english": "Undefined hook ``{}`` on plugin ``{}``",
+        "spanish": "Hook sin definir ``{}`` en el complemento ``{}``"
+    },
+    
+
 
     // End of file, helps while this is being created yet :p
     "EOF": true
