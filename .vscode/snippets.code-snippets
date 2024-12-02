@@ -108,4 +108,10 @@
 		"body" : "async def on_daily() -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
 		"scope": "python"
 	},
+	"on_typing":
+	{
+		"prefix": "on_typing",
+		"body" : "async def on_typing( channel: discord.TextChannel | discord.GroupChannel | discord.DMChannel, user: discord.Member | discord.User, when: datetime.datetime ) -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
+		"scope": "python"
+	},
 }

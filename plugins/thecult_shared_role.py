@@ -36,23 +36,14 @@ def on_initialization() -> dict:
     __data__: dict = {};
     __data__["name"] = "The Cult Member Role";
     __data__["description"] = "Add The Cult Member role to users that exists in The Cult discord Server";
-    __hooks__: list[Hooks] = [ Hooks.on_ready, Hooks.on_member_join, Hooks.on_member_remove ];
+    __hooks__: list[Hooks] = [
+        Hooks.on_ready,
+        Hooks.on_member_join,
+        Hooks.on_member_remove
+    ];
     __data__["hooks"] = __hooks__;
 
     return __data__;
-
-class TheCultSharedRole:
-
-    LP = 744769532513615922;
-    TC = 1216162825307820042;
-
-    @staticmethod
-    def iterate( member_id: int, server_id: int ) -> bool:
-        return bot.get_guild( server_id ).get_member( member_id );
-
-    @staticmethod
-    def check( member_id: int, server_id: int, server_id2: int ) -> bool:
-        return ( bot.get_guild( server_id ).get_member( member_id ) and bot.get_guild( server_id2 ).get_member( member_id ));
 
 global THE_CULT;
 THE_CULT = 1216162825307820042;
@@ -101,12 +92,36 @@ async def on_ready() -> int:
 
 async def on_member_join( member : discord.Member ) -> int:
 
-    await manage_role( member.id, TheCultSharedRole.check( member.id, TheCultSharedRole.LP, TheCultSharedRole.TC ) );
+    guild = member.guild;
+
+    if member.guild:
+
+        if member.guild.id == LIMITLESS_POTENTIAL:
+
+            guild_tc = bot.get_guild( THE_CULT );
+
+            if guild_tc:
+
+                if guild_tc.get_member( member.id ):
+        
+                    manage_role( member, True );
 
     return HOOK_CONTINUE();
 
 async def on_member_remove( member : discord.Member ) -> int:
 
-    await manage_role( member.id, TheCultSharedRole.check( member.id, TheCultSharedRole.LP, TheCultSharedRole.TC ) );
+    guild = member.guild;
+
+    if member.guild:
+
+        if member.guild.id == THE_CULT:
+
+            guild_lp = bot.get_guild( LIMITLESS_POTENTIAL );
+
+            if guild_lp:
+
+                if guild_lp.get_member( member.id ):
+
+                    manage_role( member, False );
 
     return HOOK_CONTINUE();

@@ -78,10 +78,10 @@ class Hooks:
 	Called when a Reaction is removed.
     '''
 
-    # on_think = 'on_think';
-    # '''
-	# Called every 1 second
-    # '''
+    on_think = 'on_think';
+    '''
+	Called every 1 second
+    '''
 
     on_mention = 'on_mention';
     '''
@@ -109,7 +109,15 @@ class Hooks:
 	# Called every day
     # '''
 
-    # on_typing = 'on_typing';
+    on_typing = 'on_typing';
+    '''
+    Called when someone begins typing a message.
+
+    The channel parameter could either be TextChannel, GroupChannel, or DMChannel.
+
+    If the channel is a TextChannel then the user parameter is a Member, otherwise it is a User.
+    '''
+
     # on_error = 'on_error';
     # on_command_error = 'on_command_error';
     # on_private_message = 'on_private_message';

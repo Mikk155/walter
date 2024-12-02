@@ -43,6 +43,28 @@ bot = Bot();
 #=======================================================================================
 
 #=======================================================================================
+# on_start
+#=======================================================================================
+
+async def on_start():
+
+    await g_PluginManager.callhook( Hooks.on_start );
+
+    if os.getenv( 'github' ):
+
+        print( "Run from {}".format( os.getenv( 'github' ) ) );
+
+        await bot.close();
+
+        exit(0);
+
+    bot.__on_start_called__ = True;
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
 # on_ready
 #=======================================================================================
 
@@ -58,39 +80,248 @@ async def on_ready():
             bot.user.discriminator
         ],
         dev=True
-    );
+ );
 
     if not bot.__on_start_called__:
 
-        # -TODO Call on_start
+        await on_start();
 
-        bot.__on_start_called__ = True;
+    await g_PluginManager.callhook( Hooks.on_ready );
 
-    if os.getenv( 'github' ):
+    if not on_think.is_running():
 
-        print( "Run from {}".format( os.getenv( 'github' ) ) );
-
-        await bot.close();
-
-        exit(0);
-
-    on_think.start()
+        on_think.start()
 
 #=======================================================================================
 # END
 #=======================================================================================
 
 #=======================================================================================
-# on_ready
+# on_message
 #=======================================================================================
 
-@tasks.loop( seconds = 1 )
+@bot.event
+async def on_message( message: discord.Message ):
+
+    #=======================================================================================
+    # on_mention
+    #=======================================================================================
+
+    if message.mentions and len( message.mentions ) > 0:
+
+        await g_PluginManager.callhook( "on_mention", message, message.mentions );
+
+    #=======================================================================================
+    # END
+    #=======================================================================================
+
+    #=======================================================================================
+    # on_reply
+    #=======================================================================================
+
+    if message.reference and message.reference.message_id:
+
+        try:
+
+            replied_message = await message.channel.fetch_message( message.reference.message_id );
+
+            if replied_message:
+
+                await g_PluginManager.callhook( "on_reply", message, replied_message );
+
+        except discord.NotFound:
+
+            pass;
+
+    #=======================================================================================
+    # END
+    #=======================================================================================
+
+    #=======================================================================================
+    # on_link
+    #=======================================================================================
+
+    if 'https://' in message.content or 'www.' in message.content:
+
+        contents = message.content.split();
+
+        urls=[]
+
+        for c in contents:
+
+            if c.startswith( 'https://' ) or c.startswith( 'www.' ):
+
+                urls.append( c );
+
+        if len( urls ) > 0:
+
+            await g_PluginManager.callhook( "on_link", message, urls );
+
+    #=======================================================================================
+    # END
+    #=======================================================================================
+
+    await g_PluginManager.callhook( 'on_message', message );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_member_join
+#=======================================================================================
+
+@bot.event
+async def on_member_join( member : discord.Member ):
+
+    await g_PluginManager.callhook( 'on_member_join', member );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_member_remove
+#=======================================================================================
+
+@bot.event
+async def on_member_remove( member : discord.Member ):
+
+    await g_PluginManager.callhook( 'on_member_remove', member );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_message_delete
+#=======================================================================================
+
+@bot.event
+async def on_message_delete( message: discord.Message ):
+
+    await g_PluginManager.callhook( 'on_message_delete', message );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_message_edit
+#=======================================================================================
+
+@bot.event
+async def on_message_edit( before: discord.Message, after: discord.Message ):
+
+    await g_PluginManager.callhook( 'on_message_edit', before, after );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_reaction_add
+#=======================================================================================
+
+@bot.event
+async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
+
+    await g_PluginManager.callhook( 'on_reaction_add', reaction, user );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_reaction_remove
+#=======================================================================================
+
+@bot.event
+async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
+
+    await g_PluginManager.callhook( 'on_reaction_remove', reaction, user );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_typing
+#=======================================================================================
+
+@bot.event
+async def on_typing( channel: discord.TextChannel | discord.GroupChannel | discord.DMChannel, user: discord.Member | discord.User, when: datetime.datetime ):
+    
+    await g_PluginManager.callhook( 'on_typing', channel, user, when );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# on_think
+#=======================================================================================
+
+@tasks.loop( seconds = 10.0, name=Hooks.on_think )
 async def on_think():
 
-    await bot.wait_until_ready();
+    await bot.wait_until_ready()
 
-    if g_DelayedLog.should_print():
-        await g_DelayedLog.print_server(bot);
+    async_think = []
+
+    for plugin in g_PluginManager.fnMethods[ Hooks.on_think ]:
+
+        try:
+
+            if not plugin in g_PluginManager.module_cache:
+                continue;
+
+            module = g_PluginManager.module_cache[ plugin ];
+
+            hook = getattr( module, Hooks.on_think );
+
+            if not hook in async_think:
+
+                async_think.append( hook() );
+
+        except Exception as e:
+
+            __attribute__ = ''
+
+            if str(e).find( 'has no attribute' ) != -1:
+
+                g_PluginManager.module_cache.pop( plugin );
+
+                from src.CSentences import g_Sentences
+
+                __attribute__ = g_Sentences.get( 'plugin.manager.callhook.attribute' )
+
+            g_PluginManager.m_Logger.error(
+                'plugin.manager.callhook.exception',
+                [
+                    plugin,
+                    Hooks.on_think,
+                    e,
+                    __attribute__
+                ],
+                dev=True
+            );
+
+    try:
+
+        if g_DelayedLog.should_print():
+
+            async_think.append( g_DelayedLog.print_server(bot) );
+
+        await bot.wait_until_ready();
+
+        if async_think:
+
+            await asyncio.gather( *async_think );
+
+    except Exception as e:
+
+        bot.m_Logger.debug( e );
 
 #=======================================================================================
 # END
