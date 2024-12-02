@@ -22,6 +22,15 @@
                 // The Cult
                 1216162825307820042
             ]
+        },
+        {
+            "script": "woman_moment.py",
+            "Disable": false,
+            "servers":
+            [
+                // Limitless Potential
+                744769532513615922
+            ]
         }
     ],
     "$schema": "schema.json"
