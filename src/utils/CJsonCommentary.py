@@ -28,7 +28,7 @@ class jsonc:
     Json Commentary
     '''
 
-    from src.utils.CLogger import CLogger;
+    from src.CLogger import CLogger;
     m_Logger = CLogger( "Json" );
 
     @staticmethod

@@ -28,7 +28,7 @@ class g_Sentences:
     Sentences
     '''
 
-    from src.utils.CLogger import CLogger
+    from src.CLogger import CLogger
     m_Logger = CLogger( "Sentences" );
 
     sentences: dict[dict] = {};

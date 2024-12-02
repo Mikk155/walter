@@ -28,7 +28,7 @@ class g_Config:
     Configuration System
     '''
 
-    from src.utils.CLogger import CLogger
+    from src.CLogger import CLogger
     m_Logger = CLogger( "Configuration System" );
 
     configuration: dict = {};

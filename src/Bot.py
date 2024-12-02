@@ -31,7 +31,7 @@ class Bot( discord.Client ):
     Discord BOT instance
     '''
 
-    from src.utils.CLogger import CLogger
+    from src.CLogger import CLogger
     m_Logger = CLogger( "BOT" );
 
     def __init__( self ):
@@ -45,7 +45,7 @@ class Bot( discord.Client ):
 
         from os import getenv;
         from sys import argv as args;
-        from src.utils.CConfigSystem import g_Config;
+        from src.CConfigSystem import g_Config;
         from src.constdef import INVALID_INDEX;
 
         # Don't create commands on github's workflow test run

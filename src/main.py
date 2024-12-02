@@ -63,9 +63,10 @@ from src.constdef import *
 
 from src.utils.Path import g_Path
 from src.utils.CJsonCommentary import jsonc
-from src.utils.CConfigSystem import g_Config
-from src.utils.CLogger import CLogger, g_DelayedLog
-from src.utils.CSentences import g_Sentences
+from src.CConfigSystem import g_Config
+from src.CLogger import CLogger, g_DelayedLog
+from src.CSentences import g_Sentences
+from src.CPluginManager import g_PluginManager
 from src.Bot import Bot
 
 global bot

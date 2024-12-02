@@ -41,7 +41,7 @@ class g_DelayedLog:
         '''
 
         from src.constdef import INVALID_INDEX;
-        from src.utils.CConfigSystem import g_Config;
+        from src.CConfigSystem import g_Config;
 
         while len( g_DelayedLog.delayed_logs ) > 0:
 
@@ -117,9 +117,9 @@ class CLogger:
 
     def __print__(self, message: str, Logger: snippet | dict = {}) -> str:
 
-        from src.utils.CSentences import g_Sentences;
+        from src.CSentences import g_Sentences;
         from src.constdef import INVALID_INDEX;
-        from src.utils.CConfigSystem import g_Config
+        from src.CConfigSystem import g_Config
 
         sentence = g_Sentences.get( message, message ); ## Fallback OG string
 
