@@ -268,6 +268,10 @@ class g_PluginManager:
 
                     plugin_data[ "name" ] = plugin[ "script" ];
 
+                if "servers" in plugin and len(plugin["servers"]) > 0:
+
+                    plugin_data[ "servers" ] = plugin[ "servers" ];
+
                 g_PluginManager.m_Logger.info(
                     "plugin.manager.register",
                     [
@@ -331,7 +335,7 @@ class g_PluginManager:
         );
 
     @staticmethod
-    async def callhook( hook_name: str, g1 = None, g2 = None, g3 = None ) -> None:
+    async def callhook( hook_name: str, g1 = None, g2 = None, g3 = None, guild=None ) -> None:
         '''
         Hook all functions with the given name
         '''
@@ -345,7 +349,16 @@ class g_PluginManager:
                 if not plugin in g_PluginManager.module_cache:
                     continue;
 
+                __allowed_servers__ = g_PluginManager.plugins[ f'{plugin}.py' ].get( "servers", [] );
+
+                if len( __allowed_servers__ ) > 0:
+                    
+                    if not guild or guild and not guild.id in __allowed_servers__:
+
+                        continue;
+
                 module = g_PluginManager.module_cache[ plugin ];
+
                 hook = getattr( module, hook_name );
 
                 hook_code: int;

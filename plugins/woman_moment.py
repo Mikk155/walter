@@ -36,10 +36,14 @@ def on_initialization() -> dict:
     __data__: dict = {};
     __data__["name"] = "Woman Momento";
     __data__["description"] = "Increase @Bunnt woman moment number";
-    __hooks__: list[Hooks] = [ Hooks.on_message ];
+    __hooks__: list[Hooks] = [ Hooks.on_message, Hooks.on_think ];
     __data__["hooks"] = __hooks__;
 
     return __data__;
+
+async def on_think() -> int:
+
+    return HOOK_CONTINUE();
 
 async def on_message( message: discord.Message ) -> int:
 

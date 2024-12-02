@@ -55,19 +55,19 @@ async def manage_role( member : discord.Member, add: bool = False ):
 
     rol = discord.utils.get( bot.get_guild( LIMITLESS_POTENTIAL ).roles, name="The Cult Member" );
 
-    if add:
+    if rol:
 
-        if not rol in member.roles:
+        if add:
 
-            await member.add_roles( rol );
+            if not rol in member.roles:
 
-            await bot.get_channel( 842174687445778483 ).send( f'{member.mention} is now a cult member <:elegant:1216204366349078631>\n' );
+                await member.add_roles( rol );
 
-    elif rol in member.roles:
+                await bot.get_channel( 842174687445778483 ).send( f'{member.mention} is now a cult member <:elegant:1216204366349078631>\n' );
 
-        await member.remove_roles( rol );
+        elif rol in member.roles:
 
-        await bot.log_channel( f'{member.mention} is not a cult member anymore' );
+            await member.remove_roles( rol );
 
 async def on_ready() -> int:
 
@@ -80,9 +80,7 @@ async def on_ready() -> int:
 
             for member_lp in guild_lp.members:
 
-                member_tc = guild_tc.get_member( member_lp.id );
-    
-                await manage_role( member_lp, bool( member_tc ) );
+                await manage_role( member_lp, True if guild_tc.get_member( member_lp.id ) else False );
 
     except Exception as e:
 
