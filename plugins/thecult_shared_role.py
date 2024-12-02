@@ -82,7 +82,7 @@ async def on_ready() -> int:
 
                 member_tc = guild_tc.get_member( member_lp.id );
     
-                manage_role( member_lp, bool( member_tc ) );
+                await manage_role( member_lp, bool( member_tc ) );
 
     except Exception as e:
 
@@ -104,7 +104,7 @@ async def on_member_join( member : discord.Member ) -> int:
 
                 if guild_tc.get_member( member.id ):
         
-                    manage_role( member, True );
+                    await manage_role( member, True );
 
     return HOOK_CONTINUE();
 
@@ -122,6 +122,6 @@ async def on_member_remove( member : discord.Member ) -> int:
 
                 if guild_lp.get_member( member.id ):
 
-                    manage_role( member, False );
+                    await manage_role( member, False );
 
     return HOOK_CONTINUE();
