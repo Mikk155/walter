@@ -33,6 +33,7 @@ def initialize() -> None:
     g_Sentences.initialize();
     g_Config.initialize();
     g_PluginManager.initialize();
+    g_Cache.initialize();
 
 initialize();
 
@@ -80,7 +81,7 @@ async def on_ready():
             bot.user.discriminator
         ],
         dev=True
- );
+    );
 
     if not bot.__on_start_called__:
 
@@ -266,6 +267,18 @@ async def on_typing( channel: discord.TextChannel | discord.GroupChannel | disco
 async def on_think():
 
     await bot.wait_until_ready()
+
+    cache = g_Cache.get();
+    counts = cache.get( "test", 0 );
+    counts = counts + 1;
+    cache[ "test" ] = counts;
+    cache = g_Cache.get();
+    countssex = cache.get( "day", {} );
+    count2 = countssex.get( "test in day", 0 );
+    count2 = count2 + 1;
+    countssex[ "test in day" ] = count2;
+    cache[ "day" ] = countssex;
+    cache[ "test" ] = counts;
 
     async_think = []
 

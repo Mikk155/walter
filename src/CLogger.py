@@ -36,9 +36,14 @@ class g_DelayedLog:
 
     @staticmethod
     async def print_server(bot) -> None:
+
         '''
         Print all messages that has been delayed
         '''
+
+        if not bot or bot is None:
+
+            return;
 
         from src.constdef import INVALID_INDEX;
         from src.CConfigSystem import g_Config;
@@ -181,6 +186,9 @@ class CLogger:
 
     def critical(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
         return self.__print__( message, args, cmd, dev, channel, server, "critical", "⛔" );
+
+    def trace(self, message, args:list=None, cmd:bool=True, dev:bool=False, channel:int=None, server:int=None, type:str=None, emoji:str=None) -> str:
+        return self.__print__( message, args, cmd, dev, channel, server, "trace", "➡" );
 
 g_Logger = CLogger(None);
 '''Global logger, the caller script will be passed on as a name'''

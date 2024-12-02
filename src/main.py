@@ -70,6 +70,7 @@ from src.CConfigSystem import g_Config
 from src.CLogger import CLogger, g_DelayedLog, g_Logger
 from src.CSentences import g_Sentences
 from src.CPluginManager import g_PluginManager, Hooks
+from src.CCacheManager import g_Cache
 from src.Bot import Bot
 
 global bot

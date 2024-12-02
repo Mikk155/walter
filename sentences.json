@@ -42,6 +42,11 @@
         "english": "CRITICAL",
         "spanish": "CRITICO"
     },
+    "logger.trace":
+    {
+        "english": "Traces",
+        "spanish": "Trazados"
+    },
     "file.not.exists":
     {
         "english": "File ``{}`` doesn't exists!",
@@ -102,6 +107,11 @@
     {
         "english": "Removing ``{}`` to prevent recursion.",
         "spanish": "Quitando ``{}`` para prevenir recursión."
+    },
+    "cache.update.pair":
+    {
+        "english": "Updated ``{}`` from ```json\n{}```to```json\n{}```",
+        "spanish": "Actualizado ``{}`` de ```json\n{}```a```json\n{}```"
     },
     
 

@@ -46,7 +46,7 @@ class g_Config:
 
         __plugins__ = jsonc.load( g_Path.join( "plugins.json" ) )
 
-        loggers = __plugins__.get( "loggers", [ "debug", "warning", "info" ] );
+        loggers = __plugins__.get( "loggers", [ "debug", "warning", "info", "trace" ] );
         loggers.append( "critical" );
         loggers.append( "error" );
         g_Config.configuration[ "loggers" ] = loggers;
