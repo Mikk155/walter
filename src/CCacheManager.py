@@ -49,13 +49,17 @@ class g_Cache:
 
         cache = jsonc.load( g_Path.join( "cache.json" ) )
 
-        g_Cache.m_Logger.info(
-            "object.initialized",
-            [
-                __name__
-            ],
-            dev=True
-        );
+        from src.constdef import DEVELOPER;
+
+        if not DEVELOPER():
+
+            g_Cache.m_Logger.info(
+                "object.initialized",
+                [
+                    __name__
+                ],
+                dev=True
+            );
 
     class CCacheDictionary( dict ):
 

@@ -176,13 +176,17 @@ class g_PluginManager:
             for l in f:
                 r=f'{r}\n{l}';
 
-            g_PluginManager.m_Logger.debug(
-                "plugin.manager.requirements",
-                [
-                    plugin.replace( '.py', '.txt' ), r
-                ],
-                dev=True
-            );
+            from src.constdef import DEVELOPER;
+
+            if not DEVELOPER():
+
+                g_PluginManager.m_Logger.debug(
+                    "plugin.manager.requirements",
+                    [
+                        plugin.replace( '.py', '.txt' ), r
+                    ],
+                    dev=True
+                );
 
         except CalledProcessError as e:
 
@@ -197,7 +201,7 @@ class g_PluginManager:
         from os.path import exists;
         from src.CConfigSystem import g_Config;
         from src.utils.Path import g_Path;
-        from src.constdef import INVALID_INDEX;
+        from src.constdef import INVALID_INDEX, DEVELOPER;
         from src.CSentences import g_Sentences;
         from src.utils.format import g_Format;
 
@@ -207,13 +211,15 @@ class g_PluginManager:
 
             if plugin.get( 'Disable', False ):
 
-                g_PluginManager.m_Logger.info(
-                    "plugin.manager.disabled",
-                    [
-                        plugin[ "script" ]
-                    ],
-                    dev=True
-                );
+                if not DEVELOPER():
+
+                    g_PluginManager.m_Logger.info(
+                        "plugin.manager.disabled",
+                        [
+                            plugin[ "script" ]
+                        ],
+                        dev=True
+                    );
 
                 continue;
 
@@ -318,21 +324,25 @@ class g_PluginManager:
                     dev=True
                 );
 
-        g_PluginManager.m_Logger.info(
-            "object.initialized",
-            [
-                __name__
-            ],
-            dev=True
-        );
+        if not DEVELOPER():
 
-        g_PluginManager.m_Logger.info(
-            "Hooks:```json\n{}```",
-            [
-                dumps(g_PluginManager.fnMethods, indent=2)
-            ],
-            dev=True
-        );
+            g_PluginManager.m_Logger.info(
+                "object.initialized",
+                [
+                    __name__
+                ],
+                dev=True
+            );
+
+        if not DEVELOPER():
+
+            g_PluginManager.m_Logger.info(
+                "Hooks:```json\n{}```",
+                [
+                    dumps(g_PluginManager.fnMethods, indent=2)
+                ],
+                dev=True
+            );
 
     @staticmethod
     async def callhook( hook_name: str, g1 = None, g2 = None, g3 = None, guild=None ) -> None:

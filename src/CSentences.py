@@ -45,13 +45,17 @@ class g_Sentences:
 
         g_Sentences.sentences = __plugins__;
 
-        g_Sentences.m_Logger.info(
-            "object.initialized",
-            [
-                __name__
-            ],
-            dev=True
-        );
+        from src.constdef import DEVELOPER;
+
+        if not DEVELOPER():
+
+            g_Sentences.m_Logger.info(
+                "object.initialized",
+                [
+                    __name__
+                ],
+                dev=True
+            );
 
     @staticmethod
     def push_back( file_dir: str ) -> None:
