@@ -54,15 +54,15 @@ class Bot( discord.Client ):
     async def setup_hook(self):
 
         from os import getenv;
-        from sys import argv as args;
-        from src.CConfigSystem import g_Config;
-        from src.constdef import INVALID_INDEX;
 
         # Don't create commands on github's workflow test run
         if getenv( 'github' ):
             return;
 
-        if '-dev' in args:
+        from src.CConfigSystem import g_Config;
+        from src.constdef import INVALID_INDEX, DEVELOPER;
+
+        if DEVELOPER():
 
             server_id: int = g_Config.configuration[ "server_id" ];
 

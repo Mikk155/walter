@@ -53,3 +53,14 @@ def CHARACTER_LIMIT() -> int:
     '''
 
     return 2000;
+
+
+def DEVELOPER() -> bool:
+
+    '''
+    Returns whatever the bot has been run with the ``-dev`` argument
+    '''
+
+    from sys import argv;
+
+    return ( '-dev' in argv );

@@ -139,7 +139,7 @@ class Hooks:
     # on_poll_vote_remove = 'on_poll_vote_remove';
 
 class g_PluginManager:
-    
+
     '''
     Plugin Manager System
     '''

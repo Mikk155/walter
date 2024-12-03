@@ -430,7 +430,7 @@ def get_token() -> str:
 
             exit(0)
 
-    token = __token__[ 1 if '-dev' in sys.argv else 0 ];
+    token = __token__[ 1 if DEVELOPER() else 0 ];
 
     if not isinstance( token, str ):
 
