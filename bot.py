@@ -34,6 +34,7 @@ def initialize() -> None:
     g_Config.initialize();
     g_PluginManager.initialize();
     g_Cache.initialize();
+    g_AppCommands.initialize();
 
 initialize();
 
@@ -46,6 +47,14 @@ initialize();
 #=======================================================================================
 
 async def on_start():
+
+    bot.m_Logger.info(
+        "object.initialized",
+        [
+            __name__
+        ],
+        dev=True
+    );
 
     try:
 

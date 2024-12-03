@@ -108,6 +108,16 @@
         "english": "Removing ``{}`` to prevent recursion.",
         "spanish": "Quitando ``{}`` para prevenir recursión."
     },
+    "app.command.exception":
+    {
+        "english": "Failed to create command for plugin ``{}`` Exception: {}",
+        "spanish": "Fallo en crear comando por el complemento ``{}`` Excepción: {}"
+    },
+    "app.command.invalid.name":
+    {
+        "english": "Failed to create command ``{}`` for plugin ``{}`` Exception: {}",
+        "spanish": "Fallo en crear comando ``{}`` por el complemento ``{}`` Excepción: {}"
+    },
     "cache.update.pair":
     {
         "english": "Updated ``{}`` from ```json\n{}```to```json\n{}```",

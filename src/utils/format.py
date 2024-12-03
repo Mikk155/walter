@@ -39,3 +39,28 @@ class g_Format:
             sentence = sentence.replace( "{}", str( __arg__ ), 1 );
 
         return sentence;
+
+    from discord import app_commands
+    def to_command_choices( obj: dict[str, str] | list[str] ) -> list[app_commands.Choice]:
+
+        '''
+        Converts a dictionary to a list of app_commands.Choice
+        '''
+
+        from discord import app_commands
+
+        app_commands_choices = []
+
+        if isinstance( obj, dict ):
+
+            for k, v in obj.items():
+
+                app_commands_choices.append( app_commands.Choice( name=k, value=v ) );
+
+        else:
+
+            for i, k in enumerate(obj):
+
+                app_commands_choices.append( app_commands.Choice( name=k, value=str(i) ) );
+
+        return app_commands_choices;

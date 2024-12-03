@@ -13,14 +13,20 @@
 			"\tThe bot is not even initialized yet.\n",
 			"\tThis hook is required on all plugins and must return data.",
 			"\t'''\n",
+			"\t# Create data for g_PluginManager",
 			"\t__data__: dict = {};",
 			"\t__data__[\"author\"] = \"${1:Author name}\";",
 			"\t__data__[\"contact\"] = \"${2:Author contact url}\";",
 			"\t__data__[\"name\"] = \"${3:Plugin's Name}\";",
 			"\t__data__[\"description\"] = \"${4:Plugin's Description}\";",
 			"\t__hooks__: list[Hooks] = [ ${5:Hooks.variables} ];",
-			"\t__data__[\"hooks\"] = __hooks__;",
-			"\n\treturn __data__;\n"
+			"\t__data__[\"hooks\"] = __hooks__;\n",
+			"\t# Register your app_commands (if any)",
+			"\tcmd = g_AppCommands.CCommandData(  \"${6:Command name}\" );\n",
+			"\tcmd.${7:#Set cmd's variables}\n",
+			"\tg_AppCommands.CreateCommand( cmd );\n",
+			"\t# Return data for g_PluginManager",
+			"\treturn __data__;\n"
 		],
 		"scope": "python"
 	},

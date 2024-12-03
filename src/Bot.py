@@ -66,14 +66,18 @@ class Bot( discord.Client ):
             server_id: int = g_Config.configuration[ "server_id" ];
 
             if server_id == INVALID_INDEX():
+
                 _e_ = self.m_Logger.critical( "bot.run.devmode", [ "server_id" ] );
+
                 raise _e_;
 
             __MY_GUILD__ = discord.Object( id = server_id );
 
-            self.tree.clear_commands( guild=__MY_GUILD__ )
-            self.tree.copy_global_to( guild=__MY_GUILD__ )
-            await self.tree.sync( guild=__MY_GUILD__ )
+            self.tree.clear_commands( guild=__MY_GUILD__ );
+
+            self.tree.copy_global_to( guild=__MY_GUILD__ );
+
+            await self.tree.sync( guild=__MY_GUILD__ );
 
         else:
 
