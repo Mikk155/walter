@@ -278,15 +278,17 @@ class g_PluginManager:
 
                     plugin_data[ "servers" ] = plugin[ "servers" ];
 
-                g_PluginManager.m_Logger.info(
-                    "plugin.manager.register",
-                    [
-                        plugin_data[ "name" ]
-                    ],
-                    dev=True
-                );
+                if not DEVELOPER():
 
-                g_PluginManager.m_Logger.trace( f"```json\n{dumps( plugin_data, indent=1 )}```", dev=True );
+                    g_PluginManager.m_Logger.info(
+                        "plugin.manager.register",
+                        [
+                            plugin_data[ "name" ]
+                        ],
+                        dev=True
+                    );
+
+                    g_PluginManager.m_Logger.trace( f"```json\n{dumps( plugin_data, indent=1 )}```", dev=True );
 
                 for hook in plugin_data.get( "hooks", [] ):
 

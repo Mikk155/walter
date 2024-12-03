@@ -53,9 +53,8 @@ class Bot( discord.Client ):
 
     async def setup_hook(self):
 
-        from os import getenv;
-
         # Don't create commands on github's workflow test run
+        from os import getenv;
         if getenv( 'github' ):
             return;
 

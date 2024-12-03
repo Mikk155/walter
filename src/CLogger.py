@@ -132,9 +132,9 @@ class CLogger:
 
             sentence = f'[**{type_sentence}**] {sentence}';
 
-        if self.__logger__:
+        if self.get_name():
 
-            sentence = f'[``{self.__logger__}``]{sentence}';
+            sentence = f'[``{self.get_name()}``]{sentence}';
 
         else:
 
@@ -148,7 +148,7 @@ class CLogger:
 
         from src.CConfigSystem import g_Config;
 
-        if type in g_Config.configuration.get( "loggers", [] ):
+        if type in g_Config.configuration.get( "loggers", [ "debug", "warning", "info", "trace" ] ):
 
             if cmd:
 
