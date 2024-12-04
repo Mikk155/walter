@@ -31,7 +31,9 @@ import re
 import sys
 import json
 import asyncio
+import aiohttp
 import datetime
+import typing
 
 #=======================================================================================
 # END
@@ -85,6 +87,7 @@ bot: discord.Client | Bot = Bot();
 
 # app_commands
 import src.commands.language
+import src.commands.bot_cache
 
 #=======================================================================================
 # END

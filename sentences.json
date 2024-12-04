@@ -144,6 +144,26 @@
         "english": "Updated ``{}`` from ```json\n{}```to```json\n{}```",
         "spanish": "Actualizado ``{}`` de ```json\n{}```a```json\n{}```"
     },
+    "cache.update.file.nojson":
+    {
+        "english": "Only ``.json`` files are supported.",
+        "spanish": "Solo archivos ``.json`` son soportados."
+    },
+    "cache.update.file.updating":
+    {
+        "english": "Updating bot's cache...",
+        "spanish": "Actualizando la cache del bot..."
+    },
+    "cache.update.updated.cache":
+    {
+        "english": "The bot cache was succesfuly updated and reloaded.",
+        "spanish": "La cache del bot fue subida y recargada exitosamente."
+    },
+    "only.owner":
+    {
+        "english": "Only the bot's owner (<@{}>) can do this task.",
+        "spanish": "Solo el propietario del bot (<@{}>) puede efectuar esta accion."
+    },
     
 
 
