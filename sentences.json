@@ -17,6 +17,12 @@
         "english": "Spanish",
         "spanish": "Español"
     },
+    "language.updated":
+    {
+        "english": "I'll now reply in english on this server.",
+        "spanish": "Ahora respondere en español en este servidor."
+    },
+
     "logger.warning":
     {
         "english": "Warning",
@@ -71,6 +77,21 @@
     {
         "english": "BOT connected as \"{}#{}\"",
         "spanish": "BOT conectado como \"{}#{}\""
+    },
+    "bot.handle.exception":
+    {
+        "english": "There was a problem:\n```{}```",
+        "spanish": "Hubo un problema:\n```{}```"
+    },
+    "bot.handle.exception.dev":
+    {
+        "english": "There was a problem in another server:\n```{}```{}{}",
+        "spanish": "Hubo un problema en otro servidor:\n```{}```{}{}"
+    },
+    "bot.handle.exception.server":
+    {
+        "english": "Server info:\n```json\n{}```\n",
+        "spanish": "Informacion del servidor:\n```json\n{}```\n"
     },
 
     "plugin.manager.disabled":

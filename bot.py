@@ -30,11 +30,8 @@ from src.main import *
 
 def initialize() -> None:
 
-    g_Sentences.initialize();
-    g_Config.initialize();
     g_PluginManager.initialize();
     g_Cache.initialize();
-    g_AppCommands.initialize();
 
 initialize();
 
@@ -51,7 +48,7 @@ async def on_start():
     bot.m_Logger.info(
         "object.initialized",
         [
-            __name__
+            f'{__name__}(bot.py)'
         ],
         dev=True
     );

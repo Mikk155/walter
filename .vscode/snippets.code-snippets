@@ -21,12 +21,31 @@
 			"\t__data__[\"description\"] = \"${4:Plugin's Description}\";",
 			"\t__hooks__: list[Hooks] = [ ${5:Hooks.variables} ];",
 			"\t__data__[\"hooks\"] = __hooks__;\n",
-			"\t# Register your app_commands (if any)",
-			"\tcmd = g_AppCommands.CCommandData(  \"${6:Command name}\" );\n",
-			"\tcmd.${7:#Set cmd's variables}\n",
-			"\tg_AppCommands.CreateCommand( cmd );\n",
 			"\t# Return data for g_PluginManager",
 			"\treturn __data__;\n"
+		],
+		"scope": "python"
+	},
+	"on_command":
+	{
+		"prefix":
+		[
+			"on_command",
+			"on_app_command",
+			"app_command"
+		],
+		"body" :
+		[
+			"@bot.tree.command()",
+			"async def ${1:Command name}( interaction: discord.Interaction ):",
+			"\t'''",
+			"\t${2:Command description}",
+			"\t'''\n",
+			"\tawait interaction.response.defer( thinking=True, ephemeral=${3:False} );\n",
+			"\ttry:\n",
+			"\t\t${4:Your code here}\n",
+			"\texcept Exception as e:\n",
+			"\t\tawait bot.exception_handle( e, interaction=interaction );\n",
 		],
 		"scope": "python"
 	},

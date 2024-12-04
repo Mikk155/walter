@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 """
 
 class g_Config:
-    
+
     '''
     Configuration System
     '''

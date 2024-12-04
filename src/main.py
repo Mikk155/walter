@@ -68,15 +68,23 @@ from src.utils.Path import g_Path
 from src.utils.format import g_Format
 from src.utils.CJsonCommentary import jsonc
 from src.CConfigSystem import g_Config
-from src.CLogger import CLogger, g_DelayedLog, g_Logger
 from src.CSentences import g_Sentences
+
+# These two needs to be initialized here.
+g_Sentences.initialize();
+g_Config.initialize();
+
+from src.CLogger import CLogger, g_DelayedLog, g_Logger
 from src.CPluginManager import g_PluginManager, Hooks
 from src.CCacheManager import g_Cache
-from src.CAppCommands import g_AppCommands
 from src.Bot import Bot
 
 global bot
 bot: discord.Client | Bot = Bot();
+
+
+# app_commands
+import src.commands.language
 
 #=======================================================================================
 # END

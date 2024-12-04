@@ -82,3 +82,90 @@ class Bot( discord.Client ):
         else:
 
             await self.tree.sync();
+
+    def get_exception_data(self, v) -> dict:
+        '''
+        Get a dictionary with data from V (Any discord member)
+        '''
+
+        data: dict = {}
+
+#        if isinstance( v, discord.Interaction ) or isinstance( v, discord.Message ) or isinstance( v, discord.text ):
+
+        try:
+            if v.channel:
+                data["channel_id"] = v.channel.id;
+                data["channel"] = v.channel.name;
+            if v.guild:
+                data["guild_id"] = v.guild.id;
+                data["guild"] = v.guild.name;
+        except Exception as e:
+            pass
+
+        return data;
+
+    async def exception_handle( self, exception: ( Exception | str ), interaction: ( discord.Interaction | discord.Member | discord.TextChannel ) = None, additional_commentary: str = None, concurrent: bool = False ) -> None:
+        '''
+        Handles an exception.
+
+        ``exception`` The exception that happened.
+
+        ``additional_commentary`` Any additional commentary to print after the message.
+
+        ``interaction`` If provided, the interaction response will be updated.
+
+        ``concurrent`` if true, this exception won't be send to the developer discord's log channel
+        '''
+
+        try:
+
+            from src.CSentences import g_Sentences;
+            from src.utils.format import g_Format;
+
+            if not concurrent:
+
+                __ext_fmt__ = '';
+
+                __json__ = self.get_exception_data( interaction );
+
+                if len(__json__) > 0:
+                
+                    __ext__ = g_Sentences.get( "bot.handle.exception.server" );
+
+                    from json import dumps;
+
+                    __dump__ = dumps( __json__, indent=2 );
+
+                    __ext_fmt__ = g_Format.brackets( __ext__, [ __dump__ ] );
+
+                self.m_Logger.warn(
+                    "bot.handle.exception.dev",
+                    [
+                        exception,
+                        __ext_fmt__,
+                        additional_commentary if additional_commentary else ''
+                    ],
+                    dev=True
+                );
+
+            if interaction:
+
+                if isinstance( interaction, discord.Interaction ):
+
+                    __trans__ = g_Sentences.get( "bot.handle.exception", interaction.guild_id );
+
+                    msg = g_Format.brackets( __trans__, [ exception ] );
+
+                    if additional_commentary:
+
+                        msg = f'{msg}\n{additional_commentary}';
+
+                    await interaction.followup.send( msg );
+
+                # if not concurrent:
+                    # -TODO Try to reply to the user that raised this exception
+
+        except Exception as e:
+
+            print(e)
+            pass
