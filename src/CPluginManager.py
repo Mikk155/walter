@@ -246,7 +246,7 @@ class g_PluginManager:
 
                     continue;
 
-                requirements = pyfile.replace( '.py', '.txt' );
+                requirements = pyfile.replace( '.py', '_requirements.txt' );
 
                 if exists( requirements ):
 
