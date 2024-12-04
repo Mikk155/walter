@@ -31,7 +31,7 @@ from src.main import *
 @app_commands.describe(
     json='json object containing the cache to upload.',
 )
-async def cfg_cache( interaction: discord.Interaction, json: discord.Attachment ):
+async def dev_cache( interaction: discord.Interaction, json: discord.Attachment ):
     """Update the bot cache"""
 
     await interaction.response.defer( thinking=True );
