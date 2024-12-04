@@ -34,6 +34,36 @@ class g_Sentences:
     sentences: dict[dict] = {};
     '''Dict of sentences'''
 
+    languages = [ "english" ];
+    '''Supported languages'''
+
+    __filenames__ = [];
+
+    @staticmethod
+    def push_back( filename: str ) -> None:
+        '''
+        Push a sentences json into the main sentences
+
+        **NOTE:** The sentences will be formated and the keys will be prefixed with ``{filename}.{}``
+    
+        **NOTE:** If ``filename`` has been registered before this won't be added
+        '''
+
+        if not filename in g_Sentences.__filenames__:
+
+            from src.utils.CJsonCommentary import jsonc;
+
+            from src.utils.Path import g_Path;
+
+            __sentences__ = jsonc.load( g_Path.join( f"sentences/{filename}.json" ) )
+
+            for k, v in __sentences__.items():
+
+                g_Sentences.sentences[ f'{filename}.{k}' ] = v;
+    
+            g_Sentences.__filenames__.append( filename );
+
+
     @staticmethod
     def initialize() -> None:
 
@@ -41,9 +71,16 @@ class g_Sentences:
 
         from src.utils.Path import g_Path;
 
-        __plugins__ = jsonc.load( g_Path.join( "sentences.json" ) )
+        __languages__ = jsonc.load( g_Path.join( "sentences/__langs__.json" ) )
 
-        g_Sentences.sentences = __plugins__;
+        g_Sentences.languages = __languages__;
+
+        g_Sentences.push_back( "__defs__" );
+        g_Sentences.push_back( "bot" );
+        g_Sentences.push_back( "cache" );
+        g_Sentences.push_back( "language" );
+        g_Sentences.push_back( "logger" );
+        g_Sentences.push_back( "plugin_manager" );
 
         from src.constdef import DEVELOPER;
 
@@ -56,17 +93,6 @@ class g_Sentences:
                 ],
                 dev=True
             );
-
-    @staticmethod
-    def push_back( file_dir: str ) -> None:
-        '''
-        Push a sentences json into the main sentences
-
-        **NOTE:** The sentences will be formated and the keys will be prefixed with the plugin's filename
-
-        So for example your plugin is called ``Activity.py`` and your sentence is ``display`` it will be accessed as ``Activity.display``
-        '''
-
 
     from src.constdef import INVALID_INDEX;
 

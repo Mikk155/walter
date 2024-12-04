@@ -1,0 +1,27 @@
+{
+    "run.devmode":
+    {
+        "english": "BOT trying to run in -dev mode but has no argument for \"{}\"",
+        "spanish": "El BOT intento correr en modo -dev pero no tiene argumento en \"{}\""
+    },
+    "on.ready":
+    {
+        "english": "BOT connected as \"{}#{}\"",
+        "spanish": "BOT conectado como \"{}#{}\""
+    },
+    "handle.exception":
+    {
+        "english": "There was a problem:\n```{}```",
+        "spanish": "Hubo un problema:\n```{}```"
+    },
+    "handle.exception.dev":
+    {
+        "english": "There was a problem in another server:\n```{}```{}{}",
+        "spanish": "Hubo un problema en otro servidor:\n```{}```{}{}"
+    },
+    "handle.exception.server":
+    {
+        "english": "Server info:\n```json\n{}```\n",
+        "spanish": "Informacion del servidor:\n```json\n{}```\n"
+    }
+}

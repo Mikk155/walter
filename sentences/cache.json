@@ -1,0 +1,22 @@
+{
+    "update.pair":
+    {
+        "english": "Updated ``{}`` from ```json\n{}```to```json\n{}```",
+        "spanish": "Actualizado ``{}`` de ```json\n{}```a```json\n{}```"
+    },
+    "update.file.nojson":
+    {
+        "english": "Only ``.json`` files are supported.",
+        "spanish": "Solo archivos ``.json`` son soportados."
+    },
+    "update.file.updating":
+    {
+        "english": "Updating bot's cache...",
+        "spanish": "Actualizando la cache del .."
+    },
+    "update.updated.cache":
+    {
+        "english": "The bot cache was succesfuly updated and reloaded.",
+        "spanish": "La cache del bot fue subida y recargada exitosamente."
+    }
+}

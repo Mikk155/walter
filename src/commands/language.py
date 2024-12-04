@@ -28,7 +28,7 @@ from src.main import *
 @app_commands.describe( language='Language' )
 @app_commands.guild_only()
 @app_commands.default_permissions(administrator=True)
-@app_commands.choices( language = g_Format.to_command_choices( g_Sentences.sentences[ "languages" ] ) )
+@app_commands.choices( language = g_Format.to_command_choices( g_Sentences.languages ) )
 async def cfg_language( interaction: discord.Interaction, language: app_commands.Choice[str] ):
     """Set bot language for this server"""
 

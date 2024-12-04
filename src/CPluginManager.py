@@ -181,7 +181,7 @@ class g_PluginManager:
             if not DEVELOPER():
 
                 g_PluginManager.m_Logger.debug(
-                    "plugin.manager.requirements",
+                    "plugin_manager.requirements",
                     [
                         plugin.replace( '.py', '.txt' ), r
                     ],
@@ -214,7 +214,7 @@ class g_PluginManager:
                 if not DEVELOPER():
 
                     g_PluginManager.m_Logger.info(
-                        "plugin.manager.disabled",
+                        "plugin_manager.disabled",
                         [
                             plugin[ "script" ]
                         ],
@@ -236,7 +236,7 @@ class g_PluginManager:
                     not_exist_fmt = g_Format.brackets( not_exist_sentence, [ pyfile ] );
 
                     g_PluginManager.m_Logger.warn(
-                        "plugin.manager.exception",
+                        "plugin_manager.exception",
                         [
                             plugin[ "script" ],
                             not_exist_fmt
@@ -281,7 +281,7 @@ class g_PluginManager:
                 if not DEVELOPER():
 
                     g_PluginManager.m_Logger.info(
-                        "plugin.manager.register",
+                        "plugin_manager.register",
                         [
                             plugin_data[ "name" ]
                         ],
@@ -303,7 +303,7 @@ class g_PluginManager:
                     else:
 
                         g_PluginManager.m_Logger.warn(
-                            "plugin.manager.hook.undefined",
+                            "plugin_manager.hook.undefined",
                             [
                                 plugin[ "script" ],
                                 hook
@@ -318,7 +318,7 @@ class g_PluginManager:
             except Exception as e:
 
                 g_PluginManager.m_Logger.error(
-                    "plugin.manager.exception",
+                    "plugin_manager.exception",
                     [
                         plugin[ "script" ],
                         e
@@ -406,10 +406,10 @@ class g_PluginManager:
 
                     from src.CSentences import g_Sentences
 
-                    __attribute__ = g_Sentences.get( 'plugin.manager.callhook.attribute' )
+                    __attribute__ = g_Sentences.get( 'plugin_manager.callhook.attribute' )
 
                 g_PluginManager.m_Logger.error(
-                    'plugin.manager.callhook.exception',
+                    'plugin_manager.callhook.exception',
                     [
                         plugin,
                         hook_name,

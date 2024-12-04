@@ -1,0 +1,32 @@
+{
+    "warning":
+    {
+        "english": "Warning",
+        "spanish": "Advertencia"
+    },
+    "error":
+    {
+        "english": "Error",
+        "spanish": "Error"
+    },
+    "debug":
+    {
+        "english": "Debug",
+        "spanish": "Depurado"
+    },
+    "info":
+    {
+        "english": "Information",
+        "spanish": "Información"
+    },
+    "critical":
+    {
+        "english": "CRITICAL",
+        "spanish": "CRITICO"
+    },
+    "trace":
+    {
+        "english": "Traces",
+        "spanish": "Trazados"
+    }
+}

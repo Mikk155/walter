@@ -377,10 +377,10 @@ async def on_think():
 
                 from src.CSentences import g_Sentences
 
-                __attribute__ = g_Sentences.get( 'plugin.manager.callhook.attribute' )
+                __attribute__ = g_Sentences.get( 'plugin_manager.callhook.attribute' )
 
             g_PluginManager.m_Logger.error(
-                'plugin.manager.callhook.exception',
+                'plugin_manager.callhook.exception',
                 [
                     plugin,
                     Hooks.on_think,

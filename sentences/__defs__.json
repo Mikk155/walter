@@ -1,0 +1,23 @@
+{
+    "only.owner":
+    {
+        "english": "Only the bot's owner (<@{}>) can do this task.",
+        "spanish": "Solo el propietario del bot (<@{}>) puede efectuar esta accion."
+    },
+    
+    "file.not.exists":
+    {
+        "english": "File ``{}`` doesn't exists!",
+        "spanish": "El archivo ``{}`` no existe!"
+    },
+    "can.not.open":
+    {
+        "english": "Can not open ``{}`` {}",
+        "spanish": "No se pudo abrir ``{}`` {}"
+    },
+    "object.initialized":
+    {
+        "english": "Object ``{}`` initialized!",
+        "spanish": "Objeto ``{}`` inicializado!"
+    }
+}
