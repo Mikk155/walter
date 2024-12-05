@@ -61,6 +61,10 @@
         {
             "script": "pick.py",
             "Disable": false
+        },
+        {
+            "script": "ping_counter.py",
+            "Disable": false
         }
     ],
     "$schema": "schema.json"
