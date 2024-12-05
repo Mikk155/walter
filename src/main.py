@@ -75,11 +75,12 @@ from src.CSentences import g_Sentences
 # These two needs to be initialized here.
 g_Sentences.initialize();
 g_Config.initialize();
-g_Cache.initialize();
 
 from src.CLogger import CLogger, g_DelayedLog, g_Logger
 from src.CPluginManager import g_PluginManager, Hooks
 from src.CCacheManager import g_Cache
+g_Cache.initialize();
+
 from src.Bot import Bot
 
 global bot
