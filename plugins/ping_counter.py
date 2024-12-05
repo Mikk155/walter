@@ -34,8 +34,8 @@ def on_initialization() -> dict:
     '''
 
     __data__: dict = {};
-    __data__["name"] = "Woman Momento";
-    __data__["description"] = "Increase @Bunnt woman moment number";
+    __data__["name"] = "Ping Counter";
+    __data__["description"] = "Keep track of users mentioning";
     __hooks__: list[Hooks] = [ Hooks.on_mention ];
     __data__["hooks"] = __hooks__;
 
