@@ -64,3 +64,11 @@ class g_Format:
                 app_commands_choices.append( app_commands.Choice( name=k, value=str(i) ) );
 
         return app_commands_choices;
+
+    from discord import Member
+    def user_mention( user: Member ) -> str:
+        '''
+        Return a fixed ``discord.Member.mention`` string for globalization\n
+        since a leading characters are added when the user has a custom nickname
+        '''
+        return f"<@{user.id}>"
