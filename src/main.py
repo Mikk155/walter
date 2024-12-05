@@ -91,6 +91,7 @@ bot: discord.Client | Bot = Bot();
 # app_commands
 import src.commands.language
 import src.commands.bot_cache
+import src.commands.server_logger
 
 #=======================================================================================
 # END

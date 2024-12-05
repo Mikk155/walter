@@ -62,10 +62,6 @@ class g_DelayedLog:
 
                     channel_id = g_Config.configuration[ "log_id" ];
 
-                #elif server_id != INVALID_INDEX():
-
-                    # -TODO Change channel_id with the cache's log id for the server with the current channel_id
-
                 if channel_id != INVALID_INDEX():
 
                     channel = bot.get_channel( channel_id );
@@ -73,6 +69,22 @@ class g_DelayedLog:
                     if channel:
 
                         await channel.send( content=message );
+
+                if server_id != INVALID_INDEX():
+
+                    from src.CCacheManager import g_Cache;
+                
+                    cache = g_Cache.get( "server_logger.py" );
+
+                    channel_server_id = cache.get( str( server_id ), INVALID_INDEX() );
+
+                    if channel_server_id != INVALID_INDEX():
+
+                        channel_obj = bot.get_channel( channel_server_id );
+
+                        if channel_obj:
+
+                            channel_obj.send( content=message )
 
                 g_DelayedLog.delayed_logs.pop(0);
 

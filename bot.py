@@ -423,8 +423,6 @@ for k, v in g_PluginManager.plugins.items():
 
     my_plugin_choices.append( app_commands.Choice( name=k, value=v[ "name" ] if v else "" ) );
 
-print( my_plugin_choices );
-
 @bot.tree.command()
 @app_commands.guild_only()
 @app_commands.choices( plugin = my_plugin_choices )

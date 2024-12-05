@@ -1,4 +1,9 @@
 {
+    "channel.set":
+    {
+        "english": "Set logger channel to {}",
+        "spanish": "Se configuro {} como historial de cambios"
+    },
     "warning":
     {
         "english": "Warning",
