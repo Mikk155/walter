@@ -35,6 +35,10 @@
         {
             "script": "update.py",
             "Disable": false
+        },
+        {
+            "script": "member_say.py",
+            "Disable": false
         }
     ],
     "$schema": "schema.json"
