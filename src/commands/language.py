@@ -40,7 +40,7 @@ async def cfg_language( interaction: discord.Interaction, language: app_commands
 
         cache = g_Cache.get();
 
-        cache[ str( guild ) ][ "language" ] = language.name;
+        cache[ str( guild ) ] = language.name;
 
         msg = g_Sentences.get( "language.updated", guild );
 

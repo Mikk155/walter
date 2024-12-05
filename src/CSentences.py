@@ -111,15 +111,17 @@ class g_Sentences:
 
             __sslot__ = g_Sentences.sentences[ name ];
 
-            # -TODO Get from cache system
-            __language__ = "english";
-
             from src.constdef import INVALID_INDEX;
+
+            __language__ = "english"
 
             if server_id and server_id != INVALID_INDEX():
 
-                # -TODO Get from cache system for this specific server
-                __language__ = "english";
+                from src.CCacheManager import g_Cache;
+
+                cache = g_Cache.get( "language.py" );
+
+                __language__ = cache.get( str( server_id ), "english" );
 
             if __language__ in __sslot__:
 

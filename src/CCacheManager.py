@@ -118,26 +118,34 @@ class g_Cache:
             pass;
 
     @staticmethod
-    def get() -> CCacheDictionary:
+    def get( label: str = None ) -> CCacheDictionary:
 
         '''
         Return a dict which automatically stores into the cache.json when setting variables to it
         '''
 
-        from inspect import stack;
+        n = ''
 
-        frame = stack()[1]; # Get caller plugin name
+        if label:
 
-        n = frame.filename;
+            n = label;
 
-        for s in [ '\\', '/' ]:
+        else:
 
-            if s in n:
+            from inspect import stack;
 
-                n = n[ n.rfind( s ) + 1 if n.rfind( s ) != -1 else 0 : len( n ) ];
+            frame = stack()[1]; # Get caller plugin name
 
-        if n.startswith( "src." ) or n == 'bot.py':
+            n = frame.filename;
 
-            n = '__main__';
+            for s in [ '\\', '/' ]:
+
+                if s in n:
+
+                    n = n[ n.rfind( s ) + 1 if n.rfind( s ) != -1 else 0 : len( n ) ];
+
+            if n.startswith( "src." ) or n == 'bot.py':
+
+                n = '__main__';
 
         return g_Cache.__cache__[ n ];
