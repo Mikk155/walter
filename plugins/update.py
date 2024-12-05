@@ -79,7 +79,7 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
 
     try:
 
-        if interaction.user.id != g_Config.configuration[ "owner_id" ]:
+        if IS_OWNER( interaction.user.id ):
 
             await interaction.followup.send(
                 g_Format.brackets(

@@ -42,7 +42,7 @@ async def dev_cache( interaction: discord.Interaction, json: discord.Attachment 
 
             await interaction.followup.send( g_Sentences.get( "cache.update.file.nojson", interaction.guild_id ) );
 
-        elif interaction.user.id != g_Config.configuration[ "owner_id" ]:
+        elif IS_OWNER( interaction.user.id ):
 
             await interaction.followup.send(
                 g_Format.brackets(

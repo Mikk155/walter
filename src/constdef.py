@@ -64,3 +64,17 @@ def DEVELOPER() -> bool:
     from sys import argv;
 
     return ( '-dev' in argv );
+
+from src.main import discord
+def IS_OWNER( user: discord.User | discord.Member | int ) -> bool:
+    '''
+    Returns whatever this user is the owner of this app
+    '''
+
+    from src.CConfigSystem import g_Config;
+
+    if isinstance( user, int ):
+
+        return ( g_Config.configuration[ "owner_id" ] == user );
+
+    return ( user and g_Config.configuration[ "owner_id" ] == user-id );
