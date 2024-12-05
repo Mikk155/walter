@@ -178,15 +178,13 @@ class g_PluginManager:
 
             from src.constdef import DEVELOPER;
 
-            if not DEVELOPER():
-
-                g_PluginManager.m_Logger.debug(
-                    "plugin_manager.requirements",
-                    [
-                        plugin.replace( '.py', '.txt' ), r
-                    ],
-                    dev=True
-                );
+            g_PluginManager.m_Logger.debug(
+                "plugin_manager.requirements",
+                [
+                    plugin.replace( '.py', '.txt' ), r
+                ],
+                dev=True
+            );
 
         except CalledProcessError as e:
 
@@ -246,11 +244,13 @@ class g_PluginManager:
 
                     continue;
 
-                requirements = pyfile.replace( '.py', '_requirements.txt' );
+                if not DEVELOPER():
 
-                if exists( requirements ):
+                    requirements = pyfile.replace( '.py', '_requirements.txt' );
 
-                    g_PluginManager.install_requirements( requirements, plugin[ "script" ] );
+                    if exists( requirements ):
+
+                        g_PluginManager.install_requirements( requirements, plugin[ "script" ] );
 
                 spec = lib.spec_from_file_location( modulo, pyfile );
 
