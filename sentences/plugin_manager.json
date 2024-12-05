@@ -33,5 +33,15 @@
     {
         "english": "Removing ``{}`` to prevent recursion.",
         "spanish": "Quitando ``{}`` para prevenir recursión."
+    },
+    "author":
+    {
+        "english": "Author name",
+        "spanish": "Nombre del autor"
+    },
+    "contact":
+    {
+        "english": "Contact info",
+        "spanish": "Informacion de contacto"
     }
 }

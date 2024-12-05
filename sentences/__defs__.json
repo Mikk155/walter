@@ -19,5 +19,20 @@
     {
         "english": "Object ``{}`` initialized!",
         "spanish": "Objeto ``{}`` inicializado!"
+    },
+    "enabled":
+    {
+        "english": "Enabled",
+        "spanish": "Activado"
+    },
+    "disabled":
+    {
+        "english": "Disabled",
+        "spanish": "Desactivado"
+    },
+    "status":
+    {
+        "english": "Status",
+        "spanish": "Estatus"
     }
 }

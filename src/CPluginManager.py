@@ -219,6 +219,8 @@ class g_PluginManager:
                         dev=True
                     );
 
+                g_PluginManager.plugins[ plugin[ "script" ] ] = None;
+
                 continue;
 
             try:

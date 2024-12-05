@@ -400,6 +400,93 @@ async def on_think():
 #=======================================================================================
 
 #=======================================================================================
+# Initialize the plugin manager
+#=======================================================================================
+
+g_PluginManager.initialize();
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
+# plugin_info command
+#=======================================================================================
+
+my_plugin_choices = []
+
+for k, v in g_PluginManager.plugins.items():
+
+    my_plugin_choices.append( app_commands.Choice( name=k, value=v[ "name" ] if v else "" ) );
+
+print( my_plugin_choices );
+
+@bot.tree.command()
+@app_commands.guild_only()
+@app_commands.choices( plugin = my_plugin_choices )
+@app_commands.describe( plugin='Plugin' )
+async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Choice[str] ):
+    """Show plugins information"""
+
+    await interaction.response.defer( thinking=True );
+
+    try:
+
+        if plugin.name in g_PluginManager.plugins:
+
+            info = g_PluginManager.plugins[ plugin.name ];
+
+            embed = discord.Embed( title = plugin.name, color = 16711680 );
+
+            if info:
+
+                embed.title = info[ "name" ];
+
+                embed.description = info[ "description" ];
+
+                embed.add_field( inline = True,
+                    name = g_Sentences.get( "status", interaction.guild_id ),
+                    value = '✅ ' + g_Sentences.get( "enabled", interaction.guild_id )
+                );
+
+                embed.add_field( inline = True,
+                    name = g_Sentences.get( "plugin_manager.author", interaction.guild_id ),
+                    value = info[ "author" ]
+                );
+
+                embed.add_field( inline = True,
+                    name = g_Sentences.get( "plugin_manager.contact", interaction.guild_id ),
+                    value = info[ "contact" ]
+                );
+
+                if "hooks" in info and len( info[ "hooks" ] ) > 0:
+
+                    embed.add_field( inline = True,
+                        name = "Hooks",
+                        value = '``{}``'.format( info[ "hooks" ] )
+                    );
+
+            else:
+
+                embed.title = plugin.name;
+
+                embed.description = '❌ ' + g_Sentences.get( "disabled", interaction.guild_id );
+
+            await interaction.followup.send( embed=embed );
+
+        else:
+
+            await interaction.followup.send( g_Format.brackets( g_Sentences.get( "file.not.exists", interaction.guild_id ), [ plugin.name ] ) );
+
+    except Exception as e:
+
+        await bot.exception_handle( e, interaction=interaction );
+
+#=======================================================================================
+# END
+#=======================================================================================
+
+#=======================================================================================
 # run bot
 #=======================================================================================
 
@@ -434,8 +521,6 @@ def get_token() -> str:
     return token;
 
 try:
-
-    g_PluginManager.initialize();
 
     bot.run( token = get_token(), reconnect = True );
 
