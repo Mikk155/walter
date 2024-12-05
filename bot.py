@@ -48,14 +48,6 @@ async def on_start():
 
         bot.m_Logger.error( e );
 
-    if os.getenv( 'github' ):
-
-        print( "Run from {}".format( os.getenv( 'github' ) ) );
-
-        await bot.close();
-
-        exit(0);
-
     bot.__on_start_called__ = True;
 
 #=======================================================================================
@@ -394,6 +386,18 @@ async def on_think():
     except Exception as e:
 
         bot.m_Logger.error( e );
+
+    if os.getenv( 'github' ):
+
+        print( "Run from {}".format( os.getenv( 'github' ) ) );
+
+        bot.m_Logger.critical( "on.github.workflow", dev=True )
+
+        await on_think();
+
+        await bot.close();
+
+        exit(0);
 
 #=======================================================================================
 # END
