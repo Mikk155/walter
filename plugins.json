@@ -48,6 +48,15 @@
                 // Limitless Potential
                 744769532513615922
             ]
+        },
+        {
+            "script": "neko_marry_sare.py",
+            "Disable": false,
+            "servers":
+            [
+                // Limitless Potential
+                744769532513615922
+            ]
         }
     ],
     "$schema": "schema.json"
