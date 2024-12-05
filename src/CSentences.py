@@ -75,7 +75,8 @@ class g_Sentences:
 
         g_Sentences.languages = __languages__;
 
-        g_Sentences.push_back( "__defs__" );
+        g_Sentences.sentences = jsonc.load( g_Path.join( "sentences/__defs__.json" ) );
+
         g_Sentences.push_back( "bot" );
         g_Sentences.push_back( "cache" );
         g_Sentences.push_back( "language" );
