@@ -57,6 +57,10 @@
                 // Limitless Potential
                 744769532513615922
             ]
+        },
+        {
+            "script": "pick.py",
+            "Disable": false
         }
     ],
     "$schema": "schema.json"
