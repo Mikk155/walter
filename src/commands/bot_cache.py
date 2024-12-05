@@ -72,7 +72,7 @@ async def dev_cache( interaction: discord.Interaction, json: discord.Attachment 
 
                         __json__ = jsonc.load( g_Path.join( "cache.json" ) );
 
-                        g_Cache.__cache__ = __json__;
+                        g_Cache.__cache__ = g_Cache.CCacheDictionary( __json__ );
 
                         await interaction.followup.send( g_Sentences.get( "cache.update.updated.cache", interaction.guild_id ) );
 

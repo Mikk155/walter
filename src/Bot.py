@@ -43,13 +43,17 @@ class Bot( discord.Client ):
 
         self.tree = app_commands.CommandTree( self )
 
-        self.m_Logger.info(
-            "object.initialized",
-            [
-                __name__
-            ],
-            dev=True
-        );
+        from src.constdef import DEVELOPER;
+
+        if not DEVELOPER():
+
+            self.m_Logger.info(
+                "object.initialized",
+                [
+                    __name__
+                ],
+                dev=True
+            );
 
     async def setup_hook(self):
 

@@ -31,7 +31,33 @@ class g_Cache:
     from src.CLogger import CLogger
     m_Logger = CLogger( "Cache System" );
 
-    __cache__: dict = {};
+    class CCacheDictionary( dict ):
+
+        def __getitem__( self, key ):
+
+            if key not in self:
+
+                self[ key ] = g_Cache.CCacheDictionary();
+
+            return super().__getitem__( key );
+
+        def __setitem__( self, key, value ):
+
+            if isinstance( value, ( dict | list ) ):
+
+                value = g_Cache.CCacheDictionary( value );
+
+            super().__setitem__( key, value );
+
+        def __repr__( self ):
+
+            from json import dumps;
+
+            __json__ = dumps( super().__repr__(), indent=4);
+
+            return __json__;
+
+    __cache__: CCacheDictionary = {};
     '''The whole cache (Do NOT modify directly! use g_Cache.get())'''
 
     @staticmethod
@@ -47,7 +73,9 @@ class g_Cache:
 
             open( __cache_dir__, 'w' ).write( '{\n}' )
 
-        cache = jsonc.load( g_Path.join( "cache.json" ) )
+        __json__ = jsonc.load( g_Path.join( "cache.json" ) )
+
+        g_Cache.__cache__ = g_Cache.CCacheDictionary( __json__ );
 
         from src.constdef import DEVELOPER;
 
@@ -61,73 +89,33 @@ class g_Cache:
                 dev=True
             );
 
-    class CCacheDictionary( dict ):
+    def __update__():
 
-        def update( self, custom = None ):
+        from json import dumps;
 
-            '''
-            Update value to the cache\n
-            This is only necesary when using self.pop or something else than indexing-value-set (__setitem__)
-            '''
+        # -TODO g_Cache.m_Logger.trace changes
 
-            from inspect import stack;
-            from json import dumps;
-
-            frame = stack()[1]; # Get caller plugin name
-
-            n = custom.filename if custom else frame.filename;
-
-            for s in [ '\\', '/' ]:
-
-                if s in n:
-
-                    n = n[ n.rfind( s ) + 1 if n.rfind( s ) != -1 else 0 : len( n ) ];
-
-            if n in [ 'main.py', 'bot.py' ]:
-
-                n = '__main__';
-
+        try: # Store cache context
 
             from src.CConfigSystem import g_Config;
 
-            # if "trace" in g_Config.configuration.get( "loggers", [] ):
+            obj = dumps( dict(g_Cache.__cache__), indent=4 );
 
-                # -TODO Trace cache changes appropaitely
-                # g_Cache.m_Logger.trace(
-                #     "cache.update.pair",
-                #     [
-                #         n, dumps( g_Cache.__cache__.get( n, {} ) ), dumps( self )
-                #     ],
-                #     dev=True
-                # );
+            if obj:
 
-            g_Cache.__cache__[ n ] = self; # Update cache context
+                from src.utils.Path import g_Path;
 
-            try: # Store cache context
+                open( g_Path.join( "cache.json" ), 'w' ).write( obj );
 
-                obj = dumps( g_Cache.__cache__, indent=4 );
+            else:
 
-                if obj:
+                raise Exception( "Failed to store cache." );
 
-                    from src.utils.Path import g_Path;
+        except Exception as e:
 
-                    open( g_Path.join( "cache.json" ), 'w' ).write( obj );
+            print( e );
 
-                else:
-
-                    raise Exception( "Failed to store cache." );
-
-            except: # There's nothing to do so pass.
-
-                pass;
-
-        def __setitem__(self, key, value):
-
-            super().__setitem__( key, value );
-
-            from inspect import stack;
-
-            self.update( stack()[1] );
+            pass;
 
     @staticmethod
     def get() -> CCacheDictionary:
@@ -148,8 +136,8 @@ class g_Cache:
 
                 n = n[ n.rfind( s ) + 1 if n.rfind( s ) != -1 else 0 : len( n ) ];
 
-        if n in [ 'main.py', 'bot.py' ]:
+        if n.startswith( "src." ) or n == 'bot.py':
 
             n = '__main__';
 
-        return g_Cache.CCacheDictionary( g_Cache.__cache__.get( n,  { } ) );
+        return g_Cache.__cache__[ n ];

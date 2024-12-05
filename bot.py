@@ -45,13 +45,15 @@ initialize();
 
 async def on_start():
 
-    bot.m_Logger.info(
-        "object.initialized",
-        [
-            f'{__name__}(bot.py)'
-        ],
-        dev=True
-    );
+    if not DEVELOPER():
+
+        bot.m_Logger.info(
+            "object.initialized",
+            [
+                f'{__name__}(bot.py)'
+            ],
+            dev=True
+        );
 
     try:
 
@@ -349,6 +351,8 @@ async def on_typing( channel: discord.TextChannel | discord.GroupChannel | disco
 async def on_think():
 
     await bot.wait_until_ready()
+
+    g_Cache.__update__();
 
     async_think = []
 
