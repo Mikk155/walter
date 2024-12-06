@@ -81,6 +81,8 @@ class Hooks:
     on_think = 'on_think';
     '''
 	Called every 1 second
+
+    **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
     '''
 
     on_mention = 'on_mention';

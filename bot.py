@@ -324,7 +324,7 @@ async def on_typing( channel: discord.TextChannel | discord.GroupChannel | disco
 # on_think
 #=======================================================================================
 
-@tasks.loop( seconds = 10.0, name=Hooks.on_think )
+@tasks.loop( seconds = 1.0, name=Hooks.on_think )
 async def on_think():
 
     await bot.wait_until_ready()
