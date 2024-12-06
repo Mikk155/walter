@@ -63,7 +63,13 @@ class g_Format:
 
             icount += 1;
 
-            app_commands_choices.append( app_commands.Choice( name=k, value=str(v) if isinstance( v, int ) else v ) );
+            if isinstance( k, int ):
+
+                app_commands_choices.append( app_commands.Choice( name=v, value=str(k) ) );
+
+            else:
+
+                app_commands_choices.append( app_commands.Choice( name=k, value=v ) );
 
         return app_commands_choices;
 
