@@ -68,6 +68,10 @@
         {
             "script": "count_together.py",
             "Disable": false
+        },
+        {
+            "script": "fix_embeeds.py",
+            "Disable": false
         }
     ],
     "$schema": "schema.json"
