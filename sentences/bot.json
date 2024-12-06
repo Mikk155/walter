@@ -1,8 +1,8 @@
 {
     "run.devmode":
     {
-        "english": "BOT trying to run in -dev mode but has no argument for \"{}\"",
-        "spanish": "El BOT intento correr en modo -dev pero no tiene argumento en \"{}\""
+        "english": "BOT trying to run in -dev mode but has no argument for \"{}\". App commands won't be updated.",
+        "spanish": "El BOT intento correr en modo -dev pero no tiene argumento en \"{}\"Los comandos de app no serán actualizados."
     },
     "on.ready":
     {

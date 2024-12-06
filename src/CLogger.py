@@ -58,9 +58,13 @@ class g_DelayedLog:
                 server_id: int      = g_DelayedLog.delayed_logs[0][2];
                 is_log_server: bool = g_DelayedLog.delayed_logs[0][3];
 
-                if is_log_server:
+                if is_log_server and "log_channel" in g_Config.configuration:
 
-                    channel_id = g_Config.configuration[ "log_id" ];
+                    channel = bot.get_channel( g_Config.configuration[ "log_channel" ] );
+
+                    if channel:
+
+                        await channel.send( content=message );
 
                 if channel_id != INVALID_INDEX():
 

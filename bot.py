@@ -480,18 +480,14 @@ async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Ch
 # run bot
 #=======================================================================================
 
-def get_token() -> str:
+try:
 
-    token = g_Config.configuration[ "token_dev" if DEVELOPER() else "token" ];
+    token: str = g_Config.configuration[ "token" if not "token_dev" in g_Config.configuration else "token_dev" ];
 
     g_Config.configuration.pop( 'token', None );
     g_Config.configuration.pop( 'token_dev', None );
 
-    return token;
-
-try:
-
-    bot.run( token = get_token(), reconnect = True );
+    bot.run( token = token, reconnect = True );
 
 except Exception as e:
 

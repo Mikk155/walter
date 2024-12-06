@@ -74,9 +74,9 @@ def IS_OWNER( user: discord.User | discord.Member | int ) -> bool:
 
     if isinstance( user, int ):
 
-        return ( g_Config.configuration[ "owner_id" ] == user );
+        return ( g_Config.configuration[ "owner" ] == user );
 
-    return ( user and g_Config.configuration[ "owner_id" ] == user-id );
+    return ( user and g_Config.configuration[ "owner" ] == user-id );
 
 def COMMON_TIMEZONES() -> list:
 

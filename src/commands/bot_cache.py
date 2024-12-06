@@ -51,7 +51,7 @@ async def dev_cache( interaction: discord.Interaction, json: discord.Attachment 
                         interaction.guild_id
                     ),
                     [
-                        g_Config.configuration[ "owner_id" ]
+                        g_Config.configuration[ "owner" ]
                     ]
                 )
             );

@@ -58,19 +58,17 @@ class Bot( discord.Client ):
     async def setup_hook(self):
 
         from src.CConfigSystem import g_Config;
-        from src.constdef import INVALID_INDEX, DEVELOPER;
+        from src.constdef import DEVELOPER;
 
         if DEVELOPER():
 
-            server_id: int = g_Config.configuration[ "server_id" ];
+            if not "developer_guild" in g_Config.configuration:
 
-            if server_id == INVALID_INDEX():
+                _e_ = self.m_Logger.critical( "bot.run.devmode", [ "developer->guild->int" ] );
 
-                _e_ = self.m_Logger.critical( "bot.run.devmode", [ "server_id" ] );
+                raise Exception( _e_ );
 
-                raise _e_;
-
-            __MY_GUILD__ = discord.Object( id = server_id );
+            __MY_GUILD__ = discord.Object( id = g_Config.configuration[ "developer_guild" ] );
 
             self.tree.clear_commands( guild=__MY_GUILD__ );
 
@@ -81,6 +79,8 @@ class Bot( discord.Client ):
         else:
 
             await self.tree.sync();
+
+        g_Config.configuration.pop( "developer_guild", None );
 
     async def exception_handle( self, exception: ( Exception | str ), interaction: ( discord.Interaction | discord.Member | discord.TextChannel ) = None, additional_commentary: str = None, concurrent: bool = False ) -> None:
         '''

@@ -7,27 +7,40 @@
         {
             "type": "string"
         },
-        "server_id":
-        {
-            "type": "integer",
-            "description": "The ID of your main server"
-        },
         "token":
         {
             "type": "string",
             "description": "Your discord BOT application token"
         },
-        "token_dev":
+        "developer":
         {
-            "type": "string",
-            "description": "Your discord BOT application token when running with -dev arg"
+            "type": "object",
+            "properties":
+            {
+                "token":
+                {
+                    "type": "string",
+                    "description": "Your discord BOT application token. if not set it will use the general token"
+                },
+                "guild":
+                {
+                    "type": "integer",
+                    "description": "The ID of your main server for sync app_commands fast"
+                }
+            },
+            "additionalProperties": false,
+            "required":
+            [
+                "guild"
+            ],
+            "description": "Variables used when the bot is run with the ``-dev`` argument."
         },
-        "log_id":
+        "log_channel":
         {
             "type": "integer",
             "description": "The Channel ID of your main server for output debugging messages"
         },
-        "owner_id":
+        "owner":
         {
             "type": "integer",
             "description": "The owner ID. This user will have total authority over the bot code"
@@ -93,6 +106,7 @@
     "required":
     [
         "plugins",
+        "token",
         "$schema"
     ]
 }

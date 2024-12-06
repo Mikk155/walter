@@ -1,8 +1,10 @@
 {
     "token": "your bot token",
-    "server_id": 1145236064596918304,
-    "log_id": 1145236065238667267,
-    "owner_id": 744768007892500481,
+
+    "log_channel": 1145236065238667267,
+
+    "owner": 744768007892500481,
+
     "loggers":
     [
         "debug",
@@ -10,6 +12,12 @@
         //"trace",
         "info"
     ],
+
+    "developer":
+    {
+        "guild": 1145236064596918304
+    },
+
     "plugins":
     [
         {
@@ -79,5 +87,6 @@
             "Disable": false
         }
     ],
+
     "$schema": "schema.json"
 }

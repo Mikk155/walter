@@ -90,7 +90,7 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
                         interaction.guild_id
                     ),
                     [
-                        g_Config.configuration[ "owner_id" ]
+                        g_Config.configuration[ "owner" ]
                     ]
                 )
             );

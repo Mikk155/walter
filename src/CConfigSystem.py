@@ -44,19 +44,29 @@ class g_Config:
         from src.utils.CJsonCommentary import jsonc;
         from src.constdef import INVALID_INDEX;
 
-        __plugins__ = jsonc.load( g_Path.join( "config.json" ) )
+        __config__ = jsonc.load( g_Path.join( "config.json" ) )
 
-        loggers = __plugins__.get( "loggers", [ "debug", "warning", "info", "trace" ] );
+        if "guild" in __config__.get( "developer", {} ):
+
+            g_Config.configuration[ "developer_guild" ] = __config__.get( "developer", {} )[ "guild" ];
+
+        if "token" in __config__.get( "developer", {} ):
+
+            g_Config.configuration[ "token_dev" ] = __config__.get( "developer", {} )[ "token" ];
+
+        loggers = __config__.get( "loggers", [ "debug", "warning", "info", "trace" ] );
+
+        # These are required.
         loggers.append( "critical" );
         loggers.append( "error" );
-        g_Config.configuration[ "loggers" ] = loggers;
-        g_Config.configuration[ "server_id" ]  = __plugins__.get( "server_id", INVALID_INDEX() );
-        g_Config.configuration[ "log_id" ]     = __plugins__.get( "log_id", INVALID_INDEX() );
-        g_Config.configuration[ "owner_id" ]   = __plugins__.get( "owner_id", INVALID_INDEX() );
-        g_Config.configuration[ "token" ]   = __plugins__.get( "token", INVALID_INDEX() );
-        g_Config.configuration[ "token_dev" ]   = __plugins__.get( "token_dev", INVALID_INDEX() );
 
-        g_Config.plugins = __plugins__.get( "plugins", [] );
+        g_Config.configuration[ "loggers" ] = loggers;
+
+        g_Config.configuration[ "log_channel" ]     = __config__.get( "log_channel", INVALID_INDEX() );
+        g_Config.configuration[ "owner" ]   = __config__.get( "owner", INVALID_INDEX() );
+        g_Config.configuration[ "token" ]   = __config__.get( "token", INVALID_INDEX() );
+
+        g_Config.plugins = __config__.get( "plugins", [] );
 
         from src.constdef import DEVELOPER;
 
