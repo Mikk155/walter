@@ -43,7 +43,7 @@ def on_initialization() -> dict:
 
 async def on_link( message: discord.Message, urls: list[str] ) -> int:
 
-    fix_embeeds_kvp = {
+    fix_embeds_kvp = {
         # https://github.com/Wikidepia/InstaFix
         "www.instagram.com": "www.ddinstagram.com",
 
@@ -53,7 +53,7 @@ async def on_link( message: discord.Message, urls: list[str] ) -> int:
 
     formatted = None;
 
-    for link, replace in fix_embeeds_kvp.items():
+    for link, replace in fix_embeds_kvp.items():
 
         if link in message.content:
 

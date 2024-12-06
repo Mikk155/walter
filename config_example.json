@@ -79,7 +79,7 @@
             "Disable": false
         },
         {
-            "script": "fix_embeeds.py",
+            "script": "fix_embeds.py",
             "Disable": false
         },
         {
