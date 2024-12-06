@@ -22,6 +22,16 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
+def DEVELOPER() -> bool:
+
+    '''
+    Returns whatever the bot has been run with the ``-dev`` argument
+    '''
+
+    from sys import argv;
+
+    return ( '-dev' in argv );
+
 def HOOK_CONTINUE() -> int:
 
     '''
@@ -53,17 +63,6 @@ def CHARACTER_LIMIT() -> int:
     '''
 
     return 2000;
-
-
-def DEVELOPER() -> bool:
-
-    '''
-    Returns whatever the bot has been run with the ``-dev`` argument
-    '''
-
-    from sys import argv;
-
-    return ( '-dev' in argv );
 
 from src.main import discord
 def IS_OWNER( user: discord.User | discord.Member | int ) -> bool:

@@ -1,6 +1,7 @@
 {
-    "server_id": 744769532513615922,
-    "log_id": 1211204941490688030,
+    "token": "your bot token",
+    "server_id": 1145236064596918304,
+    "log_id": 1145236065238667267,
     "owner_id": 744768007892500481,
     "loggers":
     [
@@ -71,6 +72,10 @@
         },
         {
             "script": "fix_embeeds.py",
+            "Disable": false
+        },
+        {
+            "script": "Activity.py",
             "Disable": false
         }
     ],

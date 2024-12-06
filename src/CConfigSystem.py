@@ -44,7 +44,7 @@ class g_Config:
         from src.utils.CJsonCommentary import jsonc;
         from src.constdef import INVALID_INDEX;
 
-        __plugins__ = jsonc.load( g_Path.join( "plugins.json" ) )
+        __plugins__ = jsonc.load( g_Path.join( "config.json" ) )
 
         loggers = __plugins__.get( "loggers", [ "debug", "warning", "info", "trace" ] );
         loggers.append( "critical" );
@@ -53,6 +53,8 @@ class g_Config:
         g_Config.configuration[ "server_id" ]  = __plugins__.get( "server_id", INVALID_INDEX() );
         g_Config.configuration[ "log_id" ]     = __plugins__.get( "log_id", INVALID_INDEX() );
         g_Config.configuration[ "owner_id" ]   = __plugins__.get( "owner_id", INVALID_INDEX() );
+        g_Config.configuration[ "token" ]   = __plugins__.get( "token", INVALID_INDEX() );
+        g_Config.configuration[ "token_dev" ]   = __plugins__.get( "token_dev", INVALID_INDEX() );
 
         g_Config.plugins = __plugins__.get( "plugins", [] );
 

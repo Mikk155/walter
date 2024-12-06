@@ -12,6 +12,16 @@
             "type": "integer",
             "description": "The ID of your main server"
         },
+        "token":
+        {
+            "type": "string",
+            "description": "Your discord BOT application token"
+        },
+        "token_dev":
+        {
+            "type": "string",
+            "description": "Your discord BOT application token when running with -dev arg"
+        },
         "log_id":
         {
             "type": "integer",

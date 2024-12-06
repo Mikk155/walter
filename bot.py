@@ -482,25 +482,10 @@ async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Ch
 
 def get_token() -> str:
 
-    __token__: list[str] = [ INVALID_INDEX(), INVALID_INDEX() ];
+    token = g_Config.configuration[ "token_dev" if DEVELOPER() else "token" ];
 
-    tokens: str = g_Path.join( 'tokens.txt' );
-
-    if os.path.exists( tokens ):
-
-        __token__ = open( tokens, 'r' ).readlines();
-
-    else:
-
-        bot.m_Logger.critical( "file.not.exists", [ tokens ] );
-
-        exit(0)
-
-    token = __token__[ 1 if DEVELOPER() else 0 ];
-
-    if not isinstance( token, str ):
-
-        token = str(token);
+    g_Config.configuration.pop( 'token', None );
+    g_Config.configuration.pop( 'token_dev', None );
 
     return token;
 
