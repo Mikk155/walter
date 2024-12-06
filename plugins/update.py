@@ -65,6 +65,8 @@ def on_initialization() -> dict:
     __data__["name"] = "Update the bot";
     __data__["description"] = "Updates the bot (re-run) and Fetch&Pull lastest changes from the github upstream repository";
 
+    g_Sentences.push_back( "update" );
+
     # Return data for g_PluginManager
     return __data__;
 
@@ -79,18 +81,18 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
 
     try:
 
-        if IS_OWNER( interaction.user.id ):
+        if not IS_OWNER( interaction.user.id ):
 
             await interaction.followup.send(
                 g_Format.brackets(
                     g_Sentences.get(
                         "only.owner",
                         interaction.guild_id
-                    )
-                ),
-                [
-                    g_Config.configuration[ "owner_id" ]
-                ]
+                    ),
+                    [
+                        g_Config.configuration[ "owner_id" ]
+                    ]
+                )
             );
 
             return;
@@ -98,7 +100,6 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
         if git:
 
             repo = Repo( g_Path.workspace() );
-            
 
             origin = repo.remotes.origin;
 
@@ -127,12 +128,10 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
 
         await interaction.followup.send( g_Sentences.get( "update.restarting", interaction.guild_id  ) );
 
-        bot_path = os.path.join( os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ), 'bot.py' );
-
         await bot.close();
 
         # -TODO Pass on all the arguments
-        os.execv( sys.executable, [ sys.executable, bot_path, '-dev' if DEVELOPER() else '' ] );
+        os.execv( sys.executable, [ sys.executable, g_Path.join( 'bot.py' ), '-dev' if DEVELOPER() else '' ] );
 
     except Exception as e:
 
