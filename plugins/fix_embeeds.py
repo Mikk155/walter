@@ -51,24 +51,34 @@ async def on_link( message: discord.Message, urls: list[str] ) -> int:
         "https://x.com/": "https://fxtwitter.com/",
     };
 
+    formatted = None;
+
     for link, replace in fix_embeeds_kvp.items():
 
         if link in message.content:
 
             author = message.author;
 
-            formatted = message.content.replace( link, replace );
+            if formatted:
 
-            avatar = author.avatar.url if author.avatar else None;
+                formatted = formatted.replace( link, replace );
 
-            username = author.display_name;
+            else:
 
-            webhook = await message.channel.create_webhook(name='fixembed_cmd')
+                formatted = message.content.replace( link, replace );
 
-            await webhook.send( content=formatted, username=username, avatar_url=avatar );
+    if formatted:
 
-            await message.delete();
+        avatar = author.avatar.url if author.avatar else None;
 
-            await webhook.delete();
+        username = author.display_name;
+
+        webhook = await message.channel.create_webhook(name='fixembed_cmd')
+
+        await webhook.send( content=formatted, username=username, avatar_url=avatar );
+
+        await message.delete();
+
+        await webhook.delete();
 
     return HOOK_CONTINUE();
