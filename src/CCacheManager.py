@@ -43,7 +43,7 @@ class g_Cache:
 
         def __setitem__( self, key, value ):
 
-            if isinstance( value, ( dict | list ) ):
+            if isinstance( value, dict ):
 
                 value = g_Cache.CCacheDictionary( value );
 
