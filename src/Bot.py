@@ -82,27 +82,6 @@ class Bot( discord.Client ):
 
             await self.tree.sync();
 
-    def get_exception_data(self, v) -> dict:
-        '''
-        Get a dictionary with data from V (Any discord member)
-        '''
-
-        data: dict = {}
-
-#        if isinstance( v, discord.Interaction ) or isinstance( v, discord.Message ) or isinstance( v, discord.text ):
-
-        try:
-            if v.channel:
-                data["channel_id"] = v.channel.id;
-                data["channel"] = v.channel.name;
-            if v.guild:
-                data["guild_id"] = v.guild.id;
-                data["guild"] = v.guild.name;
-        except Exception as e:
-            pass
-
-        return data;
-
     async def exception_handle( self, exception: ( Exception | str ), interaction: ( discord.Interaction | discord.Member | discord.TextChannel ) = None, additional_commentary: str = None, concurrent: bool = False ) -> None:
         '''
         Handles an exception.
@@ -125,7 +104,34 @@ class Bot( discord.Client ):
 
                 __ext_fmt__ = '';
 
-                __json__ = self.get_exception_data( interaction );
+                __json__: dict = {}
+
+        #        if isinstance( v, discord.Interaction ) or isinstance( v, discord.Message ) or isinstance( v, discord.text ):
+
+                if interaction:
+
+                    try:
+                        if interaction.channel:
+                            __json__["channel_id"] = interaction.channel.id;
+                            __json__["channel"] = interaction.channel.name;
+                        if interaction.guild:
+                            __json__["guild_id"] = interaction.guild.id;
+                            __json__["guild"] = interaction.guild.name;
+                    except Exception as e:
+                        pass
+
+                from sys import exc_info;
+                from src.utils.Path import g_Path;
+                from traceback import extract_tb;
+
+                exc_type, exc_value, exc_traceback = exc_info()
+
+                last_frame = extract_tb(exc_traceback)[-1]
+
+                __json__[ "file" ] = last_frame.filename.replace( g_Path.workspace(), '' );
+                __json__[ "caller" ] = last_frame.name;
+                __json__[ "line" ] = last_frame.lineno;
+                __json__[ "exception" ] = str(exception);
 
                 if len(__json__) > 0:
                 
