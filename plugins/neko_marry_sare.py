@@ -59,7 +59,7 @@ async def on_message( message: discord.Message ) -> int:
 
                 number += 1;
 
-                await bot.get_channel( message.channel.id ).send( f"<@744768007892500481> has confesed his love to <@746914044828450856> {number} times.", mention_author=False );
+                await bot.get_channel( message.channel.id ).send( f"Mikk has confesed his love to Sare {number} times.", mention_author=False );
 
                 cache[ "times" ] = number;
 
