@@ -49,19 +49,21 @@ class g_Format:
 
         from discord import app_commands
 
-        app_commands_choices = []
+        icount = 0;
 
-        if isinstance( obj, dict ):
+        app_commands_choices = [];
 
-            for k, v in obj.items():
+        for k, v in obj.items() if isinstance( obj, dict ) else enumerate( obj ):
 
-                app_commands_choices.append( app_commands.Choice( name=k, value=v ) );
+            if icount >= 25:
 
-        else:
+                g_Format.m_Logger.warn( "to_command_choices object is bigger than 25 items" );
 
-            for i, k in enumerate(obj):
+                break;
 
-                app_commands_choices.append( app_commands.Choice( name=k, value=str(i) ) );
+            icount += 1;
+
+            app_commands_choices.append( app_commands.Choice( name=k, value=str(v) if isinstance( v, int ) else v ) );
 
         return app_commands_choices;
 
