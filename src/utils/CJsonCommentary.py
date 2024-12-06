@@ -81,7 +81,7 @@ class jsonc:
 
             if exists( object ):
 
-                with open( object, 'r' ) as __file__:
+                with open( file = object, mode = 'r', encoding = 'utf-8' ) as __file__:
         
                     object = __file__.readlines();
         
