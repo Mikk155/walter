@@ -79,7 +79,6 @@ class g_Sentences:
 
         g_Sentences.push_back( "bot" );
         g_Sentences.push_back( "cache" );
-        g_Sentences.push_back( "language" );
         g_Sentences.push_back( "logger" );
         g_Sentences.push_back( "plugin_manager" );
 

@@ -4,7 +4,6 @@
         "english": "Only the bot's owner (<@{}>) can do this task.",
         "spanish": "Solo el propietario del bot (<@{}>) puede efectuar esta accion."
     },
-    
     "file.not.exists":
     {
         "english": "File ``{}`` doesn't exists!",
