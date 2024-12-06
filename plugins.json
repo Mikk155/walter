@@ -65,8 +65,11 @@
         {
             "script": "ping_counter.py",
             "Disable": false
+        },
+        {
+            "script": "count_together.py",
+            "Disable": false
         }
     ],
     "$schema": "schema.json"
 }
-

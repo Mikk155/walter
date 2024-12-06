@@ -34,5 +34,10 @@
     {
         "english": "Status",
         "spanish": "Estatus"
+    },
+    "channel.configured":
+    {
+        "english": "Channel {} configured",
+        "spanish": "Canal {} configurado"
     }
 }
