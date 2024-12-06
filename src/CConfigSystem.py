@@ -53,7 +53,6 @@ class g_Config:
         g_Config.configuration[ "server_id" ]  = __plugins__.get( "server_id", INVALID_INDEX() );
         g_Config.configuration[ "log_id" ]     = __plugins__.get( "log_id", INVALID_INDEX() );
         g_Config.configuration[ "owner_id" ]   = __plugins__.get( "owner_id", INVALID_INDEX() );
-        g_Config.configuration[ "github_id" ]  = __plugins__.get( "github_id", INVALID_INDEX() );
 
         g_Config.plugins = __plugins__.get( "plugins", [] );
 

@@ -387,18 +387,6 @@ async def on_think():
 
         bot.m_Logger.error( e );
 
-    if os.getenv( 'github' ):
-
-        print( "Run from {}".format( os.getenv( 'github' ) ) );
-
-        bot.m_Logger.critical( "on.github.workflow", dev=True )
-
-        await on_think();
-
-        await bot.close();
-
-        exit(0);
-
 #=======================================================================================
 # END
 #=======================================================================================
@@ -496,23 +484,17 @@ def get_token() -> str:
 
     __token__: list[str] = [ INVALID_INDEX(), INVALID_INDEX() ];
 
-    if os.getenv( 'github' ):
+    tokens: str = g_Path.join( 'tokens.txt' );
 
-        __token__[0] = os.getenv( 'token' );
+    if os.path.exists( tokens ):
+
+        __token__ = open( tokens, 'r' ).readlines();
 
     else:
 
-        tokens: str = g_Path.join( 'tokens.txt' );
+        bot.m_Logger.critical( "file.not.exists", [ tokens ] );
 
-        if os.path.exists( tokens ):
-
-            __token__ = open( tokens, 'r' ).readlines();
-
-        else:
-
-            bot.m_Logger.critical( "file.not.exists", [ tokens ] );
-
-            exit(0)
+        exit(0)
 
     token = __token__[ 1 if DEVELOPER() else 0 ];
 

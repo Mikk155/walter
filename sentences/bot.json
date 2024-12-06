@@ -23,10 +23,5 @@
     {
         "english": "Server info:\n```json\n{}```\n",
         "spanish": "Informacion del servidor:\n```json\n{}```\n"
-    },
-    "on.github.workflow":
-    {
-        "english": "All tests ended in github workflows, Shutting down bot.",
-        "spanish": "Todas las pruebas terminaron en github workflows, Apagando bot."
     }
 }

@@ -22,11 +22,6 @@
             "type": "integer",
             "description": "The owner ID. This user will have total authority over the bot code"
         },
-        "github_id":
-        {
-            "type": "integer",
-            "description": "Github webhook channel ID, This is only required if you'd do use of github's workflows"
-        },
         "loggers":
         {
             "type": "array",
