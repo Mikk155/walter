@@ -49,7 +49,9 @@ async def dev_cache( interaction: discord.Interaction, json: discord.Attachment 
                     g_Sentences.get(
                         "only.owner",
                         interaction.guild_id
-                    ) ) [
+                    )
+                ),
+                [
                     g_Config.configuration[ "owner_id" ]
                 ]
             );

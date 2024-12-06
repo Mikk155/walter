@@ -86,7 +86,9 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
                     g_Sentences.get(
                         "only.owner",
                         interaction.guild_id
-                    ) ) [
+                    )
+                ),
+                [
                     g_Config.configuration[ "owner_id" ]
                 ]
             );
@@ -95,7 +97,8 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
 
         if git:
 
-            repo = Repo( os.path.abspath( "" ) );
+            repo = Repo( g_Path.workspace() );
+            
 
             origin = repo.remotes.origin;
 
