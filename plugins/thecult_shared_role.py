@@ -37,7 +37,7 @@ def on_initialization() -> dict:
     __data__["name"] = "The Cult Member Role";
     __data__["description"] = "Add The Cult Member role to users that exists in The Cult discord Server";
     __hooks__: list[Hooks] = [
-        Hooks.on_ready,
+        Hooks.on_start,
         Hooks.on_member_join,
         Hooks.on_member_remove
     ];
@@ -69,7 +69,7 @@ async def manage_role( member : discord.Member, add: bool = False ):
 
             await member.remove_roles( rol );
 
-async def on_ready() -> int:
+async def on_start() -> int:
 
     try:
 
