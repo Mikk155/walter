@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 import os
 import re
 import sys
+import pytz
 import json
 import random
 import asyncio
@@ -92,6 +93,7 @@ bot: discord.Client | Bot = Bot();
 import src.commands.language
 import src.commands.bot_cache
 import src.commands.server_logger
+import src.commands.timezone
 
 #=======================================================================================
 # END

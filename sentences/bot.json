@@ -23,5 +23,10 @@
     {
         "english": "Server info:\n```json\n{}```\n",
         "spanish": "Informacion del servidor:\n```json\n{}```\n"
+    },
+    "timezone":
+    {
+        "english": "Saved time zone ``{}`` for this server.",
+        "spanish": "Se guardo la zona horaria ``{}`` para este servidor."
     }
 }

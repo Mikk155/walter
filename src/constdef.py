@@ -78,3 +78,37 @@ def IS_OWNER( user: discord.User | discord.Member | int ) -> bool:
         return ( g_Config.configuration[ "owner_id" ] == user );
 
     return ( user and g_Config.configuration[ "owner_id" ] == user-id );
+
+def COMMON_TIMEZONES() -> list:
+
+    '''
+    Returns a list of common timezones
+    '''
+
+    return [
+        "UTC",
+        "America/Argentina/Cordoba",
+        "America/Lima",
+        "America/New_York",
+        "America/Los_Angeles",
+        "America/Mexico_City",
+        "Europe/London",
+        "Europe/Paris",
+        "Europe/Berlin",
+        "Europe/Moscow",
+        "Asia/Shanghai",
+        "Asia/Tokyo",
+        "Asia/Kolkata",
+        "Asia/Dubai",
+        "Africa/Johannesburg",
+        "Australia/Sydney",
+        "America/Sao_Paulo",
+        "Pacific/Auckland",
+        "Pacific/Honolulu",
+        "Asia/Singapore",
+        "America/Toronto",
+        "Asia/Seoul",
+        "America/Bogota",
+        "Asia/Jakarta",
+        "Europe/Istanbul"
+    ];

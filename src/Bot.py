@@ -174,3 +174,43 @@ class Bot( discord.Client ):
 
             print(e)
             pass
+
+    from datetime import datetime
+    from src.constdef import INVALID_INDEX
+    def time(self, server_id = INVALID_INDEX() ) -> datetime:
+
+        from datetime import datetime as dt;
+        from src.constdef import INVALID_INDEX;
+        from pytz import timezone, UnknownTimeZoneError, UTC;
+
+        '''
+        Get bot's date time now
+        
+        ``server_id`` Get the datetime for this server
+        '''
+
+        default_timezone = 'UTC'
+
+        time = None;
+
+        if server_id != INVALID_INDEX:
+
+            from src.CCacheManager import g_Cache;
+
+            cache = g_Cache.get( "timezone.py" );
+
+            if str( server_id ) in cache:
+
+                timezone_name = cache.get( str( server_id ), default_timezone );
+
+                try:
+
+                    timezone = timezone( timezone_name );
+
+                except UnknownTimeZoneError:
+
+                    timezone = timezone( default_timezone );
+
+                time = dt.now( timezone );
+        
+        return time if time else dt.now();
