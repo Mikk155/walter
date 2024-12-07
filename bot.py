@@ -333,20 +333,24 @@ async def on_think():
 
     async_think = []
 
-    for plugin in g_PluginManager.fnMethods[ Hooks.on_think ]:
+    def append_hook( list_async: list, fnMethodName: str ) -> list:
+
+        '''
+        Append an asyncronous hook
+        '''
 
         try:
 
             if not plugin in g_PluginManager.module_cache:
-                continue;
+                return list_async;
 
             module = g_PluginManager.module_cache[ plugin ];
 
-            hook = getattr( module, Hooks.on_think );
+            hook = getattr( module, fnMethodName );
 
-            if not hook in async_think:
+            if not hook in list_async:
 
-                async_think.append( hook() );
+                list_async.append( hook() );
 
         except Exception as e:
 
@@ -364,12 +368,18 @@ async def on_think():
                 'plugin_manager.callhook.exception',
                 [
                     plugin,
-                    Hooks.on_think,
+                    fnMethodName,
                     e,
                     __attribute__
                 ],
                 dev=True
             );
+
+        return list_async;
+
+    for plugin in g_PluginManager.fnMethods[ Hooks.on_think ]:
+
+        async_think = append_hook( async_think, Hooks.on_think );
 
     try:
 
