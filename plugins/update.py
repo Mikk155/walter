@@ -102,24 +102,29 @@ async def dev_update( interaction: discord.Interaction, git: bool = False, confi
 
         if config_json:
 
-            async with aiohttp.ClientSession() as session:
+            if not config_json.filename.endswith( '.json' ):
 
-                async with session.get( json.url ) as response:
+                await interaction.followup.send( g_Sentences.get( "only.json.file.support", interaction.guild_id ) );
 
-                    if response.status == 200:
+            else:
 
-                        data = await response.read();
+                async with aiohttp.ClientSession() as session:
 
-                        with open( g_Path.join( "config.json" ), "wb") as f:
+                    async with session.get( config_json.url ) as response:
 
-                            f.write( data );
+                        if response.status == 200:
 
-                        await interaction.followup.send( g_Sentences.get( "update.config.updated", interaction.guild_id ) );
+                            data = await response.read();
 
-                    else:
+                            with open( g_Path.join( "config.json" ), "wb") as f:
 
-                        # -TODO __defs__ message
-                        await interaction.followup.send( g_Sentences.get( "Couldn't download the file.", interaction.guild_id ) );
+                                f.write( data );
+
+                            await interaction.followup.send( g_Sentences.get( "update.config.updated", interaction.guild_id ) );
+
+                        else:
+
+                            await interaction.followup.send( g_Sentences.get( "can.not.download.file", interaction.guild_id ) );
 
         if git:
 

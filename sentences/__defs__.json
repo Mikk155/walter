@@ -34,6 +34,16 @@
         "english": "Status",
         "spanish": "Estatus"
     },
+    "only.json.file.support":
+    {
+        "english": "Only ``.json`` files are supported.",
+        "spanish": "Solo archivos ``.json`` son soportados."
+    },
+    "can.not.download.file":
+    {
+        "english": "Couldn't download file.",
+        "spanish": "No se pudo descargar el archivo."
+    },
     "channel.configured":
     {
         "english": "Channel {} configured",

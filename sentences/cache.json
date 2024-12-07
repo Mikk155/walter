@@ -4,11 +4,6 @@
         "english": "Updated ``{}`` from ```json\n{}```to```json\n{}```",
         "spanish": "Actualizado ``{}`` de ```json\n{}```a```json\n{}```"
     },
-    "update.file.nojson":
-    {
-        "english": "Only ``.json`` files are supported.",
-        "spanish": "Solo archivos ``.json`` son soportados."
-    },
     "update.file.updating":
     {
         "english": "Updating bot's cache...",
