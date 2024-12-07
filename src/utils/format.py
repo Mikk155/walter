@@ -57,7 +57,7 @@ class g_Format:
 
             if icount >= 25:
 
-                g_Format.m_Logger.warn( "to_command_choices object is bigger than 25 items" );
+                g_Format.m_Logger.warn( "format.command_choices.bigger" );
 
                 break;
 
@@ -79,4 +79,17 @@ class g_Format:
         Return a fixed ``discord.Member.mention`` string for globalization\n
         since a leading characters are added when the user has a custom nickname
         '''
-        return f"<@{user.id}>"
+
+        if user:
+
+            if isinstance( user, int ):
+
+                return f"<@{user}>";
+
+            else:
+
+                return f"<@{user.id}>";
+
+        g_Format.m_Logger.warn( "format.invalid.mention" );
+
+        return "";
