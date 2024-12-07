@@ -2,6 +2,7 @@ wip/*
 # Cache
 cache.json
 config.json
+config_lp.json
 dev.bat
 __pycache__
 **/__pycache__/**

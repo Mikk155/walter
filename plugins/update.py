@@ -73,8 +73,11 @@ def on_initialization() -> dict:
 @bot.tree.command()
 @app_commands.guild_only()
 @app_commands.default_permissions(administrator=True)
-@app_commands.describe( git='Fetch and pull lastest github\'s commits in the upstream repositor' )
-async def dev_update( interaction: discord.Interaction, git: bool = False ):
+@app_commands.describe(
+    git='Fetch and pull lastest github\'s commits in the upstream repositor',
+    config_json='New config json file to update'
+)
+async def dev_update( interaction: discord.Interaction, git: bool = False, config_json: discord.Attachment = None ):
     """Update the bot"""
 
     await interaction.response.defer( thinking=True );
@@ -96,6 +99,27 @@ async def dev_update( interaction: discord.Interaction, git: bool = False ):
             );
 
             return;
+
+        if config_json:
+
+            async with aiohttp.ClientSession() as session:
+
+                async with session.get( json.url ) as response:
+
+                    if response.status == 200:
+
+                        data = await response.read();
+
+                        with open( g_Path.join( "config.json" ), "wb") as f:
+
+                            f.write( data );
+
+                        await interaction.followup.send( g_Sentences.get( "update.config.updated", interaction.guild_id ) );
+
+                    else:
+
+                        # -TODO __defs__ message
+                        await interaction.followup.send( g_Sentences.get( "Couldn't download the file.", interaction.guild_id ) );
 
         if git:
 

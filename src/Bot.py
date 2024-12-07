@@ -106,8 +106,6 @@ class Bot( discord.Client ):
 
                 __json__: dict = {}
 
-        #        if isinstance( v, discord.Interaction ) or isinstance( v, discord.Message ) or isinstance( v, discord.text ):
-
                 if interaction:
 
                     try:

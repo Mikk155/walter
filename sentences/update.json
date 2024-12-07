@@ -13,5 +13,10 @@
     {
         "english": "Restarting.. [gif](https://tenor.com/view/do-not-run-python-python-computer-python-coding-coding-funny-coding-meme-gif-10365831290651691441)",
         "spanish": "Reiniciando.. [gif](https://cdn.discordapp.com/attachments/1211204941490688030/1294477757572583444/caption.gif?ex=670b27db&is=6709d65b&hm=b38c1ce3ebee1fa34249afe85febe069bdd5add7897045a6d2d98904a486c7c5&)"
+    },
+    "update.config.updated":
+    {
+        "english": "config.json has been updated.",
+        "spanish": "config.json ha sido actualizado."
     }
 }
