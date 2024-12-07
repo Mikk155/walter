@@ -43,6 +43,7 @@ def on_initialization() -> dict:
 
 @bot.tree.command()
 @app_commands.guild_only()
+@app_commands.default_permissions(administrator=True)
 @app_commands.describe( channel='Channel', number='Last number sent in the channel' )
 async def cfg_count_together( interaction: discord.Interaction, channel: discord.TextChannel, number: int ):
     """Configure a channel as a count-together channel"""
