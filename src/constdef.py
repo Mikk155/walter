@@ -111,3 +111,18 @@ def COMMON_TIMEZONES() -> list:
         "Asia/Jakarta",
         "Europe/Istanbul"
     ];
+
+LUNES       = 1
+MARTES      = 2
+MIERCOLES   = 3
+JUEVES      = 4
+VIERNES     = 5
+SABADO      = 6
+DOMINGO     = 7
+MONDAY      = 1
+TUESDAY     = 2
+WEDNESDAY   = 3
+THURSDAY    = 4
+FRIDAY      = 5
+SATURDAY    = 6
+SUNDAY      = 7

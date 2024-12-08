@@ -78,7 +78,7 @@ async def on_think_day( guild: discord.Guild ) -> int:
 
     date = datetime.datetime.now();
 
-    if date.isoweekday() != 7:
+    if date.isoweekday() != VIERNES:
 
         return HOOK_CONTINUE();
 
