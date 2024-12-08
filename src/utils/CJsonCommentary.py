@@ -32,7 +32,43 @@ class jsonc:
     m_Logger = CLogger( "Json" );
 
     @staticmethod
-    def __format__( object : list[str] | str ) -> dict | list:
+    def load( object: str, exists_ok = False ) -> dict | list:
+
+        '''
+        Open a json file ignoring single-line commentary
+
+        Returns empty dict if an Exception is thrown
+
+        **object** Path to a json file or a string with json format
+
+        **exists_ok** If true when the file doesn't exist we create it and return a empty dict instead of throwing a warning error
+        '''
+
+        from os.path import exists;
+
+        filenm = None
+
+        if object.endswith( '.json' ):
+
+            filenm = object;
+
+            if exists( object ):
+
+                with open( file = object, mode = 'r', encoding = 'utf-8' ) as __file__:
+        
+                    object = __file__.readlines();
+
+            elif exists_ok:
+
+                open( object, 'w' ).write( "{\n}" );
+
+                return {};
+
+            else:
+
+                jsonc.m_Logger.error( "file.not.exists", [ object ], dev=True );
+
+                return {};
 
         from json import loads
 
@@ -60,34 +96,7 @@ class jsonc:
 
         except Exception as e:
 
-            jsonc.m_Logger.error( 'can.not.open', [ e ], dev=True );
+            jsonc.m_Logger.error( 'can.not.open', [ filenm if filenm else 'object' ], dev=True );
+            jsonc.m_Logger.error( e, dev=True );
 
         return {};
-
-    @staticmethod
-    def load( object: str ) -> dict | list:
-
-        '''
-        Open a json file ignoring single-line commentary
-
-        Returns empty dict if an Exception is thrown
-
-        **object** Path to a json file or a string with json format
-        '''
-
-        from os.path import exists;
-
-        if object.endswith( '.json' ):
-
-            if exists( object ):
-
-                with open( file = object, mode = 'r', encoding = 'utf-8' ) as __file__:
-        
-                    object = __file__.readlines();
-        
-            else:
-
-                jsonc.m_Logger.critical( "file.not.exists", [ object ], dev=True );
-                return jsonc.__format__( ["{}"] );
-
-        return jsonc.__format__(object);
