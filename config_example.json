@@ -22,7 +22,6 @@
     [
         {
             "script": "thecult_shared_role.py",
-            "Disable": false,
             "servers":
             [
                 // Limitless Potential
@@ -41,16 +40,13 @@
             ]
         },
         {
-            "script": "update.py",
-            "Disable": false
+            "script": "update.py"
         },
         {
-            "script": "member_say.py",
-            "Disable": false
+            "script": "member_say.py"
         },
         {
             "script": "control_arase.py",
-            "Disable": false,
             "servers":
             [
                 // Limitless Potential
@@ -59,7 +55,6 @@
         },
         {
             "script": "neko_marry_sare.py",
-            "Disable": false,
             "servers":
             [
                 // Limitless Potential
@@ -67,32 +62,25 @@
             ]
         },
         {
-            "script": "pick.py",
-            "Disable": false
+            "script": "pick.py"
         },
         {
-            "script": "ping_counter.py",
-            "Disable": false
+            "script": "ping_counter.py"
         },
         {
-            "script": "count_together.py",
-            "Disable": false
+            "script": "count_together.py"
         },
         {
-            "script": "fix_embeds.py",
-            "Disable": false
+            "script": "fix_embeds.py"
         },
         {
-            "script": "Activity.py",
-            "Disable": false
+            "script": "Activity.py"
         },
         {
-            "script": "feliz_jueves.py",
-            "Disable": false
+            "script": "feliz_jueves.py"
         },
         {
-            "script": "hoy_es_viernes.py",
-            "Disable": false
+            "script": "hoy_es_viernes.py"
         }
     ],
 
