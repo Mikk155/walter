@@ -109,6 +109,24 @@
 		"body" : "async def on_think() -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
 		"scope": "python"
 	},
+	"on_think_minute":
+	{
+		"prefix": "on_think_minute",
+		"body" : "async def on_think_minute() -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
+		"scope": "python"
+	},
+	"on_think_hour":
+	{
+		"prefix": "on_think_hour",
+		"body" : "async def on_think_hour() -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
+		"scope": "python"
+	},
+	"on_think_day":
+	{
+		"prefix": "on_think_day",
+		"body" : "async def on_think_day( guild: discord.Guild ) -> int:\n\n\t${1:}\n\n\treturn HOOK_CONTINUE();\n",
+		"scope": "python"
+	},
 	"on_mention":
 	{
 		"prefix": "on_mention",

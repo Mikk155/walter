@@ -307,7 +307,7 @@ async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
 
 @bot.event
 async def on_typing( channel: discord.TextChannel | discord.GroupChannel | discord.DMChannel, user: discord.Member | discord.User, when: datetime.datetime ):
-    
+
     try:
 
         await g_PluginManager.callhook( 'on_typing', channel, user, when, guild=channel.guild );
@@ -333,7 +333,7 @@ async def on_think():
 
     async_think = []
 
-    def append_hook( list_async: list, fnMethodName: str ) -> list:
+    def append_hook( list_async: list, fnMethodName: str, arg = None ) -> list:
 
         '''
         Append an asyncronous hook
@@ -341,7 +341,7 @@ async def on_think():
 
         try:
 
-            if not plugin in g_PluginManager.module_cache:
+            if not plugin in g_PluginManager.module_cache or not plugin in g_PluginManager.fnMethods[ fnMethodName ]:
                 return list_async;
 
             module = g_PluginManager.module_cache[ plugin ];
@@ -350,7 +350,13 @@ async def on_think():
 
             if not hook in list_async:
 
-                list_async.append( hook() );
+                if arg:
+
+                    list_async.append( hook(arg) );
+
+                else:
+
+                    list_async.append( hook() );
 
         except Exception as e:
 
@@ -380,6 +386,54 @@ async def on_think():
     for plugin in g_PluginManager.fnMethods[ Hooks.on_think ]:
 
         async_think = append_hook( async_think, Hooks.on_think );
+
+    now = bot.time();
+
+    if g_PluginManager.on_time_minute < now:
+
+        for plugin in g_PluginManager.fnMethods[ Hooks.on_think_minute ]:
+
+            async_think = append_hook( async_think, Hooks.on_think_minute );
+
+        if g_PluginManager.on_time_hour < now:
+
+            for plugin in g_PluginManager.fnMethods[ Hooks.on_think_hour ]:
+
+                async_think = append_hook( async_think, Hooks.on_think_hour );
+
+            if g_PluginManager.on_time_day != now.day:
+
+                for guild in bot.guilds:
+
+                    if guild and not guild in g_PluginManager.on_time_listday:
+
+                            async_think = append_hook( async_think, Hooks.on_think_day, guild );
+
+                g_PluginManager.on_time_day = now.day;
+
+            timezones = dict( g_Cache.get( "timezone.py" ) );
+
+            for server, timezone in timezones.items():
+
+                srv_now = bot.time( int( server ) );
+
+                srv_old = g_PluginManager.on_time_listday.get( server, srv_now.day );
+
+                if srv_old != srv_now.day:
+
+                    for plugin in g_PluginManager.fnMethods[ Hooks.on_think_day ]:
+
+                        guild = bot.get_guild( int(server) )
+
+                        if guild:
+
+                            async_think = append_hook( async_think, Hooks.on_think_day, guild );
+
+                            g_PluginManager.on_time_listday[ server ] = srv_now.day;
+
+            g_PluginManager.on_time_hour = ( now + datetime.timedelta( hours=1.0 ) );
+
+        g_PluginManager.on_time_minute = ( now + datetime.timedelta( minutes=1.0 ) );
 
     try:
 

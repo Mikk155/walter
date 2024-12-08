@@ -85,6 +85,29 @@ class Hooks:
     **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
     '''
 
+    on_think_minute = 'on_think_minute';
+    '''
+	Called every 1 minute
+
+    **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
+    '''
+
+    on_think_hour = 'on_think_hour';
+    '''
+	Called every 1 hour
+
+    **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
+    '''
+
+    on_think_day = 'on_think_day';
+    '''
+	Called every 1 day
+
+    **NOTE**: Unlikely other think functions, this is called individualy for each server when the timezone for that server matchs a new day
+
+    **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
+    '''
+
     on_mention = 'on_mention';
     '''
 	Called when a user is mentioned in a Message.
@@ -105,11 +128,6 @@ class Hooks:
 
     **NOTE**: this inherits from on_message and will call on_message after this method.
     '''
-
-    # on_daily = 'on_daily';
-    # '''
-	# Called every day
-    # '''
 
     on_typing = 'on_typing';
     '''
@@ -145,6 +163,12 @@ class g_PluginManager:
     '''
     Plugin Manager System
     '''
+
+    from datetime import datetime
+    on_time_minute: datetime
+    on_time_hour: datetime
+    on_time_day: int
+    on_time_listday: dict[str, int]
 
     from src.CLogger import CLogger
     m_Logger = CLogger( "Plugin Manager" );
@@ -204,6 +228,12 @@ class g_PluginManager:
         from src.constdef import INVALID_INDEX, DEVELOPER;
         from src.CSentences import g_Sentences;
         from src.utils.format import g_Format;
+
+        from datetime import datetime;
+        g_PluginManager.on_time_minute = datetime.now();
+        g_PluginManager.on_time_hour = datetime.now();
+        g_PluginManager.on_time_day = datetime.now().day - 1;
+        g_PluginManager.on_time_listday = {};
 
         from importlib import util as lib;
 
