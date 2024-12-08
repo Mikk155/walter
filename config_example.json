@@ -87,6 +87,10 @@
             "Disable": false
         },
         {
+            "script": "feliz_jueves.py",
+            "Disable": false
+        },
+        {
             "script": "hoy_es_viernes.py",
             "Disable": false
         }
