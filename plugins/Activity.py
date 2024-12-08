@@ -141,7 +141,7 @@ async def on_think() -> int:
 
     except Exception as e:
 
-        print( e )
+#        print( e )
         pass
 
     return HOOK_CONTINUE();
