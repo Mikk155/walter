@@ -88,6 +88,9 @@
         },
         {
             "script": "anti_scam.py"
+        },
+        {
+            "script": "message_reaction.py"
         }
     ],
 

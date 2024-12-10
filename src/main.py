@@ -26,6 +26,7 @@ DEALINGS IN THE SOFTWARE.
 # Default libraries
 #=======================================================================================
 
+import io
 import os
 import re
 import sys
