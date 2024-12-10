@@ -48,5 +48,15 @@
     {
         "english": "Channel {} configured",
         "spanish": "Canal {} configurado"
+    },
+    "message":
+    {
+        "english": "Message",
+        "spanish": "Mensaje"
+    },
+    "channel":
+    {
+        "english": "Channel",
+        "spanish": "Canal"
     }
 }
