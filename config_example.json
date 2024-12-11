@@ -91,6 +91,16 @@
         },
         {
             "script": "message_reaction.py"
+        },
+        {
+            "script": "new_members.py",
+            "servers":
+            [
+                // Limitless Potential
+                744769532513615922,
+                // The Cult
+                1216162825307820042
+            ]
         }
     ],
 
