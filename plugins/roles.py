@@ -89,24 +89,21 @@ class RoleDropDown( discord.ui.Select ):
 
     server_id: int;
 
-    role_data: dict;
-
-    def __init__( self, server_id ):
-
-        cache = g_Cache.get();
-
-        self.role_data = cache.get( str( server_id ), {} );
+    def __init__( self, server_id, role_data ):
 
         self.server_id = server_id;
 
-        options = [ discord.SelectOption( label=self.role_data[rol][0], value=rol, description=self.role_data[rol][1] ) for rol in self.role_data.keys() ];
+        options = [ discord.SelectOption( \
+            label=role_data[rol][0], value=rol,
+            description=role_data[rol][1] ) \
+                for rol in role_data.keys()
+        ];
 
         super().__init__( placeholder="Choose a role", min_values=1, max_values=1, options=options );
 
     async def callback( self, interaction: discord.Interaction ):
 
         try:
-            print(self.values)
 
             choice = self.values[0];
 
@@ -130,11 +127,21 @@ class RoleDropDown( discord.ui.Select ):
 
 class CRoleView( discord.ui.View ):
 
-    def __init__( self, server_id ):
+    def __init__( self, server_id, role_data ):
 
         super().__init__();
 
-        self.add_item( RoleDropDown( server_id ) );
+        self.timeout = 10
+        self.add_item( RoleDropDown( server_id, role_data ) );
+
+class CRoleView( discord.ui.View ):
+
+    def __init__( self, server_id, role_data ):
+
+        super().__init__();
+
+        self.timeout = 10
+        self.add_item( RoleDropDown( server_id, role_data ) );
 
 @bot.tree.command()
 async def role( interaction: discord.Interaction ):
@@ -144,15 +151,38 @@ async def role( interaction: discord.Interaction ):
 
     try:
 
-        await interaction.followup.send(
-            embed=discord.Embed(
-                title="Role Interface",
-                description="Roles"
-            ),
-            view=CRoleView(
-                interaction.guild_id,
-            )
-        );
+        cache = g_Cache.get();
+
+        all_roles = [];
+
+        all_data = cache.get( str( interaction.guild_id ), {} ).copy();
+
+        temp_data = {};
+
+        for k, v in all_data.items():
+
+            if interaction.guild.get_role( int(k) ):
+
+                temp_data[k] = v;
+
+                if len( temp_data ) >= 25:
+
+                    all_roles.append( temp_data.copy() );
+
+                    temp_data.clear();
+
+        if temp_data and len(temp_data) > 0:
+
+            all_roles.append( temp_data );
+
+        for role_data in all_roles:
+
+            await interaction.followup.send(
+                view=CRoleView(
+                    interaction.guild_id,
+                    role_data
+                )
+            );
 
     except Exception as e:
 
