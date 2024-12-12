@@ -140,7 +140,6 @@ class CRoleView( discord.ui.View ):
 
         super().__init__();
 
-        self.timeout = 10
         self.add_item( RoleDropDown( server_id, role_data ) );
 
 @bot.tree.command()
