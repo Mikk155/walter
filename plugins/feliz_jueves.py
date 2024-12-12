@@ -35,8 +35,8 @@ def on_initialization() -> dict:
 
     # Create data for g_PluginManager
     __data__: dict = {};
-    __data__["name"] = "Hoy es viernes";
-    __data__["description"] = "Reminder everyone that today is viernes";
+    __data__["name"] = "Feliz jueves";
+    __data__["description"] = "Reminder everyone that today is jueves";
     __hooks__: list[Hooks] = [ Hooks.on_think_day ];
     __data__["hooks"] = __hooks__;
 
