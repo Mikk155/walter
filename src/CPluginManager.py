@@ -199,15 +199,14 @@ class g_PluginManager:
 
             r = '';
             f = open( requirements, 'r' ).readlines();
+
             for l in f:
                 r=f'{r}\n{l}';
-
-            from src.constdef import DEVELOPER;
 
             g_PluginManager.m_Logger.debug(
                 "plugin_manager.requirements",
                 [
-                    plugin.replace( '.py', '.txt' ), r
+                    plugin, r
                 ],
                 dev=True
             );
