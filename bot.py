@@ -30,15 +30,7 @@ from src.main import *
 
 async def on_start():
 
-    if not DEVELOPER():
-
-        bot.m_Logger.info(
-            "object.initialized",
-            [
-                f'{__name__}(bot.py)'
-            ],
-            dev=True
-        );
+    bot.m_Logger.info( "object_initialized", [ f'{__name__}(bot.py)' ], dev=True );
 
     try:
 
@@ -530,7 +522,7 @@ async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Ch
 
         else:
 
-            await interaction.followup.send( g_Sentences.get( "file.not.exists", interaction.guild_id, [ plugin.name ] ) );
+            await interaction.followup.send( g_Sentences.get( "file_does_not_exists", interaction.guild_id, [ plugin.name ] ) );
 
     except Exception as e:
 

@@ -68,14 +68,4 @@ class g_Config:
 
         g_Config.plugins = __config__.get( "plugins", [] );
 
-        from src.constdef import DEVELOPER;
-
-        if not DEVELOPER():
-
-            g_Config.m_Logger.info(
-                "object.initialized",
-                [
-                    __name__
-                ],
-                dev=True
-            );
+        g_Config.m_Logger.info( "object_initialized", [ __name__ ], dev=True );

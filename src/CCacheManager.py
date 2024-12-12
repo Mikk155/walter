@@ -77,17 +77,7 @@ class g_Cache:
 
         g_Cache.__cache__ = g_Cache.CCacheDictionary( __json__ );
 
-        from src.constdef import DEVELOPER;
-
-        if not DEVELOPER():
-
-            g_Cache.m_Logger.info(
-                "object.initialized",
-                [
-                    __name__
-                ],
-                dev=True
-            );
+        g_Cache.m_Logger.info( "object_initialized", [ __name__ ], dev=True );
 
     def __update__():
 

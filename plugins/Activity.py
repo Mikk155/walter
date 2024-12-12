@@ -173,7 +173,7 @@ async def cfg_activity(
 
             await interaction.followup.send(
                 g_Sentences.get(
-                    "only.owner",
+                    "only_bot_developer",
                     interaction.guild_id,
                     [
                         g_Config.configuration[ "owner" ]

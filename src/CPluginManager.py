@@ -32,76 +32,76 @@ class Hooks:
 
     on_ready = 'on_ready';
     '''
-	Called when the client is done preparing the data received from Discord.
+    Called when the client is done preparing the data received from Discord.
 
-	Usually after login is successful and the Client.guilds and co. are filled up.
+    Usually after login is successful and the Client.guilds and co. are filled up.
 
-	This function is not guaranteed to be the first event called. Likewise, this function is not guaranteed to only be called once.
+    This function is not guaranteed to be the first event called. Likewise, this function is not guaranteed to only be called once.
 
-	This library implements reconnection logic and thus will end up calling this event whenever a RESUME request fails.
+    This library implements reconnection logic and thus will end up calling this event whenever a RESUME request fails.
     '''
 
     on_member_join = 'on_member_join';
     '''
-	Called when a Member joins a Guild.
+    Called when a Member joins a Guild.
     '''
 
     on_member_remove = 'on_member_remove';
     '''
-	Called when a Member leaves a Guild.
+    Called when a Member leaves a Guild.
     '''
 
     on_message = 'on_message';
     '''
-	Called when a Message is created and sent.
+    Called when a Message is created and sent.
 
-	The bot’s own messages messages are hooked through this event too.
+    The bot’s own messages messages are hooked through this event too.
     '''
 
     on_message_delete = 'on_message_delete';
     '''
-	Called when a message is deleted.
+    Called when a message is deleted.
     '''
 
     on_message_edit = 'on_message_edit';
     '''
-	Called when a Message is edited.
+    Called when a Message is edited.
     '''
 
     on_reaction_add = 'on_reaction_add';
     '''
-	Called when a Reaction is added.
+    Called when a Reaction is added.
     '''
 
     on_reaction_remove = 'on_reaction_remove';
     '''
-	Called when a Reaction is removed.
+    Called when a Reaction is removed.
     '''
 
     on_think = 'on_think';
     '''
-	Called every 1 second
+    Called every 1 second
 
     **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
     '''
 
     on_think_minute = 'on_think_minute';
     '''
-	Called every 1 minute
+    Called every 1 minute
 
     **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
     '''
 
     on_think_hour = 'on_think_hour';
     '''
-	Called every 1 hour
+    Called every 1 hour
 
     **NOTE**: This is not warantered to be a definitive value, the bot may delay by other operations.
     '''
 
     on_think_day = 'on_think_day';
     '''
-	Called every 1 day
+    Called every 1 day
 
     **NOTE**: Unlikely other think functions, this is called individualy for each server when the timezone for that server matchs a new day
 
@@ -110,21 +110,21 @@ class Hooks:
 
     on_mention = 'on_mention';
     '''
-	Called when a user is mentioned in a Message.
+    Called when a user is mentioned in a Message.
 
-	**NOTE**: this inherits from on_message and will call on_message after this method.
+    **NOTE**: this inherits from on_message and will call on_message after this method.
     '''
 
     on_reply = 'on_reply';
     '''
-	Called when a user Message is a reply from another Message.
+    Called when a user Message is a reply from another Message.
 
-	**NOTE**: this inherits from on_message and will call on_message after this method.
+    **NOTE**: this inherits from on_message and will call on_message after this method.
     '''
 
     on_link = 'on_link';
     '''
-	Called when Message contents a link.
+    Called when Message contents a link.
 
     **NOTE**: this inherits from on_message and will call on_message after this method.
     '''
@@ -263,7 +263,7 @@ class g_PluginManager:
 
                 if not exists( pyfile ):
 
-                    not_exist_sentence = g_Sentences.get( "file.not.exists" );
+                    not_exist_sentence = g_Sentences.get( "file_does_not_exists" );
 
                     not_exist_fmt = g_Format.brackets( not_exist_sentence, [ pyfile ] );
 
@@ -360,15 +360,7 @@ class g_PluginManager:
                     dev=True
                 );
 
-        if not DEVELOPER():
-
-            g_PluginManager.m_Logger.info(
-                "object.initialized",
-                [
-                    __name__
-                ],
-                dev=True
-            );
+        g_PluginManager.m_Logger.info( "object_initialized", [ __name__ ], dev=True );
 
         if not DEVELOPER():
 

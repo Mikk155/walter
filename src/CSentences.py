@@ -55,45 +55,25 @@ class g_Sentences:
 
             from src.utils.Path import g_Path;
 
-            __sentences__ = jsonc.load( g_Path.join( f"sentences/{filename}.json" ) )
+            __sentences__ = jsonc.load( g_Path.join( f"sentences/plugins/{filename}.json" ) )
 
             for k, v in __sentences__.items():
 
                 g_Sentences.sentences[ f'{filename}.{k}' ] = v;
-    
+
             g_Sentences.__filenames__.append( filename );
 
 
     @staticmethod
     def initialize() -> None:
 
+        from src.utils.Path import g_Path;
         from src.utils.CJsonCommentary import jsonc;
 
-        from src.utils.Path import g_Path;
+        g_Sentences.languages = jsonc.load( g_Path.join( "sentences/__langs__.json" ) );
+        g_Sentences.sentences = jsonc.load( g_Path.join( "sentences/__main__.json" ) );
 
-        __languages__ = jsonc.load( g_Path.join( "sentences/__langs__.json" ) )
-
-        g_Sentences.languages = __languages__;
-
-        g_Sentences.sentences = jsonc.load( g_Path.join( "sentences/__defs__.json" ) );
-
-        g_Sentences.push_back( "bot" );
-        g_Sentences.push_back( "format" );
-        g_Sentences.push_back( "cache" );
-        g_Sentences.push_back( "logger" );
-        g_Sentences.push_back( "plugin_manager" );
-
-        from src.constdef import DEVELOPER;
-
-        if not DEVELOPER():
-
-            g_Sentences.m_Logger.info(
-                "object.initialized",
-                [
-                    __name__
-                ],
-                dev=True
-            );
+        g_Sentences.m_Logger.info( "object_initialized", [ __name__ ], dev=True );
 
     from src.constdef import INVALID_INDEX;
 
@@ -110,8 +90,6 @@ class g_Sentences:
         if name in g_Sentences.sentences:
 
             __sslot__ = g_Sentences.sentences[ name ];
-
-            from src.constdef import INVALID_INDEX;
 
             __language__ = "english"
 

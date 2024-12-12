@@ -60,7 +60,7 @@ async def cfg_felizjueves( interaction: discord.Interaction, channel: discord.Te
 
         await interaction.followup.send(
             g_Sentences.get(
-                "channel.configured",
+                "channel_configured",
                 interaction.guild_id,
                 [
                     channel.jump_url

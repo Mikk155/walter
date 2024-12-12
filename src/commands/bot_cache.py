@@ -40,13 +40,13 @@ async def dev_cache( interaction: discord.Interaction, json: discord.Attachment 
 
         if not json.filename.endswith( '.json' ):
 
-            await interaction.followup.send( g_Sentences.get( "only.json.file.support", interaction.guild_id ) );
+            await interaction.followup.send( g_Sentences.get( "only_file_support", interaction.guild_id, [ "json" ] ) );
 
         elif not IS_OWNER( interaction.user.id ):
 
             await interaction.followup.send(
                 g_Sentences.get(
-                    "only.owner",
+                    "only_bot_developer",
                     interaction.guild_id,
                     [
                         g_Config.configuration[ "owner" ]
@@ -78,7 +78,7 @@ async def dev_cache( interaction: discord.Interaction, json: discord.Attachment 
 
                     else:
 
-                        await interaction.followup.send( g_Sentences.get( "can.not.download.file", interaction.guild_id ) );
+                        await interaction.followup.send( g_Sentences.get( "could_not_download_file", interaction.guild_id ) );
 
     except Exception as e:
 

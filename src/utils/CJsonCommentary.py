@@ -66,7 +66,7 @@ class jsonc:
 
             else:
 
-                jsonc.m_Logger.error( "file.not.exists", [ object ], dev=True );
+                jsonc.m_Logger.error( "file_does_not_exists", [ object ], dev=True );
 
                 return {};
 
@@ -96,7 +96,7 @@ class jsonc:
 
         except Exception as e:
 
-            jsonc.m_Logger.error( 'can.not.open', [ filenm if filenm else 'object' ], dev=True );
+            jsonc.m_Logger.error( 'can_not_open', [ filenm if filenm else 'object' ], dev=True );
             jsonc.m_Logger.error( e, dev=True );
 
         return {};
