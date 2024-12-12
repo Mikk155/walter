@@ -82,7 +82,14 @@ class Bot( discord.Client ):
 
         g_Config.configuration.pop( "developer_guild", None );
 
-    async def exception_handle( self, exception: ( Exception | str ), interaction: ( discord.Interaction | discord.Member | discord.TextChannel ) = None, additional_commentary: str = None, concurrent: bool = False ) -> None:
+    from typing import Optional
+    async def exception_handle( \
+            self,
+            exception: ( Exception | str ),
+            interaction = None,
+            additional_commentary: Optional[str] = None,
+            concurrent: Optional[bool] = None
+        ) -> None:
         '''
         Handles an exception.
 
@@ -100,58 +107,62 @@ class Bot( discord.Client ):
             from src.CSentences import g_Sentences;
             from src.utils.format import g_Format;
 
-            if not concurrent:
+            embed = discord.Embed( color = 3447003, timestamp=self.time(), colour=16711680 );
 
-                __ext_fmt__ = '';
+            if interaction:
 
-                __json__: dict = {}
-
-                if interaction:
-
-                    try:
-                        if interaction.channel:
-                            __json__["channel_id"] = interaction.channel.id;
-                            __json__["channel"] = interaction.channel.name;
-                        if interaction.guild:
-                            __json__["guild_id"] = interaction.guild.id;
-                            __json__["guild"] = interaction.guild.name;
-                    except Exception as e:
-                        pass
+                try:
+                    if interaction.channel:
+                        embed.add_field( inline = False,
+                            name = "channel_id",
+                            value = f"{interaction.channel.id}"
+                        );
+                        embed.add_field( inline = False,
+                            name = "channel",
+                            value = f"{interaction.channel.name}"
+                        );
+                except Exception as e:
+                    pass
+                try:
+                    if interaction.guild:
+                        embed.add_field( inline = False,
+                            name = "guild_id",
+                            value = f"{interaction.guild.id}"
+                        );
+                        embed.add_field( inline = False,
+                            name = "guild",
+                            value = f"{interaction.guild.name}"
+                        );
+                except Exception as e:
+                    pass
 
                 from sys import exc_info;
                 from src.utils.Path import g_Path;
                 from traceback import extract_tb;
 
                 exc_type, exc_value, exc_traceback = exc_info()
+                traceback_list = extract_tb(exc_traceback)
 
-                last_frame = extract_tb(exc_traceback)[-1]
+                for frame in traceback_list:
+                    filename = frame.filename.replace( g_Path.workspace(), '' );
+                    if "Python" in filename:
+                        filename = filename[ filename.find( "Python" ) : ];
+                    embed.add_field( inline = False,
+                        name = f"{frame.name} line {frame.lineno}",
+                        value = f"```py\n{frame.line}``` `{filename}`"
+                    );
 
-                __json__[ "file" ] = last_frame.filename.replace( g_Path.workspace(), '' );
-                __json__[ "caller" ] = last_frame.name;
-                __json__[ "line" ] = last_frame.lineno;
-                __json__[ "exception" ] = str(exception);
+                    if len( embed.fields ) > 24:
+                        break;
 
-                if len(__json__) > 0:
-                
-                    __ext__ = g_Sentences.get( "bot.handle.exception.server" );
+                embed.title = exc_type.__name__;
+                embed.description = str(exception);
+                embed.set_footer( text="message sent to devs" );
 
-                    from json import dumps;
+                if not concurrent:
 
-                    __dump__ = dumps( __json__, indent=2 );
-
-                    __ext_fmt__ = g_Format.brackets( __ext__, [ __dump__ ] );
-
-                self.m_Logger.warn(
-                    "bot.handle.exception.dev",
-                    [
-                        exception,
-                        __ext_fmt__,
-                        additional_commentary if additional_commentary else ''
-                    ],
-                    dev=True
-                );
-
-            if interaction:
+                    from src.CConfigSystem import g_Config;
+                    await self.get_channel( g_Config.configuration["log_channel"]).send( embed=embed );
 
                 if isinstance( interaction, discord.Interaction ):
 
@@ -165,7 +176,6 @@ class Bot( discord.Client ):
 
                     await interaction.followup.send( msg );
 
-                # if not concurrent:
                     # -TODO Try to reply to the user that raised this exception
 
         except Exception as e:
