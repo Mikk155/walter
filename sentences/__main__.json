@@ -163,7 +163,7 @@
         "english": "to_command_choices object is bigger than 25 items",
         "spanish": "objeto to_command_choices es mayor a 25 objetos"
     },
-    "format.format.invalid.mention":
+    "format.invalid.mention":
     {
         "english": "Invalid user or user ID",
         "spanish": "Usuario o ID de usuario invalida"

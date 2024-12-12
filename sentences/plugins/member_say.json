@@ -1,5 +1,5 @@
 {
-    "member_say.said":
+    "said":
     {
         "english": "Member {} used /say at {}",
         "spanish": "Miembro {} uso /say en {}"
