@@ -10,3 +10,5 @@ plugins/github/**
 wip/*
 plugins/github.py
 plugins/github_requirements.txt
+plugins/music.py
+plugins/music_requirements.txt
