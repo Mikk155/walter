@@ -57,11 +57,9 @@ async def cfg_count_together( interaction: discord.Interaction, channel: discord
         cache[ str( interaction.guild_id ) ] = { "channel": channel.id, "number": number };
 
         await interaction.followup.send(
-            g_Format.brackets(
-                g_Sentences.get(
-                    "channel.configured",
-                    interaction.guild_id
-                ),
+            g_Sentences.get(
+                "channel.configured",
+                interaction.guild_id,
                 [
                     channel.jump_url
                 ]

@@ -82,11 +82,9 @@ async def ping_count( interaction: discord.Interaction, user: discord.Member ):
         if counts[0] > 0:
 
             await interaction.followup.send(
-                g_Format.brackets(
-                    g_Sentences.get(
-                        "ping_counter.times",
-                        interaction.guild_id
-                    ),
+                g_Sentences.get(
+                    "ping_counter.times",
+                    interaction.guild_id,
                     [
                         counts[1],
                         counts[0]
@@ -97,11 +95,9 @@ async def ping_count( interaction: discord.Interaction, user: discord.Member ):
         else:
 
             await interaction.followup.send(
-                g_Format.brackets(
-                    g_Sentences.get(
-                        "ping_counter.first",
-                        interaction.guild_id
-                    ),
+                g_Sentences.get(
+                    "ping_counter.first",
+                    interaction.guild_id,
                     [
                         mention
                     ]

@@ -111,7 +111,7 @@ async def cfg_message_reaction(
 
             cache[ str( interaction.guild_id ) ] = srv;
 
-            await interaction.followup.send( g_Format.brackets( g_Sentences.get( 'item.removed', interaction.guild_id ), [ word ] ) );
+            await interaction.followup.send( g_Sentences.get( 'item.removed', interaction.guild_id, [ word ] ) );
 
         else:
 
@@ -119,7 +119,7 @@ async def cfg_message_reaction(
 
             cache[ str( interaction.guild_id ) ] = srv;
 
-            await interaction.followup.send( g_Format.brackets( g_Sentences.get( "item.set.to", interaction.guild_id ), [ word, emoji ] ) );
+            await interaction.followup.send( g_Sentences.get( "item.set.to", interaction.guild_id, [ word, emoji ] ) );
 
     except Exception as e:
 

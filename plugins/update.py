@@ -87,11 +87,9 @@ async def dev_update( interaction: discord.Interaction, git: bool = False, confi
         if not IS_OWNER( interaction.user.id ):
 
             await interaction.followup.send(
-                g_Format.brackets(
-                    g_Sentences.get(
-                        "only.owner",
-                        interaction.guild_id
-                    ),
+                g_Sentences.get(
+                    "only.owner",
+                    interaction.guild_id,
                     [
                         g_Config.configuration[ "owner" ]
                     ]
@@ -140,14 +138,7 @@ async def dev_update( interaction: discord.Interaction, git: bool = False, confi
 
             if changes > 0:
 
-                await interaction.followup.send(
-                    g_Format.brackets(
-                        g_Sentences.get(
-                            "update.pull.commits",
-                            interaction.guild_id 
-                        ), [ changes ]
-                    )
-                );
+                await interaction.followup.send( g_Sentences.get( "update.pull.commits", interaction.guild_id, [ changes ] ) );
 
                 origin.pull();
 

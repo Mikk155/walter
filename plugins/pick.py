@@ -58,11 +58,9 @@ async def pick( interaction: discord.Interaction, options: str ):
         if len( items ) > 1:
 
             await interaction.followup.send(
-                g_Format.brackets(
-                    g_Sentences.get(
-                        "pick.done",
-                        interaction.guild_id
-                    ),
+                g_Sentences.get(
+                    "pick.done",
+                    interaction.guild_id,
                     [
                         ''.join( f'\n- {i}' for i in items ),
                         items[ random.randint( 0, len( items ) - 1 ) ]

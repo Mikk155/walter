@@ -172,11 +172,9 @@ async def cfg_activity(
         if not IS_OWNER( interaction.user.id ):
 
             await interaction.followup.send(
-                g_Format.brackets(
-                    g_Sentences.get(
-                        "only.owner",
-                        interaction.guild_id
-                    ),
+                g_Sentences.get(
+                    "only.owner",
+                    interaction.guild_id,
                     [
                         g_Config.configuration[ "owner" ]
                     ]
@@ -206,11 +204,9 @@ async def cfg_activity(
             cache[ 'activity' ] = int( activity.value );
 
         await interaction.followup.send(
-            g_Format.brackets(
-                g_Sentences.get(
-                    "Activity.updated",
-                    interaction.guild_id
-                ),
+            g_Sentences.get(
+                "Activity.updated",
+                interaction.guild_id,
                 [
                     json.dumps( dict( cache ), indent=4 )
                 ]

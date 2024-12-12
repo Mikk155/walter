@@ -42,9 +42,7 @@ async def cfg_timezone( interaction: discord.Interaction, timezone: app_commands
 
         cache[ str( interaction.guild_id ) ] = timezone.name;
 
-        msg = g_Sentences.get( "bot.timezone", guild );
-
-        await interaction.followup.send( g_Format.brackets( msg, [ timezone.name ] ) );
+        await interaction.followup.send( g_Sentences.get( "bot.timezone", guild, [ timezone.name ] ) );
 
     except Exception as e:
 

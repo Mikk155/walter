@@ -175,13 +175,11 @@ async def on_link( message: discord.Message, urls: list[str] ) -> int:
 
                 kick = __config__[g_antiscam.cfg.kick];
 
-                reason = g_Format.brackets(
-                    g_Sentences.get( "anti_scam.scammed", guild_id ),
+                reason = g_Sentences.get( "anti_scam.scammed", guild_id,
                     [
                         member.mention,
                         g_Sentences.get( "anti_scam.kicked", guild_id ) if kick else \
-                        g_Format.brackets(
-                            g_Sentences.get( "anti_scam.timeout", guild_id ),
+                        g_Sentences.get( "anti_scam.timeout", guild_id,
                             [
                                 __config__[g_antiscam.cfg.timeout]
                             ]

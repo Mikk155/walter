@@ -45,11 +45,9 @@ async def dev_cache( interaction: discord.Interaction, json: discord.Attachment 
         elif not IS_OWNER( interaction.user.id ):
 
             await interaction.followup.send(
-                g_Format.brackets(
-                    g_Sentences.get(
-                        "only.owner",
-                        interaction.guild_id
-                    ),
+                g_Sentences.get(
+                    "only.owner",
+                    interaction.guild_id,
                     [
                         g_Config.configuration[ "owner" ]
                     ]

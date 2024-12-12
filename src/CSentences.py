@@ -98,7 +98,7 @@ class g_Sentences:
     from src.constdef import INVALID_INDEX;
 
     @staticmethod
-    def get(name: str, server_id: int = INVALID_INDEX() ) -> str:
+    def get(name: str, id: int = None, maps: list[str] = None ) -> str:
         
         '''
         Gets a sentence from the sentences json
@@ -115,13 +115,13 @@ class g_Sentences:
 
             __language__ = "english"
 
-            if server_id and server_id != INVALID_INDEX():
+            if id:
 
                 from src.CCacheManager import g_Cache;
 
                 cache = g_Cache.get( "language.py" );
 
-                __language__ = cache.get( str( server_id ), "english" );
+                __language__ = cache.get( str( id ), "english" );
 
             if __language__ in __sslot__:
 
@@ -134,5 +134,11 @@ class g_Sentences:
         if __sentence__ is None:
 
             return f"{name}";
+
+        if maps:
+
+            from src.utils.format import g_Format;
+
+            __sentence__ = g_Format.brackets( __sentence__, maps );
 
         return __sentence__;

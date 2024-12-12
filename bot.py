@@ -530,7 +530,7 @@ async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Ch
 
         else:
 
-            await interaction.followup.send( g_Format.brackets( g_Sentences.get( "file.not.exists", interaction.guild_id ), [ plugin.name ] ) );
+            await interaction.followup.send( g_Sentences.get( "file.not.exists", interaction.guild_id, [ plugin.name ] ) );
 
     except Exception as e:
 
