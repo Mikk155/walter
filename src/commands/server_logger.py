@@ -43,7 +43,7 @@ async def cfg_logger( interaction: discord.Interaction, channel: discord.TextCha
 
         cache[ str( guild ) ] = channel.id;
 
-        await interaction.followup.send( g_Sentences.get( "logger.channel.set", guild ) );
+        await interaction.followup.send( g_Sentences.get( "logger.channel.set", guild, [ interaction.channel.name ] ) );
 
     except Exception as e:
 
