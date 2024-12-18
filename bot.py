@@ -465,7 +465,7 @@ my_plugin_choices = []
 
 for k, v in g_PluginManager.plugins.items():
 
-    my_plugin_choices.append( app_commands.Choice( name=k, value=v[ "name" ] if v else "" ) );
+    my_plugin_choices.append( app_commands.Choice( name=k, value=v.name if v else "" ) );
 
 @bot.tree.command()
 @app_commands.guild_only()
@@ -486,9 +486,9 @@ async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Ch
 
             if info:
 
-                embed.title = info[ "name" ];
+                embed.title = info.name;
 
-                embed.description = info[ "description" ];
+                embed.description = info.description;
 
                 embed.add_field( inline = True,
                     name = g_Sentences.get( "status", interaction.guild_id ),
@@ -497,19 +497,19 @@ async def plugin_info( interaction: discord.Interaction, plugin: app_commands.Ch
 
                 embed.add_field( inline = True,
                     name = g_Sentences.get( "plugin_manager.author", interaction.guild_id ),
-                    value = info[ "author" ]
+                    value = info.author
                 );
 
                 embed.add_field( inline = True,
                     name = g_Sentences.get( "plugin_manager.contact", interaction.guild_id ),
-                    value = info[ "contact" ]
+                    value = info.contact
                 );
 
-                if "hooks" in info and len( info[ "hooks" ] ) > 0:
+                if len( info.hooks ) > 0:
 
                     embed.add_field( inline = True,
                         name = "Hooks",
-                        value = '``{}``'.format( info[ "hooks" ] )
+                        value = '``{}``'.format( info.hooks )
                     );
 
             else:

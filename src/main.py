@@ -81,7 +81,7 @@ g_Sentences.initialize();
 g_Config.initialize();
 
 from src.CLogger import CLogger, g_DelayedLog, g_Logger
-from src.CPluginManager import g_PluginManager, Hooks
+from src.CPluginManager import g_PluginManager, Hooks, Plugin, Command
 from src.CCacheManager import g_Cache
 g_Cache.initialize();
 
