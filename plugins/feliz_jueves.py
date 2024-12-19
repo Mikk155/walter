@@ -88,7 +88,6 @@ async def on_think_day( guild: discord.Guild ) -> int:
             "https://youtu.be/BvtUSsok4JA?si=ybKl3D8CX7aI5KAq",
             "https://youtu.be/J9PHO6ZgW0Q?si=ID2WRe8Z9_PShFAV",
             "https://www.youtube.com/watch?v=M1FcoVImTwk",
-            "https://www.youtube.com/watch?v=vMkMi3DV1tM",
             "https://youtu.be/2gBFVGgknNg?si=tmWmrb-VRhMfWDja",
             "https://youtu.be/E51pvhXgrHI?si=nfMXPlUuY6ER2WUd"
         ];
