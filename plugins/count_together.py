@@ -45,7 +45,12 @@ def on_initialization() -> dict:
 @app_commands.guild_only()
 @app_commands.default_permissions(administrator=True)
 @app_commands.describe( channel='Channel', number='Last number sent in the channel' )
-async def cfg_count_together( interaction: discord.Interaction, channel: discord.TextChannel, number: int ):
+async def cfg_count_together(
+    interaction: discord.Interaction,
+    channel: typing.Optional[discord.TextChannel] = None,
+    number: typing.Optional[int] = 1,
+    disable: typing.Optional[bool] = None
+):
     """Configure a channel as a count-together channel"""
 
     await interaction.response.defer( thinking=True );
@@ -58,7 +63,7 @@ async def cfg_count_together( interaction: discord.Interaction, channel: discord
 
         await interaction.followup.send(
             g_Sentences.get(
-                "channel_configured",
+                "disabled" if disable else "channel_configured",
                 interaction.guild_id,
                 [
                     channel.jump_url

@@ -47,7 +47,12 @@ def on_initialization() -> dict:
 @app_commands.guild_only()
 @app_commands.default_permissions(administrator=True)
 @app_commands.describe( channel='Channel to use' )
-async def cfg_felizjueves( interaction: discord.Interaction, channel: discord.TextChannel ):
+async def cfg_felizjueves(
+    interaction: discord.Interaction,
+    channel: typing.Optional[discord.TextChannel] = None,
+    disable: typing.Optional[bool] = None
+):
+
     """Configure a channel to get feliz jueves every thursday"""
 
     await interaction.response.defer( thinking=True );
@@ -56,11 +61,11 @@ async def cfg_felizjueves( interaction: discord.Interaction, channel: discord.Te
 
         cache = g_Cache.get();
 
-        cache[ str(interaction.guild_id) ] = channel.id;
+        cache[ str(interaction.guild_id) ] = None if disable else channel.id;
 
         await interaction.followup.send(
             g_Sentences.get(
-                "channel_configured",
+                "disabled" if disable else "channel_configured",
                 interaction.guild_id,
                 [
                     channel.jump_url
