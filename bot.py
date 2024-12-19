@@ -38,7 +38,7 @@ async def on_start():
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e );
 
     bot.__on_start_called__ = True;
 
@@ -74,7 +74,7 @@ async def on_ready():
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e );
 
     if not on_think.is_running():
 
@@ -103,7 +103,7 @@ async def on_message( message: discord.Message ):
 
         except Exception as e:
 
-            bot.m_Logger.error( e );
+            bot.exception_handle( e, message );
 
     #=======================================================================================
     # END
@@ -127,7 +127,7 @@ async def on_message( message: discord.Message ):
 
                 except Exception as e:
 
-                    bot.m_Logger.error( e );
+                    bot.exception_handle( e, message );
 
         except discord.NotFound:
 
@@ -161,7 +161,7 @@ async def on_message( message: discord.Message ):
 
             except Exception as e:
 
-                bot.m_Logger.error( e );
+                bot.exception_handle( e, message );
 
     #=======================================================================================
     # END
@@ -173,7 +173,7 @@ async def on_message( message: discord.Message ):
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e, message );
 
 #=======================================================================================
 # END
@@ -192,7 +192,7 @@ async def on_member_join( member : discord.Member ):
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e );
 
 #=======================================================================================
 # END
@@ -211,7 +211,7 @@ async def on_member_remove( member : discord.Member ):
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e );
 
 #=======================================================================================
 # END
@@ -230,7 +230,7 @@ async def on_message_delete( message: discord.Message ):
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e, message.channel ); # Channel cuz the interaction is removed x[
 
 #=======================================================================================
 # END
@@ -249,7 +249,7 @@ async def on_message_edit( before: discord.Message, after: discord.Message ):
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e, after );
 
 #=======================================================================================
 # END
@@ -268,7 +268,7 @@ async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e, reaction.message );
 
 #=======================================================================================
 # END
@@ -287,7 +287,7 @@ async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e, reaction.message );
 
 #=======================================================================================
 # END
@@ -306,7 +306,7 @@ async def on_typing( channel: discord.TextChannel | discord.GroupChannel | disco
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e, channel );
 
 #=======================================================================================
 # END
@@ -451,7 +451,7 @@ async def on_think():
 
     except Exception as e:
 
-        bot.m_Logger.error( e );
+        bot.exception_handle( e );
 
 #=======================================================================================
 # END

@@ -423,23 +423,9 @@ class g_PluginManager:
 
             except Exception as e:
 
-                __attribute__ = ''
-
                 if str(e).find( 'has no attribute' ) != -1:
 
                     g_PluginManager.module_cache.pop( plugin );
 
-                    from src.CSentences import g_Sentences
-
-                    __attribute__ = g_Sentences.get( 'plugin_manager.callhook.attribute' )
-
-                g_PluginManager.m_Logger.error(
-                    'plugin_manager.callhook.exception',
-                    [
-                        plugin,
-                        hook_name,
-                        e,
-                        __attribute__
-                    ],
-                    dev=True
-                );
+                from src.main import bot
+                await bot.exception_handle( e, g1 );
