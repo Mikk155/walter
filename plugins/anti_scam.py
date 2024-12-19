@@ -130,6 +130,9 @@ async def on_link( message: discord.Message, urls: list[str] ) -> int:
 
         cache = g_Cache.get();
 
+        if not str( guild_id ) in cache:
+            return;
+
         srv = cache[ str( guild_id ) ];
 
         __config__ = srv.get( "__config__", g_antiscam.cfg.default );
