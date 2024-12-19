@@ -28,7 +28,7 @@ def on_initialization() -> dict:
 
     __data__: dict = {};
     __data__["name"] = "New members";
-    __data__["description"] = "";
+    __data__["description"] = "Track new members";
     __data__["hooks"] = [ Hooks.on_member_join, Hooks.on_message ];
 
     return __data__;
@@ -73,14 +73,11 @@ async def verify( interaction: discord.Interaction, why: str ):
 
 async def on_member_join( member : discord.Member ) -> int:
 
-    if member:
-
-        member.add_roles( member.guild.get_role( 1316214066384994324 ) );
+    member.add_roles( member.guild.get_role( 1316214066384994324 ) );
 
 async def on_message( message: discord.Message ) -> int:
 
-    if message.channel.id == 1118352656096829530 \
-        and not message.author.guild_permissions.administrator:
+    if message.channel.id == 1118352656096829530 and not message.author.guild_permissions.administrator:
 
         await message.delete();
 
