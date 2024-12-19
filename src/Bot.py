@@ -99,30 +99,25 @@ class Bot( discord.Client ):
 
             embed = discord.Embed( color = 3447003, timestamp=self.time(), colour=16711680 );
 
-            if interaction:
+            if additional_commentary:
+                embed.add_field( inline = False, name = "app commentary", value = additional_commentary );
 
+            if interaction:
+                channel_target: discord.TextChannel = None;
+                if isinstance( interaction, discord.TextChannel  ):
+                    channel_target = interaction;
+                else: # Assume is a message/interaction
+                    try:
+                        channel_target = interaction.channel;
+                    except Exception as e:
+                        pass
                 try:
-                    if interaction.channel:
-                        embed.add_field( inline = False,
-                            name = "channel_id",
-                            value = f"{interaction.channel.id}"
-                        );
-                        embed.add_field( inline = False,
-                            name = "channel",
-                            value = f"{interaction.channel.name}"
-                        );
-                except Exception as e:
-                    pass
-                try:
-                    if interaction.guild:
-                        embed.add_field( inline = False,
-                            name = "guild_id",
-                            value = f"{interaction.guild.id}"
-                        );
-                        embed.add_field( inline = False,
-                            name = "guild",
-                            value = f"{interaction.guild.name}"
-                        );
+                    if channel_target:
+                        embed.add_field( inline = False, name = "channel_id", value = f"{channel_target.id}" );
+                        embed.add_field( inline = False, name = "channel", value = f"{channel_target.name}" );
+                        if channel_target.guild:
+                            embed.add_field( inline = False, name = "guild_id", value = f"{channel_target.guild.id}" );
+                            embed.add_field( inline = False, name = "channel", value = f"{channel_target.guild.name}" );
                 except Exception as e:
                     pass
 
@@ -154,19 +149,21 @@ class Bot( discord.Client ):
                     from src.CConfigSystem import g_Config;
                     await self.get_channel( g_Config.configuration["log_channel"]).send( embed=embed );
 
+                msg = g_Sentences.get( "bot.handle.exception", interaction.guild_id );
+
                 if isinstance( interaction, discord.Interaction ):
 
-                    __trans__ = g_Sentences.get( "bot.handle.exception", interaction.guild_id );
+                    await interaction.followup.send( msg, embed=embed );
 
-                    msg = g_Format.brackets( __trans__, [ exception ] );
+                elif not concurrent:
 
-                    if additional_commentary:
+                    if isinstance( interaction, discord.Message ):
 
-                        msg = f'{msg}\n{additional_commentary}';
+                        await interaction.reply( msg, embed=embed, mention_author=False );
 
-                    await interaction.followup.send( msg );
+                    elif isinstance( interaction, discord.TextChannel ):
 
-                    # -TODO Try to reply to the user that raised this exception
+                        await interaction.send( msg, embed=embed );
 
         except Exception as e:
 
