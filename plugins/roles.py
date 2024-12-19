@@ -113,13 +113,17 @@ class RoleDropDown( discord.ui.Select ):
 
                 await interaction.user.remove_roles( rol );
 
+                await interaction.response.send_message( "Removed role {}".format( rol.mention ), ephemeral=True, allowed_mentions=False );
+
             else:
 
                 await interaction.user.add_roles( rol );
 
+                await interaction.response.send_message( "Added role {}".format( rol.mention ), ephemeral=True, allowed_mentions=False );
+
         except discord.Forbidden:
 
-            await interaction.followup.send( "Exception: Not enough permissions." );
+            await interaction.response.send_message( "Exception: Not enough permissions." );
 
         except Exception as e:
 
