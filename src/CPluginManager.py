@@ -158,38 +158,6 @@ class Hooks:
     # on_poll_vote_add = 'on_poll_vote_add';
     # on_poll_vote_remove = 'on_poll_vote_remove';
 
-class Command():
-    '''Commands creation class'''
-
-class Plugin():
-    '''Define a plugin'''
-
-    hooks: list[Hooks] = []
-    '''List of plugin's Hooks, see ``Hooks`` class'''
-
-    author: str = "Mikk"
-    '''Name of the plugin's author'''
-
-    contact: str = "https://github.com/Mikk155/"
-    '''Contact info of the plugin's author'''
-
-    name: str
-    '''Name of the plugin, if empty the plugin's file name will be used'''
-
-    servers: list[int] = []
-    '''
-    List of guild's ID that this plugin is only enabled for
-
-    Leave empty to not delimit to any
-    '''
-
-    commands: list[Command]
-    '''List of plugin's Commands, see ``Command`` class'''
-
-    def __init__( self, name ):
-
-        self.name = name;
-
 class g_PluginManager:
 
     '''
@@ -325,23 +293,37 @@ class g_PluginManager:
 
                 g_PluginManager.module_cache[modulo] = obj
 
-                p_Plugin = Plugin( plugin[ "script" ] );
+                plugin_data = obj.on_initialization();
 
-                p_Plugin: Plugin = obj.on_initialization( p_Plugin );
+                if not "author" in plugin_data:
+
+                    plugin_data[ "author" ] = "Mikk";
+
+                if not "contact" in plugin:
+
+                    plugin_data[ "contact" ] = "https://github.com/Mikk155/";
+
+                if not "name" in plugin_data:
+
+                    plugin_data[ "name" ] = plugin[ "script" ];
+
+                if "servers" in plugin and len(plugin["servers"]) > 0:
+
+                    plugin_data[ "servers" ] = plugin[ "servers" ];
 
                 if not DEVELOPER():
 
                     g_PluginManager.m_Logger.info(
                         "plugin_manager.register",
                         [
-                            p_Plugin.name
+                            plugin_data[ "name" ]
                         ],
                         dev=True
                     );
 
-                    g_PluginManager.m_Logger.trace( f"```json\n{dumps( p_Plugin, indent=1 )}```", dev=True );
+                    g_PluginManager.m_Logger.trace( f"```json\n{dumps( plugin_data, indent=1 )}```", dev=True );
 
-                for hook in p_Plugin.hooks:
+                for hook in plugin_data.get( "hooks", [] ):
 
                     if hook in g_PluginManager.fnMethods:
 
@@ -362,7 +344,7 @@ class g_PluginManager:
                             dev=True
                         );
 
-                g_PluginManager.plugins[ plugin[ "script" ] ] = p_Plugin;
+                g_PluginManager.plugins[ plugin[ "script" ] ] = plugin_data;
 
                 g_PluginManager.loaded += 1;
 
@@ -404,7 +386,7 @@ class g_PluginManager:
                 if not plugin in g_PluginManager.module_cache:
                     continue;
 
-                __allowed_servers__ = g_PluginManager.plugins[ f'{plugin}.py' ].servers;
+                __allowed_servers__ = g_PluginManager.plugins[ f'{plugin}.py' ].get( "servers", [] );
 
                 if len( __allowed_servers__ ) > 0:
                     
