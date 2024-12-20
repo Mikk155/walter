@@ -188,6 +188,9 @@ async def on_message_edit( before: discord.Message, after: discord.Message ) -> 
             for n in new_result:
                 new += n;
 
+            if old == new:
+                return HOOK_CONTINUE();
+
             embed.add_field( inline = False,
                 name = "Before",
                 value = old
