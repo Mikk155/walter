@@ -33,7 +33,7 @@ def on_initialization() -> dict:
 
     return __data__;
 
-@bot.tree.command( guild=bot.get_guild( 1118352656096829530 ) )
+@bot.tree.command( guild=bot.get_guild( 744769532513615922 ) )
 @app_commands.guild_only()
 @app_commands.describe(
     why='Why you joined this server?'
@@ -50,20 +50,18 @@ async def verify( interaction: discord.Interaction, why: str ):
 
             return;
 
-        if why:
+        admin = await bot.get_channel( 1287940238202769418 ).send(
+                embed=discord.Embed(
+                title = f"User {interaction.user.name} used verification",
+                description = f"{interaction.user.mention} Response: {why} <@438449162527440896>",
+                color = 16711680
+            )
+        );
 
-            admin = await bot.get_channel( 1287940238202769418 ).send(
-                    embed=discord.Embed(
-                    title = f"User {interaction.user.name} used verification",
-                    description = f"{interaction.user.mention} Response: {why} <@438449162527440896>",
-                    color = 16711680
-                )
-            );
-
-            try:
-                await admin.pin();
-            except:
-                pass
+        try:
+            await admin.pin();
+        except:
+            pass
 
         await interaction.followup.send( "An administrator will confirm your identity.\nThis will take some time.\nWe apologize for the inconveniences.", ephemeral=True );
 
