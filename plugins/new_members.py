@@ -45,7 +45,7 @@ async def verify( interaction: discord.Interaction, why: str ):
 
     try:
 
-        if interaction.channel_id != 1118352656096829530 \
+        if interaction.channel_id != 1287940238202769418 \
         or not interaction.guild.get_role( 1316214066384994324 ) in interaction.user.roles:
 
             return;
@@ -73,7 +73,7 @@ async def verify( interaction: discord.Interaction, why: str ):
 
 async def on_member_join( member : discord.Member ) -> int:
 
-    member.add_roles( member.guild.get_role( 1316214066384994324 ) );
+    await member.add_roles( member.guild.get_role( 1316214066384994324 ) );
 
 async def on_message( message: discord.Message ) -> int:
 
