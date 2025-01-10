@@ -29,7 +29,7 @@ def on_initialization() -> dict:
     __data__: dict = {};
     __data__["name"] = "New members";
     __data__["description"] = "Track new members";
-    __data__["hooks"] = [ Hooks.on_member_join, Hooks.on_message ];
+    __data__["hooks"] = [ Hooks.on_member_join, Hooks.on_message, Hooks.on_member_remove ];
 
     return __data__;
 
@@ -41,19 +41,19 @@ def on_initialization() -> dict:
 async def verify( interaction: discord.Interaction, why: str ):
     """Ask for a verification"""
 
-    await interaction.response.defer( ephemeral=True, thinking=True );
-
     try:
 
-        if interaction.channel_id != 1287940238202769418 \
+        if interaction.channel_id != 1118352656096829530 \
         or not interaction.guild.get_role( 1316214066384994324 ) in interaction.user.roles:
 
             return;
 
+        await interaction.response.defer( ephemeral=True, thinking=True );
+
         admin = await bot.get_channel( 1287940238202769418 ).send(
                 embed=discord.Embed(
                 title = f"User {interaction.user.name} used verification",
-                description = f"{interaction.user.mention} Response: {why} <@438449162527440896>",
+                description = f"{interaction.user.mention} Response: {why}",
                 color = 16711680
             )
         );
@@ -72,6 +72,32 @@ async def verify( interaction: discord.Interaction, why: str ):
 async def on_member_join( member : discord.Member ) -> int:
 
     await member.add_roles( member.guild.get_role( 1316214066384994324 ) );
+
+    users_channel = bot.get_channel( 842174687445778483 );
+
+    if users_channel:
+
+        embed = discord.Embed( color = discord.Color(0xda00ff), title=member.global_name, description=f"{member.mention} joined the server." );
+
+        embed.add_field( inline = False, name ="Account creation", value = f'{member.created_at.day}/{member.created_at.month}/{member.created_at.year}' );
+
+        await users_channel.send( embed=embed );
+
+    return HOOK_CONTINUE();
+
+async def on_member_remove( member : discord.Member ) -> int:
+
+    users_channel = bot.get_channel( 842174687445778483 );
+
+    if users_channel:
+
+        embed = discord.Embed( color = discord.Color(0xda00ff), title=member.global_name, description=f"{member.mention} left the server." );
+
+        embed.add_field( inline = False, name ="Member since", value = f'{member.joined_at.day}/{member.joined_at.month}/{member.joined_at.year}' );
+
+        await users_channel.send( embed=embed );
+
+    return HOOK_CONTINUE();
 
 async def on_message( message: discord.Message ) -> int:
 
