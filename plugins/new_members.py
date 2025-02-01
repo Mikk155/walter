@@ -58,11 +58,6 @@ async def verify( interaction: discord.Interaction, why: str ):
             )
         );
 
-        try:
-            await admin.pin();
-        except:
-            pass
-
         await interaction.followup.send( "An administrator will confirm your identity.\nThis will take some time.\nWe apologize for the inconveniences.", ephemeral=True );
 
     except Exception as e:

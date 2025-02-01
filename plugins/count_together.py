@@ -97,8 +97,13 @@ async def on_message( message: discord.Message ) -> int:
 
                     if desired != current:
 
-                        await message.add_reaction( '❌' );
-
+                        try:
+                            await message.add_reaction( '❌' );
+                        except:
+                            delta = datetime.timedelta( minutes=10 );
+                            await message.author.timeout( delta, reason="Burrito" );
+                            await message.reply( "Burrito", silent=True,delete_after=10 );
+                            await message.delete();
                     else:
 
                         data[ "number" ] = desired;
