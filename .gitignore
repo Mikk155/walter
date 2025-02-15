@@ -1,14 +1,7 @@
 cache.json
-config.json
-config_lp.json
-dev.bat
+token.txt
+token_dev.txt
 __pycache__
 **/__pycache__/**
-plugins/github/**
 
-# Work in progress
 wip/*
-plugins/github.py
-plugins/github_requirements.txt
-plugins/music.py
-plugins/music_requirements.txt
