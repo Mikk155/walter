@@ -155,7 +155,7 @@ async def think_runner():
     # Print out any delayed logger
     from src.utils.Logger import logs
     if len(logs) > 0:
-        log_channel = bot.get_channel( 1211204941490688030 )
+        log_channel = bot.get_channel( 1211204941490688030 if bot.developer else 1340784821105983508 )
         if log_channel:
             from src.utils.Logger import logs
             amount = 3 # Print only these messages per second
