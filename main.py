@@ -78,13 +78,14 @@ class Bot( discord.Client ):
         else:
             await self.tree.sync()
 
-    async def exception( self, exception_obj: ( Exception | str ), ) -> discord.Embed:
+    def exception( self, exception_obj: ( Exception | str ), ) -> discord.Embed:
 
         '''
             Build a ``discord.Embed`` class with the stack flow of the exception handled.
         '''
 
-        embed = discord.Embed( color = 3447003, timestamp=self.time(), colour=16711680 )
+        from src.utils.Logger import LoggerColors, LoggerLevel
+        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=datetime.now(), colour=16711680 )
 
         try:
 
@@ -113,7 +114,10 @@ class Bot( discord.Client ):
 
         except Exception as e:
 
-            print( f'Exception raised during exception builder LOL: {e}')
+            embed = discord.Embed( color = 3447003, timestamp=datetime.now(), title=f'Exception raised during exception builder LOL:', description=e )
+
+        from src.utils.Logger import logs
+        logs.append(embed)
 
         return embed
 
@@ -126,8 +130,90 @@ bot: Bot = Bot( developer = True if argument( "-developer" ) == "true" else Fals
 # Start of Events
 #================================================
 from src.events.on_start import on_start
-from src.events.on_reconnect import on_reconnect
+from src.events.on_resumed import on_resumed
 from src.events.on_think import on_think_second, on_think_minute, on_think_hour, on_think_day
+from src.events.on_mention import on_mention
+from src.events.on_message import on_message as on_sub_message
+from src.events.on_reply import on_reply
+from src.events.on_link import on_link
+from src.events.on_member_join import on_member_join
+from src.events.on_member_remove import on_member_remove
+from src.events.on_message_delete import on_message_delete
+from src.events.on_message_edit import on_message_edit
+from src.events.on_reaction import on_reaction, ReactionAction
+from src.events.on_invite import on_invite, InviteAction
+from src.events.on_typing import on_typing
+from src.events.on_guild_channel_pins_update import on_guild_channel_pins_update
+from src.events.on_disconnect import on_disconnect
+from src.events.on_error import on_error
+from src.events.on_guild_emojis_update import on_guild_emojis_update
+from src.events.on_guild_stickers_update import on_guild_stickers_update
+from src.events.on_audit_log_entry_create import on_audit_log_entry_create
+
+@bot.event
+async def on_invite_create( invite: discord.Invite ):
+    try:
+        await on_reaction( invite, InviteAction.created )
+    except Exception as e:
+        bot.exception( f"Failed on calling custom hook \"on_invite_create\" Exception: ``{e}``" )
+
+@bot.event
+async def on_invite_delete( invite: discord.Invite ):
+    try:
+        await on_reaction( invite, InviteAction.deleted )
+    except Exception as e:
+        bot.exception( f"Failed on calling custom hook \"on_invite_delete\" Exception: ``{e}``" )
+
+@bot.event
+async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
+    try:
+        await on_reaction( reaction, user, ReactionAction.added )
+    except Exception as e:
+        bot.exception( f"Failed on calling custom hook \"on_reaction_add\" Exception: ``{e}``" )
+
+@bot.event
+async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
+    try:
+        await on_reaction( reaction, user, ReactionAction.removed )
+    except Exception as e:
+        bot.exception( f"Failed on calling custom hook \"on_reaction_remove\" Exception: ``{e}``" )
+
+@bot.event
+async def on_message( message: discord.Message ):
+
+    await on_sub_message( message )
+
+    # Contains a mention
+    if message.mentions and len( message.mentions ) > 0:
+        try:
+            await on_mention( message, message.mentions )
+        except Exception as e:
+            bot.exception( f"Failed on calling custom hook \"on_mention\" Exception: ``{e}``" )
+
+    # is a reply message
+    if message.reference and message.reference.message_id:
+        try:
+            replied_message = await message.channel.fetch_message( message.reference.message_id );
+            if replied_message:
+                try:
+                    await on_reply( message, replied_message )
+                except Exception as e:
+                    bot.exception( f"Failed on calling custom hook \"on_reply\" Exception: ``{e}``" )
+        except discord.NotFound:
+            pass;
+
+    # Is a url
+    if 'https://' in message.content or 'www.' in message.content:
+        contents = message.content.split();
+        urls=[]
+        for c in contents:
+            if c.startswith( 'https://' ) or c.startswith( 'www.' ):
+                urls.append( c );
+        if len( urls ) > 0:
+            try:
+                await on_link( message, urls )
+            except Exception as e:
+                bot.exception( f"Failed on calling custom hook \"on_link\" Exception: ``{e}``" )
 
 @tasks.loop( seconds = 1.0, reconnect=True )
 async def think_runner():
@@ -183,12 +269,6 @@ async def on_ready():
         bot.ThinkDelta.Day = now + timedelta(days=1)
 
         bot.__on_start_called__ = True
-    
-    else:
-
-        bot.m_Logger.info( f"Connection restored." ) # -TODO Store timedelta?
-
-        await on_reconnect()
 
     if not think_runner.is_running():
 
@@ -198,4 +278,4 @@ async def on_ready():
 # End of Events
 #================================================
 
-bot.run( token = open( os.path.join( os.path.dirname( __file__ ), argument( "-token", "token.txt" ) ), "r" ).readline() )
+bot.run( token = open( os.path.join( os.path.dirname( __file__ ), argument( "-token", "token.txt" ) ), "r" ).readline(), reconnect = True )

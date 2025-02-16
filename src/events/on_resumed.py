@@ -6,5 +6,7 @@
 
 from __main__ import bot
 
-async def on_reconnect():
-    pass
+import discord
+
+async def on_resumed():
+    bot.m_Logger.info( f"Connection restored." ) # -TODO Store timedelta?

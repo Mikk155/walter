@@ -4,5 +4,7 @@
 
 from __main__ import bot
 
+import discord
+
 async def on_start():
     pass
