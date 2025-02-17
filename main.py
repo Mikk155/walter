@@ -137,7 +137,7 @@ async def on_message( message: discord.Message ):
 @tasks.loop( seconds = 1.0, reconnect=True )
 async def think_runner():
 
-    #-TODO Store cache
+    g_Cache.__update__()
 
     await bot.wait_until_ready()
 
@@ -160,13 +160,13 @@ async def think_runner():
     # Print out any delayed logger
     from src.utils.Logger import logs
     if len(logs) > 0:
-        log_channel = bot.get_channel( 1211204941490688030 if bot.developer else 1340784821105983508 )
+        log_channel = bot.get_channel( 1340781319566659605 if bot.developer else 1340784821105983508 )
         if log_channel:
             from src.utils.Logger import logs
             amount = 3 # Print only these messages per second
             while len(logs) > 0 and amount > 0:
                 if logs[0]:
-                    await log_channel.send( embed=logs[0] )
+                    await log_channel.send( embed=logs[0], silent=True )
                     await bot.wait_until_ready()
                     amount -= 1
                 logs.pop(0)

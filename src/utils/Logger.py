@@ -93,7 +93,7 @@ class Logger():
         if LogLevel == -1 or LogLevel & ( LoggerLevel ):
 
             global LoggerColors
-            embed = Embed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=datetime.now(), title=f'[{self.module}] [{type}]' if self.module else type, description=string ) #-TODO Timezone arg?
+            embed = Embed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=datetime.now(), title=f'[{self.module}] {type}' if self.module else type, description=string ) #-TODO Timezone arg?
             global logs
             logs.append( embed )
 
@@ -102,19 +102,19 @@ class Logger():
         return string_print;
 
     def error( self, string: str, *args ) -> str:
-        return self.__logger__( "Error", string, LoggerLevel.error, *args );
+        return self.__logger__( "‼️ Error", string, LoggerLevel.error, *args );
 
     def debug( self, string: str, *args ) -> str:
-        return self.__logger__( "Debug", string, LoggerLevel.debug, *args );
+        return self.__logger__( "📝 Debug", string, LoggerLevel.debug, *args );
 
     def warn( self, string: str, *args ) -> str:
-        return self.__logger__( "Warning", string, LoggerLevel.warning, *args );
+        return self.__logger__( "⚠️ Warning", string, LoggerLevel.warning, *args );
 
     def info( self, string: str, *args ) -> str:
-        return self.__logger__( "Info", string, LoggerLevel.information, *args );
+        return self.__logger__( "❕ Info", string, LoggerLevel.information, *args );
 
     def trace( self, string: str, *args ) -> str:
-        return self.__logger__( "Trace", string, LoggerLevel.trace, *args );
+        return self.__logger__( "➡ Trace", string, LoggerLevel.trace, *args );
 
     def critical( self, string: str, *args ) -> str:
-        return self.__logger__( "Critical", string, LoggerLevel.critical, *args );
+        return self.__logger__( "⛔ Critical", string, LoggerLevel.critical, *args );
