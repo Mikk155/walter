@@ -34,6 +34,9 @@ from src.utils.Args import argument
 from src.Bot import Bot as DiscordBot
 bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False )
 
+from src.utils.CacheManager import g_Cache
+g_Cache.initialize()
+
 #================================================
 # Start of Application Commands
 #================================================
