@@ -23,7 +23,7 @@ DEALINGS IN THE SOFTWARE.
 """
 
 from discord import Embed
-from datetime import datetime
+from src.utils.timezone import timezone
 
 global logs
 logs: list[Embed] = []
@@ -94,7 +94,7 @@ class Logger():
         if LogLevel == -1 or LogLevel & ( LoggerLevel ):
 
             global LoggerColors
-            embed = Embed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=datetime.now(), title=f'[{self.module}] {type}' if self.module else type, description=string ) #-TODO Timezone arg?
+            embed = Embed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=timezone(), title=f'[{self.module}] {type}' if self.module else type, description=string ) #-TODO Timezone arg?
             global logs
             logs.append( embed )
 

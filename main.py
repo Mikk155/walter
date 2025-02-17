@@ -30,6 +30,7 @@ from discord.ext import commands, tasks
 from datetime import timedelta, datetime
 
 from src.utils.Args import argument
+from src.utils.timezone import timezone
 
 from src.Bot import Bot as DiscordBot
 bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False )
@@ -144,7 +145,7 @@ async def think_runner():
 
     await on_think_second()
 
-    now = datetime.now(); #-TODO Arg timezone?
+    now = timezone()
 
     if bot.ThinkDelta.Minute < now:
         await on_think_minute()
@@ -183,7 +184,7 @@ async def on_ready():
 
         await on_start()
 
-        now = datetime.now(); #-TODO Arg timezone?
+        now = timezone()
         bot.ThinkDelta.Minute = now + timedelta(minutes=1)
         bot.ThinkDelta.Hour = now + timedelta(hours=1)
         bot.ThinkDelta.Day = now + timedelta(days=1)
