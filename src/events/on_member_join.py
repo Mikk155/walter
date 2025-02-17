@@ -10,4 +10,23 @@ import discord
 
 @bot.event
 async def on_member_join( member : discord.Member ):
-    pass
+
+    try:
+
+        if member.guild.id == 744769532513615922:
+
+            await member.add_roles( member.guild.get_role( 1316214066384994324 ) )
+
+            users_channel = bot.get_channel( 842174687445778483 )
+
+            if users_channel:
+
+                embed = discord.Embed( color = discord.Color(0xda00ff), title=member.global_name, description=f"{member.mention} joined the server." )
+
+                embed.add_field( inline = False, name ="Account creation", value = f'{member.created_at.day}/{member.created_at.month}/{member.created_at.year}' )
+
+                await users_channel.send( embed=embed )
+
+    except Exception as e:
+
+        bot.exception( f"on_member_join: {e}" )

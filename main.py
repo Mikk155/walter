@@ -31,20 +31,15 @@ from datetime import timedelta, datetime
 
 from src.utils.Args import argument
 
+from src.Bot import Bot as DiscordBot
+bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False )
+
 #================================================
 # Start of Application Commands
 #================================================
+from src.commands.new_members import verify
 #================================================
 # End of Application Commands
-#================================================
-
-#================================================
-# Start of BOT
-#================================================
-from src.Bot import Bot as DiscordBot
-bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False )
-#================================================
-# End of BOT
 #================================================
 
 #================================================
