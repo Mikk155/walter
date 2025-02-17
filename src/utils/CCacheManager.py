@@ -85,3 +85,7 @@ class g_Cache:
         '''
 
         return g_Cache.__cache__[ label ];
+
+    @staticmethod
+    def set( label: str, value ) -> None:
+        g_Cache.__cache__[ label ] = value;

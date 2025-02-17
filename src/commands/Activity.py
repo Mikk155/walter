@@ -38,11 +38,8 @@ async def activity( interaction: discord.Interaction, new_activity: Optional[dis
                         data_bytes = await response.read()
 
                         try:
-
                             data = json.loads( data_bytes )
-
-                            g_Cache.__cache__[ "Activity" ] = data
-
+                            g_Cache.set( "Activity", data )
                         except Exception as e:
                             await interaction.followup.send( bot.sentences.get( "INVALID_JSON_OBJECT", e ) )
                             return
