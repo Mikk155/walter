@@ -23,8 +23,19 @@ class Bot( discord.Client ):
     developer: bool = False
     '''If argument ``-developer`` is ``1`` this will be true.'''
 
+    from src.utils.CSentences import sentence as __sentences__
+    sentences: __sentences__;
+
     def __init__( self, developer: bool = False ):
+
         self.developer = developer
+
+        from src.utils.CSentences import sentence
+
+        self.sentences = sentence()
+        if self.sentences:
+            self.m_Logger.trace( self.sentences.get( "OBJECT_INITIALISED", __name__ ) )
+
         super().__init__( intents = discord.Intents.all() )
         self.tree = discord.app_commands.CommandTree( self )
 
@@ -38,14 +49,14 @@ class Bot( discord.Client ):
         else:
             await self.tree.sync()
 
-    def exception( self, exception_obj: ( Exception | str ), ) -> discord.Embed:
+    def exception( self, exception_obj: ( Exception | str ) ) -> discord.Embed:
 
         '''
             Build a ``discord.Embed`` class with the stack flow of the exception handled.
         '''
 
         from src.utils.Logger import LoggerColors, LoggerLevel
-        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=datetime.now(), colour=16711680 )
+        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=datetime.now() )
 
         try:
 

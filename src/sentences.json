@@ -1,0 +1,15 @@
+// This contains all the messages used by the bot
+{
+    "EVENT_FAIL_CALL_CUSTOM_HOOK":
+    {
+        "english": "Failed on calling custom hook \"{}\" Exception: ``{}``"
+    },
+    "EVENT_ON_START":
+    {
+        "english": "Bot connected and logged as {}#{}"
+    },
+    "OBJECT_INITIALISED":
+    {
+        "english": "Object {} initialised"
+    }
+}

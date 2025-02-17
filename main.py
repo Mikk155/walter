@@ -34,8 +34,9 @@ from src.utils.Args import argument
 from src.Bot import Bot as DiscordBot
 bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False )
 
-from src.utils.CacheManager import g_Cache
+from src.utils.CCacheManager import g_Cache
 g_Cache.initialize()
+bot.m_Logger.trace( bot.sentences.get( "OBJECT_INITIALISED", __name__ ) );
 
 #================================================
 # Start of Application Commands
@@ -74,28 +75,28 @@ async def on_invite_create( invite: discord.Invite ):
     try:
         await on_reaction( invite, InviteAction.created )
     except Exception as e:
-        bot.exception( f"Failed on calling custom hook \"on_invite_create\" Exception: ``{e}``" )
+        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_create", e ) )
 
 @bot.event
 async def on_invite_delete( invite: discord.Invite ):
     try:
         await on_reaction( invite, InviteAction.deleted )
     except Exception as e:
-        bot.exception( f"Failed on calling custom hook \"on_invite_delete\" Exception: ``{e}``" )
+        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_delete", e ) )
 
 @bot.event
 async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
     try:
         await on_reaction( reaction, user, ReactionAction.added )
     except Exception as e:
-        bot.exception( f"Failed on calling custom hook \"on_reaction_add\" Exception: ``{e}``" )
+        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reaction_add", e ) )
 
 @bot.event
 async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
     try:
         await on_reaction( reaction, user, ReactionAction.removed )
     except Exception as e:
-        bot.exception( f"Failed on calling custom hook \"on_reaction_remove\" Exception: ``{e}``" )
+        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reaction_remove", e ) )
 
 @bot.event
 async def on_message( message: discord.Message ):
@@ -107,7 +108,7 @@ async def on_message( message: discord.Message ):
         try:
             await on_mention( message, message.mentions )
         except Exception as e:
-            bot.exception( f"Failed on calling custom hook \"on_mention\" Exception: ``{e}``" )
+            bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_mention", e ) )
 
     # is a reply message
     if message.reference and message.reference.message_id:
@@ -117,7 +118,7 @@ async def on_message( message: discord.Message ):
                 try:
                     await on_reply( message, replied_message )
                 except Exception as e:
-                    bot.exception( f"Failed on calling custom hook \"on_reply\" Exception: ``{e}``" )
+                    bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reply", e ) )
         except discord.NotFound:
             pass;
 
@@ -132,7 +133,7 @@ async def on_message( message: discord.Message ):
             try:
                 await on_link( message, urls )
             except Exception as e:
-                bot.exception( f"Failed on calling custom hook \"on_link\" Exception: ``{e}``" )
+                bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_link", e ) )
 
 @tasks.loop( seconds = 1.0, reconnect=True )
 async def think_runner():
@@ -178,8 +179,7 @@ async def on_ready():
 
     if not bot.__on_start_called__:
 
-        if not bot.developer:
-            bot.m_Logger.info( f"Bot connected as {bot.user.name}#{bot.user.discriminator}" )
+        bot.m_Logger.info( bot.sentences.get( "EVENT_ON_START", bot.user.name, bot.user.discriminator ) )
 
         await on_start()
 

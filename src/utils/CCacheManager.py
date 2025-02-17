@@ -1,7 +1,7 @@
 class g_Cache:
     
     '''
-    Cache System
+        Cache System
     '''
 
     from src.utils.Logger import Logger
@@ -51,8 +51,6 @@ class g_Cache:
         __json__ = jsonc.load( __cache_dir__ )
 
         g_Cache.__cache__ = g_Cache.CCacheDictionary( __json__ );
-
-        g_Cache.m_Logger.trace( "Object initialised {}", __name__ );
 
     def __update__():
 

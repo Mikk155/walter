@@ -64,6 +64,7 @@ LoggerColors = {
     LoggerLevel.trace: 0x800080,
     LoggerLevel.information: 0x00FF00,
     LoggerLevel.warning: 0xFFFF00,
+    LoggerLevel.error: 0xFF0000,
     LoggerLevel.critical: 0xFF0000,
 };
 
