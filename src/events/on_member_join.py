@@ -8,12 +8,13 @@ bot: Bot
 
 import discord
 
+from src.utils.constants import guild_limitlesspotential_id
 @bot.event
 async def on_member_join( member : discord.Member ):
 
     try:
 
-        if member.guild.id == 744769532513615922:
+        if member.guild and member.guild.id == guild_limitlesspotential_id():
 
             await member.add_roles( member.guild.get_role( 1316214066384994324 ) )
 

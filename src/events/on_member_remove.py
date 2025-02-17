@@ -8,12 +8,14 @@ bot: Bot
 
 import discord
 
+from src.utils.constants import guild_limitlesspotential_id
+
 @bot.event
 async def on_member_remove( member : discord.Member ):
 
     try:
 
-        if member.guild.id == 744769532513615922:
+        if member.guild and member.guild.id == guild_limitlesspotential_id():
 
             users_channel = bot.get_channel( 842174687445778483 )
 

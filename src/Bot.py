@@ -42,7 +42,8 @@ class Bot( discord.Client ):
     async def setup_hook(self):
 
         if self.developer:
-            __MY_GUILD__ = discord.Object( id = 1145236064596918304 )
+            from src.utils.constants import guild_testserver_id
+            __MY_GUILD__ = discord.Object( id = guild_testserver_id() )
             self.tree.clear_commands( guild=__MY_GUILD__ )
             self.tree.copy_global_to( guild=__MY_GUILD__ )
             await self.tree.sync( guild=__MY_GUILD__ )

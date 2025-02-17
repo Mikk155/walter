@@ -4,7 +4,8 @@ bot: Bot
 
 import discord
 
-@bot.tree.command( guild=bot.get_guild( 744769532513615922 ) )
+from src.utils.constants import guild_limitlesspotential_id
+@bot.tree.command( guild=bot.get_guild( guild_limitlesspotential_id() ) )
 @discord.app_commands.guild_only()
 @discord.app_commands.describe(
     why='Why you joined this server?'

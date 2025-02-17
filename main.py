@@ -35,17 +35,17 @@ from src.utils.timezone import timezone
 from src.Bot import Bot as DiscordBot
 bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False )
 
-from src.utils.CCacheManager import g_Cache
-g_Cache.initialize()
-bot.m_Logger.trace( bot.sentences.get( "OBJECT_INITIALISED", __name__ ) );
-
 #================================================
 # Start of Application Commands
 #================================================
-from src.commands.new_members import verify
+import src.commands.Activity
 #================================================
 # End of Application Commands
 #================================================
+
+from src.utils.CCacheManager import g_Cache
+g_Cache.initialize()
+bot.m_Logger.trace( bot.sentences.get( "OBJECT_INITIALISED", __name__ ) );
 
 #================================================
 # Start of Events

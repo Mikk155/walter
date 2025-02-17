@@ -11,5 +11,21 @@
     "OBJECT_INITIALISED":
     {
         "english": "Object {} initialised"
+    },
+    "ONLY_FORMAT_SUPPORT":
+    {
+        "english": "Only supports \"{}\" format."
+    },
+    "FAIL_DOWNLOAD_FILE":
+    {
+        "english": "Failed to download."
+    },
+    "UPDATED_FILE":
+    {
+        "english": "Successfully updated."
+    },
+    "INVALID_JSON_OBJECT":
+    {
+        "english": "Invalid json object: ``{}``"
     }
 }
