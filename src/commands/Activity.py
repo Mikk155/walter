@@ -1,4 +1,3 @@
-
 from __main__ import bot
 from src.Bot import Bot
 bot: Bot

@@ -41,5 +41,10 @@
     "COUNT_TOGETHER_NUMBER":
     {
         "english": "Last number set to {}."
+    },
+    "SAY_MEMBER_SAID":
+    {
+        "english": "Member {} used /say at {}\n{}",
+        "spanish": "Miembro {} uso /say en {}\n{}"
     }
 }

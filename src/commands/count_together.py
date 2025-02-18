@@ -1,4 +1,3 @@
-
 from __main__ import bot
 from src.Bot import Bot
 bot: Bot
@@ -29,4 +28,4 @@ async def count_together( interaction: discord.Interaction, number: int ):
 
     except Exception as e:
 
-        await bot.exception( f"command::activity: {e}" )
+        await bot.exception( f"command::count_together: {e}" )
