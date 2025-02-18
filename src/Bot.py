@@ -4,6 +4,8 @@ import aiohttp
 import discord
 from datetime import datetime
 
+from src.utils.timezone import timezone
+
 class Bot( discord.Client ):
 
     '''
@@ -60,7 +62,7 @@ class Bot( discord.Client ):
         '''
 
         from src.utils.Logger import LoggerColors, LoggerLevel
-        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=self.timezone() )
+        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=timezone() )
 
         try:
 
@@ -89,7 +91,7 @@ class Bot( discord.Client ):
 
         except Exception as e:
 
-            embed = discord.Embed( color = 3447003, timestamp=self.timezone(), title=f'Exception raised during exception builder LOL:', description=e )
+            embed = discord.Embed( color = 3447003, timestamp=timezone(), title=f'Exception raised during exception builder LOL:', description=e )
 
         from src.utils.Logger import logs
         logs.append(embed)
