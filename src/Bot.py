@@ -1,6 +1,7 @@
 import io
 import json
 import aiohttp
+import asyncio
 import discord
 from datetime import datetime
 
@@ -138,3 +139,12 @@ class Bot( discord.Client ):
                 return webhook
 
         return await channel.create_webhook( name="walter" );
+
+    async def user_reacted( self, emoji: str, user: discord.Member | discord.User, message: discord.Message ) -> bool:
+        if message and user:
+            for reaction in message.reactions:
+                if str(reaction.emoji) == emoji:
+                    async for user_in_reaction in reaction.users():
+                        if user == user_in_reaction:
+                            return True;
+        return False;
