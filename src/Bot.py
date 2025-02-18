@@ -1,3 +1,6 @@
+import io
+import json
+import aiohttp
 import discord
 from datetime import datetime
 
@@ -97,3 +100,29 @@ class Bot( discord.Client ):
         if error:
             return discord.Embed( color=0xFF0000, title=f'⛔ Error', description=description )
         return discord.Embed( color=0x00FF00, title=f'✅ Response', description=description )
+
+    def json_to_file( self, json_object: dict ) -> discord.File:
+        json_serialized = json.dumps( json_object, indent=2 )
+        buffer = io.BytesIO( json_serialized.encode( 'utf-8' ) )
+        buffer.seek(0)
+        return discord.File( buffer, "json.json" )
+
+    async def file_to_json( self, json_file: discord.Attachment ) -> ( dict | discord.Embed ):
+        data = None
+        embed = None
+        if not json_file.filename.endswith( '.json' ):
+            embed = self.response( self.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ), True )
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get( json_file.url ) as response:
+                    if response.status == 200:
+                        data_bytes = await response.read()
+                        try:
+                            data = json.loads( data_bytes )
+                        except Exception as e:
+                            embed = self.response( self.sentences.get( "INVALID_JSON_OBJECT", e ), True )
+                            return ( data, embed )
+                        embed = self.response( self.sentences.get( "UPDATED_FILE" ) )
+                    else:
+                        embed = self.response( self.sentences.get( "FAIL_DOWNLOAD_FILE" ), True )
+        return ( data, embed )

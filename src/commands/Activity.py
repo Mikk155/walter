@@ -25,40 +25,15 @@ async def activity( interaction: discord.Interaction, new_activity: Optional[dis
 
         if new_activity:
 
-            if not new_activity.filename.endswith( '.json' ):
-                await interaction.followup.send( embed=bot.response( bot.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ), True ) )
-                return
+            json_object = await bot.file_to_json( new_activity )
 
-            async with aiohttp.ClientSession() as session:
-
-                async with session.get( new_activity.url ) as response:
-
-                    if response.status == 200:
-
-                        data_bytes = await response.read()
-
-                        try:
-                            data = json.loads( data_bytes )
-                            g_Cache.set( "Activity", data )
-                        except Exception as e:
-                            await interaction.followup.send( embed=bot.response( bot.sentences.get( "INVALID_JSON_OBJECT", e ), True ) )
-                            return
-
-                        await interaction.followup.send( embed=bot.response( bot.sentences.get( "UPDATED_FILE" ) ) )
-
-                    else:
-                        await interaction.followup.send( embed=bot.response( bot.sentences.get( "FAIL_DOWNLOAD_FILE" ), True ) )
+            if json_object[0]:
+                g_Cache.set( "Activity", json_object[0] )
+            if json_object[1]:
+                await interaction.followup.send( embed=json_object[1] )
         else:
 
-            cache = g_Cache.get( "Activity" )
-
-            emoji_list = json.dumps( cache, indent=0 )
-
-            buffer = io.BytesIO( emoji_list.encode( 'utf-8' ) )
-
-            buffer.seek(0)
-
-            await interaction.followup.send( file=discord.File( buffer, "json.json" ) )
+            await interaction.followup.send( file = bot.json_to_file( g_Cache.get( "Activity" ) ) )
 
     except Exception as e:
 
