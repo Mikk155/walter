@@ -37,5 +37,9 @@
     {
         "english": "The user {} has not been pinged yet, This is his first <:pingreee:911150900666572842>",
         "spanish": "El usuario {} no ha sido mencionado aun, Esta será su primera vez <:pingreee:911150900666572842>"
+    },
+    "COUNT_TOGETHER_NUMBER":
+    {
+        "english": "Last number set to {}."
     }
 }

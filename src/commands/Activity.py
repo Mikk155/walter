@@ -9,7 +9,7 @@ from discord import app_commands
 from src.utils.CCacheManager import g_Cache
 from typing import Optional
 
-@bot.tree.command()
+@bot.tree.command( name="cfg_activity" )
 @app_commands.guild_only()
 @app_commands.default_permissions( administrator=True )
 @app_commands.describe( new_activity='New Actiivity json file to replace.' )
