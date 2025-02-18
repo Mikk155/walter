@@ -13,7 +13,9 @@ class g_Cache:
 
             if key not in self:
 
-                self[ key ] = g_Cache.CCacheDictionary();
+                cache_dict = g_Cache.CCacheDictionary();
+                self[ key ] = cache_dict
+                return cache_dict;
 
             return super().__getitem__( key );
 
@@ -40,15 +42,11 @@ class g_Cache:
     def initialize() -> None:
 
         from src.utils.CJsonCommentary import jsonc;
-        from os.path import exists, join, abspath;
+        from os.path import join, abspath;
 
         __cache_dir__ = join( abspath(""), ( "cache.json" ) );
 
-        if not exists(__cache_dir__ ):
-
-            open( __cache_dir__, 'w' ).write( '{\n}' )
-
-        __json__ = jsonc.load( __cache_dir__ )
+        __json__ = jsonc.load( __cache_dir__, exists_ok=True )
 
         g_Cache.__cache__ = g_Cache.CCacheDictionary( __json__ );
 
