@@ -39,6 +39,7 @@ bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "t
 # Start of Application Commands
 #================================================
 import src.commands.Activity
+import src.commands.ping_count
 #================================================
 # End of Application Commands
 #================================================

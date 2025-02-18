@@ -3,9 +3,6 @@ from __main__ import bot
 from src.Bot import Bot
 bot: Bot
 
-import io
-import json
-import aiohttp
 import discord
 from discord import app_commands
 
