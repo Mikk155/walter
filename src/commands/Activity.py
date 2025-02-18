@@ -26,7 +26,7 @@ async def activity( interaction: discord.Interaction, new_activity: Optional[dis
         if new_activity:
 
             if not new_activity.filename.endswith( '.json' ):
-                await interaction.followup.send( bot.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ) )
+                await interaction.followup.send( embed=bot.response( bot.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ), True ) )
                 return
 
             async with aiohttp.ClientSession() as session:
@@ -41,13 +41,13 @@ async def activity( interaction: discord.Interaction, new_activity: Optional[dis
                             data = json.loads( data_bytes )
                             g_Cache.set( "Activity", data )
                         except Exception as e:
-                            await interaction.followup.send( bot.sentences.get( "INVALID_JSON_OBJECT", e ) )
+                            await interaction.followup.send( embed=bot.response( bot.sentences.get( "INVALID_JSON_OBJECT", e ), True ) )
                             return
 
-                        await interaction.followup.send( bot.sentences.get( "UPDATED_FILE" ) )
+                        await interaction.followup.send( embed=bot.response( bot.sentences.get( "UPDATED_FILE" ) ) )
 
                     else:
-                        await interaction.followup.send( bot.sentences.get( "FAIL_DOWNLOAD_FILE" ) )
+                        await interaction.followup.send( embed=bot.response( bot.sentences.get( "FAIL_DOWNLOAD_FILE" ), True ) )
         else:
 
             cache = g_Cache.get( "Activity" )

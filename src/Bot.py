@@ -92,3 +92,8 @@ class Bot( discord.Client ):
         logs.append(embed)
 
         return embed
+
+    def response( self, description=None, error = False ) -> discord.Embed:
+        if error:
+            return discord.Embed( color=0xFF0000, title=f'⛔ Error', description=description )
+        return discord.Embed( color=0x00FF00, title=f'✅ Response', description=description )

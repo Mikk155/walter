@@ -94,7 +94,7 @@ class Logger():
         if LogLevel == -1 or LogLevel & ( LoggerLevel ):
 
             global LoggerColors
-            embed = Embed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=timezone(), title=f'[{self.module}] {type}' if self.module else type, description=string ) #-TODO Timezone arg?
+            embed = Embed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=timezone(), title=f'[{self.module}] {type}' if self.module else type, description=string )
             global logs
             logs.append( embed )
 
