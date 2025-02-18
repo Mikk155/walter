@@ -126,3 +126,13 @@ class Bot( discord.Client ):
                     else:
                         embed = self.response( self.sentences.get( "FAIL_DOWNLOAD_FILE" ), True )
         return ( data, embed )
+
+    async def webhook( self, channel: discord.TextChannel ) -> discord.Webhook:
+        
+        webhooks: list[discord.Webhook] = await channel.webhooks()
+
+        for webhook in webhooks:
+            if webhook and webhook.name == "walter":
+                return webhook
+
+        return await channel.create_webhook( name="walter" );
