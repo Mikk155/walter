@@ -8,9 +8,9 @@
     {
         "english": "Bot connected and logged as {}#{}"
     },
-    "OBJECT_INITIALISED":
+    "OBJECT_INITIALIZED":
     {
-        "english": "Object {} initialised"
+        "english": "Object {} initialized"
     },
     "ONLY_FORMAT_SUPPORT":
     {

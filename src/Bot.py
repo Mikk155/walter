@@ -7,6 +7,7 @@ import discord
 from datetime import datetime
 from typing import Optional
 
+from src.utils.sentences import sentences
 from src.utils.utils import g_Utils
 
 class Bot( discord.Client ):
@@ -31,21 +32,11 @@ class Bot( discord.Client ):
     developer: bool = False
     '''If ``-developer`` is ``1`` this will be true.'''
 
-    from src.utils.CSentences import sentence as __sentences__
-    sentences: __sentences__;
-
     def __init__( self, developer: Optional[bool] = False ):
-
         self.developer = developer
-
-        from src.utils.CSentences import sentence
-
-        self.sentences = sentence()
-        if self.sentences:
-            self.m_Logger.trace( self.sentences.get( "OBJECT_INITIALISED", "Discord Bot" ) ).print()
-
         super().__init__( intents = discord.Intents.all() )
         self.tree = discord.app_commands.CommandTree( self )
+#        self.m_Logger.trace( sentences[ "OBJECT_INITIALIZED" ], "Discord Bot" ).print()
 
     async def setup_hook(self):
 
@@ -171,7 +162,7 @@ class Bot( discord.Client ):
 
         if not json_file.filename.endswith( '.json' ):
 
-            embed = self.m_Logger.error( self.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ) )
+            embed = self.m_Logger.error( sentences[ "ONLY_FORMAT_SUPPORT" ], "json" );
 
         else:
 
@@ -189,15 +180,15 @@ class Bot( discord.Client ):
 
                         except Exception as e:
 
-                            embed = self.m_Logger.error( self.sentences.get( "INVALID_JSON_OBJECT", e ) )
+                            embed = self.m_Logger.error( sentences[ "INVALID_JSON_OBJECT" ], e )
 
                             return ( data, embed )
 
-                        embed = self.m_Logger.error( self.sentences.get( "UPDATED_FILE" ) )
+                        embed = self.m_Logger.error( sentences[ "UPDATED_FILE" ] )
 
                     else:
 
-                        embed = self.m_Logger.error( self.sentences.get( "FAIL_DOWNLOAD_FILE" ) )
+                        embed = self.m_Logger.error( sentences[ "FAIL_DOWNLOAD_FILE" ] )
 
         return ( data, embed )
 

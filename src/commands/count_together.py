@@ -5,6 +5,7 @@ bot: Bot;
 import discord;
 from discord import app_commands;
 
+from src.utils.sentences import sentences
 from src.utils.CCacheManager import g_Cache;
 
 @bot.tree.command( name = "cfg_count_together" )
@@ -27,7 +28,7 @@ async def count_together( interaction: discord.Interaction, number: int ):
 
         cache[ "number" ] = number;
 
-        message = bot.sentences.get( "COUNT_TOGETHER_NUMBER", number );
+        message = sentences[ "COUNT_TOGETHER_NUMBER" ].format( number );
 
         await interaction.followup.send( message );
 

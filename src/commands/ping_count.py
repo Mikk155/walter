@@ -5,6 +5,7 @@ bot: Bot;
 import discord;
 from discord import app_commands;
 
+from src.utils.sentences import sentences
 from src.utils.CCacheManager import g_Cache;
 from typing import Optional;
 
@@ -34,11 +35,11 @@ async def ping_count( interaction: discord.Interaction, user: Optional[discord.M
 
             if counts[0] > 0:
 
-                await interaction.followup.send( bot.sentences.get( "PING_COUNTER_TIMES", counts[1], counts[0] ) );
+                await interaction.followup.send( sentences[ "PING_COUNTER_TIMES" ].format( counts[1], counts[0] ) );
 
             else:
 
-                await interaction.followup.send( bot.sentences.get( "PING_COUNTER_FIRST", f'<@{user.id}>' ) );
+                await interaction.followup.send( sentences[ "PING_COUNTER_FIRST" ].format( f'<@{user.id}>' ) );
 
                 counts[0] = 1;
 

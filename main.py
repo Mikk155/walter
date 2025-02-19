@@ -30,6 +30,7 @@ from typing import Optional;
 from discord.ext import commands, tasks;
 from datetime import timedelta;
 
+from src.utils.sentences import sentences
 from src.utils.utils import g_Utils;
 
 def argument( name: str, default: str = None ) -> None | str:
@@ -56,7 +57,7 @@ from src.utils.CCacheManager import g_Cache;
 
 g_Cache.initialize();
 
-bot.m_Logger.trace( bot.sentences.get( "OBJECT_INITIALISED", "Cache System" ) ).print();
+#bot.m_Logger.trace( sentences[ "OBJECT_INITIALISED" ], "Cache System" ).print();
 
 #================================================
 # Start of Events
@@ -91,7 +92,7 @@ async def on_invite_create( invite: discord.Invite ):
 
     except Exception as e:
 
-        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_create", e ) );
+        bot.exception( sentences[ "EVENT_FAIL_CALL_CUSTOM_HOOK" ].format( "on_invite_create", e ) );
 
 @bot.event
 async def on_invite_delete( invite: discord.Invite ):
@@ -102,7 +103,7 @@ async def on_invite_delete( invite: discord.Invite ):
 
     except Exception as e:
 
-        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_delete", e ) );
+        bot.exception( sentences[ "EVENT_FAIL_CALL_CUSTOM_HOOK" ].format( "on_invite_delete", e ) );
 
 @bot.event
 async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
@@ -113,7 +114,7 @@ async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
 
     except Exception as e:
 
-        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reaction_add", e ) );
+        bot.exception( sentences[ "EVENT_FAIL_CALL_CUSTOM_HOOK" ].format( "on_reaction_add", e ) );
 
 @bot.event
 async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
@@ -124,7 +125,7 @@ async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
 
     except Exception as e:
 
-        bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reaction_remove", e ) );
+        bot.exception( sentences[ "EVENT_FAIL_CALL_CUSTOM_HOOK" ].format( "on_reaction_remove", e ) );
 
 @bot.event
 async def on_message( message: discord.Message ):
@@ -140,7 +141,7 @@ async def on_message( message: discord.Message ):
 
         except Exception as e:
 
-            bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_mention", e ) );
+            bot.exception( sentences[ "EVENT_FAIL_CALL_CUSTOM_HOOK" ].format( "on_mention", e ) );
 
     # is a reply message
     if message.reference and message.reference.message_id:
@@ -157,7 +158,7 @@ async def on_message( message: discord.Message ):
 
                 except Exception as e:
 
-                    bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reply", e ) );
+                    bot.exception( sentences[ "EVENT_FAIL_CALL_CUSTOM_HOOK" ].format( "on_reply", e ) );
 
         except discord.NotFound:
 
@@ -184,7 +185,7 @@ async def on_message( message: discord.Message ):
 
             except Exception as e:
 
-                bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_link", e ) );
+                bot.exception( sentences[ "EVENT_FAIL_CALL_CUSTOM_HOOK" ].format( "on_link", e ) );
 
 @tasks.loop( seconds = 1.0, reconnect=True )
 async def think_runner():
@@ -247,7 +248,7 @@ async def on_ready():
 
     if not bot.__on_start_called__:
 
-        bot.m_Logger.info( bot.sentences.get( "EVENT_ON_START", bot.user.name, bot.user.discriminator ) ).print();
+        bot.m_Logger.info( sentences[ "EVENT_ON_START" ].format( bot.user.name, bot.user.discriminator ) ).print();
 
         await on_start();
 
