@@ -78,14 +78,14 @@ from src.events.on_audit_log_entry_create import on_audit_log_entry_create
 @bot.event
 async def on_invite_create( invite: discord.Invite ):
     try:
-        await on_reaction( invite, InviteAction.created )
+        await on_invite( invite, InviteAction.created )
     except Exception as e:
         bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_create", e ) )
 
 @bot.event
 async def on_invite_delete( invite: discord.Invite ):
     try:
-        await on_reaction( invite, InviteAction.deleted )
+        await on_invite( invite, InviteAction.deleted )
     except Exception as e:
         bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_delete", e ) )
 
