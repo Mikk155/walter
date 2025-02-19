@@ -4,13 +4,13 @@ class sentence( dict ):
         Bot Sentences
     '''
 
-    from src.utils.Logger import Logger
+    from src.utils.Logger import Logger;
     m_Logger = Logger( "Sentences" );
 
     def __init__( self ):
 
         from mikk import jsonc, fmt;
-        from os.path import exists, join, abspath;
+
         super().__init__( jsonc.load( fmt.join("src/sentences.json" ) ) );
 
     def get( self, key: str, *args ) -> str:
@@ -27,11 +27,11 @@ class sentence( dict ):
 
             else:
 
-                self.m_Logger.critical( "Failed to get language {} for sentence {}", "english", key ).print()
+                self.m_Logger.critical( "Failed to get language {} for sentence {}", "english", key ).print();
 
         else:
 
-            self.m_Logger.error( "Undefined sentence {}", key ).print()
+            self.m_Logger.error( "Undefined sentence {}", key ).print();
 
         if __sentence__ is None:
 

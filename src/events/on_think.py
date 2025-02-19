@@ -2,22 +2,22 @@
     Events called when the bot thinks
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
-from src.utils.utils import g_Utils
-from src.utils.CCacheManager import g_Cache
+from src.utils.utils import g_Utils;
+from src.utils.CCacheManager import g_Cache;
 
-from src.plugins.Activity import g_Activity
+from src.plugins.Activity import g_Activity;
 
 async def on_think_second():
 
     try:
 
-        now = g_Utils.time()
+        now = g_Utils.time();
 
         if g_Activity.time < now:
 
@@ -35,7 +35,7 @@ async def on_think_second():
 
     except Exception as e:
 
-        bot.exception( f"on_think_second: {e}" )
+        bot.exception( f"on_think_second: {e}" );
 
 async def on_think_minute():
 
@@ -45,7 +45,7 @@ async def on_think_minute():
 
     except Exception as e:
 
-        bot.exception( f"on_think_minute: {e}" )
+        bot.exception( f"on_think_minute: {e}" );
 
 async def on_think_hour():
 
@@ -55,7 +55,7 @@ async def on_think_hour():
 
     except Exception as e:
 
-        bot.exception( f"on_think_hour: {e}" )
+        bot.exception( f"on_think_hour: {e}" );
 
 async def on_think_day():
 
@@ -65,4 +65,4 @@ async def on_think_day():
 
     except Exception as e:
 
-        bot.exception( f"on_think_day: {e}" )
+        bot.exception( f"on_think_day: {e}" );

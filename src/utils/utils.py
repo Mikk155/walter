@@ -1,7 +1,7 @@
-import datetime
-import pytz
+import datetime;
+import pytz;
 
-global g_Utils
+global g_Utils;
 class g_Utils:
 
     '''
@@ -13,4 +13,4 @@ class g_Utils:
         '''
             Get the curret time for the bot zone
         '''
-        return  datetime.datetime.now( pytz.timezone( "America/Argentina/Cordoba" ) )
+        return  datetime.datetime.now( pytz.timezone( "America/Argentina/Cordoba" ) );

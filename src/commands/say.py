@@ -1,33 +1,41 @@
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
 import discord
-from discord import app_commands
+from discord import app_commands;
 
-from typing import Optional
+from typing import Optional;
 
 @bot.tree.command()
+
 @app_commands.guild_only()
+
 @app_commands.default_permissions( administrator=True )
+
 @app_commands.describe( message='Say something', user='User to use identity', )
+
 async def say( interaction: discord.Interaction, message: str, user: Optional[discord.Member] = None ):
+
     """Make the bot say something"""
 
-    await interaction.response.defer( thinking=True )
+    await interaction.response.defer( thinking=True );
 
     try:
 
         if not user:
+
             user = bot.user;
 
-        webhook = await bot.webhook( interaction.channel )
+        webhook = await bot.webhook( interaction.channel );
 
-        said = await webhook.send( content=message, username=user.display_name, avatar_url=user.avatar.url if user.avatar else None, wait=True );
+        said: discord.WebhookMessage = await webhook.send( content=message, username=user.display_name, \
+                                                        avatar_url=user.avatar.url if user.avatar else None, wait=True );
 
-        bot.m_Logger.info( bot.sentences.get( "SAY_MEMBER_SAID", interaction.user.global_name, said.jump_url, message ) ).print()
+        bot.m_Logger.info( bot.sentences.get( "SAY_MEMBER_SAID", interaction.user.global_name, said.jump_url, message ) ).print();
 
     except Exception as e:
 
-        embed = bot.exception( f"command::say: {e}", interaction )
-        await interaction.followup.send( embed=embed )
+        embed = bot.exception( f"command::say: {e}", interaction );
+
+        await interaction.followup.send( embed=embed );

@@ -2,11 +2,11 @@
     Event called when a member adds/removes a reaction
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
 class ReactionAction:
     removed = 0;
@@ -20,4 +20,4 @@ async def on_reaction( reaction: discord.Reaction, user : discord.User, action: 
 
     except Exception as e:
 
-        bot.exception( f"on_message_edit: {e}" )
+        bot.exception( f"on_message_edit: {e}" );

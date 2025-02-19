@@ -4,7 +4,7 @@ class g_Cache:
         Cache System
     '''
 
-    from src.utils.Logger import Logger
+    from src.utils.Logger import Logger;
     m_Logger = Logger( "Cache System" );
 
     class CCacheDictionary( dict ):
@@ -14,7 +14,9 @@ class g_Cache:
             if key not in self:
 
                 cache_dict = g_Cache.CCacheDictionary();
-                self[ key ] = cache_dict
+
+                self[ key ] = cache_dict;
+
                 return cache_dict;
 
             return super().__getitem__( key );
@@ -35,15 +37,15 @@ class g_Cache:
 
             return __json__;
 
-    __cache__: CCacheDictionary = {};
+    __cache__: CCacheDictionary = None;
     '''The whole cache (Do NOT modify directly! use g_Cache.get())'''
 
     @staticmethod
     def initialize() -> None:
 
-        from mikk import jsonc, fmt
+        from mikk import jsonc, fmt;
 
-        __json__ = jsonc.load( fmt.join( "cache.json" ), exists_ok=True )
+        __json__ = jsonc.load( fmt.join( "cache.json" ), exists_ok=True );
 
         g_Cache.__cache__ = g_Cache.CCacheDictionary( __json__ );
 
@@ -60,6 +62,7 @@ class g_Cache:
             if obj:
 
                 from mikk import fmt
+
                 open( fmt.join( "cache.json" ), 'w' ).write( obj );
 
             else:
@@ -83,4 +86,5 @@ class g_Cache:
 
     @staticmethod
     def set( label: str, value ) -> None:
+
         g_Cache.__cache__[ label ] = value;

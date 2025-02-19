@@ -2,11 +2,11 @@
     Event called when a invite is created/deleted
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
 class InviteAction:
     deleted = 0;
@@ -20,4 +20,4 @@ async def on_invite( invite: discord.Invite, action: InviteAction ):
 
     except Exception as e:
 
-        bot.exception( f"on_invite: {e}" )
+        bot.exception( f"on_invite: {e}" );

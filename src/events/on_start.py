@@ -2,11 +2,11 @@
     Event called when the bot is run for the first time.
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
 async def on_start():
 
@@ -16,4 +16,4 @@ async def on_start():
 
     except Exception as e:
 
-        bot.exception( f"on_start: {e}" )
+        bot.exception( f"on_start: {e}" );

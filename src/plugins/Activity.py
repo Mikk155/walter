@@ -1,6 +1,6 @@
-import datetime
-from src.utils.CCacheManager import g_Cache
-from src.utils.utils import g_Utils
+import datetime;
+from src.utils.CCacheManager import g_Cache;
+from src.utils.utils import g_Utils;
 
 class CActivity:
 
@@ -18,15 +18,15 @@ class CActivity:
             "competing": "5",
     };
 
-    name: str
+    name: str;
 
-    type: int
+    type: int;
 
-    state: int
+    state: int;
 
-    states: list
+    states: list;
 
-    intervals: int
+    intervals: int;
 
     time: datetime.datetime
 

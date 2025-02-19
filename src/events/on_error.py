@@ -2,14 +2,14 @@
     Event called when a unhandled exception raised
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
 #@bot.event
-async def on_error( event: str, *args, **kwargs):
+async def on_error( event: str, *args, **kwargs ):
 
     try:
 
@@ -17,4 +17,4 @@ async def on_error( event: str, *args, **kwargs):
 
     except Exception as e:
 
-        bot.exception( f"event: {e}" )
+        bot.exception( f"event: {e}" );

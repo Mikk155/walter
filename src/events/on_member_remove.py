@@ -2,13 +2,13 @@
     Event called when a member leaves a guild
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
-from src.utils.constants import guild_limitlesspotential_id
+from src.utils.constants import guild_limitlesspotential_id;
 
 @bot.event
 async def on_member_remove( member : discord.Member ):
@@ -17,7 +17,7 @@ async def on_member_remove( member : discord.Member ):
 
         if member.guild and member.guild.id == guild_limitlesspotential_id():
 
-            users_channel = bot.get_channel( 842174687445778483 )
+            users_channel = bot.get_channel( 842174687445778483 );
 
             if users_channel:
 
@@ -29,4 +29,4 @@ async def on_member_remove( member : discord.Member ):
 
     except Exception as e:
 
-        bot.exception( f"on_member_remove: {e}", member )
+        bot.exception( f"on_member_remove: {e}", member );

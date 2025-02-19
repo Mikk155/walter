@@ -4,11 +4,11 @@
     This is not called when it run for a first time.
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
 async def on_resumed():
 
@@ -20,4 +20,4 @@ async def on_resumed():
 
     except Exception as e:
 
-        bot.exception( f"on_resumed: {e}" )
+        bot.exception( f"on_resumed: {e}" );

@@ -22,11 +22,11 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-import discord
-from src.utils.utils import g_Utils
+import discord;
+from src.utils.utils import g_Utils;
 
-global logs
-logs: list[discord.Embed] = []
+global logs;
+logs: list[discord.Embed] = [];
 
 global LogLevel;
 LogLevel: int = -1;
@@ -100,13 +100,15 @@ class Logger():
                 break;
             string = string.replace( "{}", arg if isinstance( arg, str ) else str(arg), 1 );
 
-        embed = LoggerEmbed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=g_Utils.time(), title=f'{emoji} [{self.module}] {type}' if self.module else f'{emoji} {type}', description=string )
+        embed = LoggerEmbed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=g_Utils.time(), \
+                            title=f'{emoji} [{self.module}] {type}' if self.module else f'{emoji} {type}', description=string );
+
         embed.cmd_string = '[{}] {}'.format( f'{self.module}::{type}' if self.module else type, string );
 
         global LogLevel;
         if LogLevel == -1 or LogLevel & ( LoggerLevel ):
 
-            embed.should_log = True
+            embed.should_log = True;
 
         return embed;
 

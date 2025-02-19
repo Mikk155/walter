@@ -2,11 +2,11 @@
     Event called when a sticker is updated
 '''
 
-from __main__ import bot
-from src.Bot import Bot
-bot: Bot
+from __main__ import bot;
+from src.Bot import Bot;
+bot: Bot;
 
-import discord
+import discord;
 
 @bot.event
 async def on_guild_stickers_update( guild: discord.Guild, before: list[discord.Sticker], after: list[discord.Sticker] ):
@@ -17,4 +17,4 @@ async def on_guild_stickers_update( guild: discord.Guild, before: list[discord.S
 
     except Exception as e:
 
-        bot.exception( f"on_guild_stickers_update: {e}" )
+        bot.exception( f"on_guild_stickers_update: {e}" );
