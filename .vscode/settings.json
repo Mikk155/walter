@@ -8,7 +8,6 @@
         "**/__pycache__/": true,
         "token.txt": true,
         "token_dev.txt": true,
-        "wip/": true
     },
     "search.exclude":
     {
