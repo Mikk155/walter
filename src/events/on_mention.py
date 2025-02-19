@@ -14,9 +14,10 @@ async def on_mention( message: discord.Message, mentions: list[ discord.User | d
 
     try:
 
+        cache = g_Cache.get( "ping_counter");
+
         for user in mentions:
             if user:
-                cache = g_Cache.get( "ping_counter");
                 counts = cache.get( f'<@{user.id}>', [ 0, user.global_name ] );
                 counts[1] = user.global_name;
                 counts[0] = counts[0] + 1;
@@ -24,4 +25,4 @@ async def on_mention( message: discord.Message, mentions: list[ discord.User | d
 
     except Exception as e:
 
-        bot.exception( f"on_mention: {e}" )
+        bot.exception( f"on_mention: {e}", message )

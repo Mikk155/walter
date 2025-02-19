@@ -28,4 +28,5 @@ async def count_together( interaction: discord.Interaction, number: int ):
 
     except Exception as e:
 
-        await bot.exception( f"command::count_together: {e}" )
+        embed = bot.exception( f"command::count_together: {e}", interaction )
+        await interaction.followup.send( embed=embed )

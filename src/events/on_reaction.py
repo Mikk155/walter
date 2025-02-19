@@ -13,4 +13,11 @@ class ReactionAction:
     added = 1;
 
 async def on_reaction( reaction: discord.Reaction, user : discord.User, action: ReactionAction ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_message_edit: {e}" )

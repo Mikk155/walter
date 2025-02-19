@@ -9,16 +9,9 @@ class sentence( dict ):
 
     def __init__( self ):
 
-        from src.utils.CJsonCommentary import jsonc;
+        from mikk import jsonc, fmt;
         from os.path import exists, join, abspath;
-
-        __sentences_dir__ = join( join( abspath(""), "src" ), "sentences.json" );
-
-        if not exists(__sentences_dir__ ):
-
-            open( __sentences_dir__, 'w' ).write( '{\n}' )
-
-        super().__init__( jsonc.load( __sentences_dir__ ) );
+        super().__init__( jsonc.load( fmt.join("src/sentences.json" ) ) );
 
     def get( self, key: str, *args ) -> str:
 
@@ -34,11 +27,11 @@ class sentence( dict ):
 
             else:
 
-                self.m_Logger.critical( "Failed to get language {} for sentence {}", "english", key )
+                self.m_Logger.critical( "Failed to get language {} for sentence {}", "english", key ).print()
 
         else:
 
-            self.m_Logger.error( "Undefined sentence {}", key )
+            self.m_Logger.error( "Undefined sentence {}", key ).print()
 
         if __sentence__ is None:
 

@@ -29,8 +29,9 @@ async def ping_count( interaction: discord.Interaction, user: Optional[discord.M
             else:
                 await interaction.followup.send( bot.sentences.get( "PING_COUNTER_FIRST", f'<@{user.id}>' ) )
                 counts[0] = 1
-                counts[ '<@{user.id}>' ] = counts
+                counts[ f'<@{user.id}>' ] = counts
 
     except Exception as e:
 
-        await bot.exception( f"command::ping_count: {e}" )
+        embed = bot.exception( f"command::ping_count: {e}", interaction )
+        await interaction.followup.send( embed=embed )

@@ -10,4 +10,11 @@ import discord
 
 #@bot.event
 async def on_error( event: str, *args, **kwargs):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"event: {e}" )

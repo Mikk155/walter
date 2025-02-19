@@ -9,4 +9,11 @@ bot: Bot
 import discord
 
 async def on_reply( message: discord.Message, replied: discord.Message ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_reply: {e}", message )

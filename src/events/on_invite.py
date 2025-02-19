@@ -13,4 +13,11 @@ class InviteAction:
     created = 1;
 
 async def on_invite( invite: discord.Invite, action: InviteAction ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_invite: {e}" )

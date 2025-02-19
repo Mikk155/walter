@@ -10,4 +10,11 @@ import discord
 
 @bot.event
 async def on_guild_stickers_update( guild: discord.Guild, before: list[discord.Sticker], after: list[discord.Sticker] ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_guild_stickers_update: {e}" )

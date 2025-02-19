@@ -10,4 +10,12 @@ import discord
 
 @bot.event
 async def on_audit_log_entry_create( entry: discord.audit_logs.AuditLogEntry ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_audit_log_entry_create: {e}" )
+

@@ -11,4 +11,11 @@ import datetime
 
 @bot.event
 async def on_typing( channel: discord.abc.Messageable, user: discord.Member | discord.User, when: datetime.datetime ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_typing: {e}", channel )

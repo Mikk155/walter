@@ -22,11 +22,11 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from discord import Embed
-from src.utils.timezone import timezone
+import discord
+from src.utils.utils import g_Utils
 
 global logs
-logs: list[Embed] = []
+logs: list[discord.Embed] = []
 
 global LogLevel;
 LogLevel: int = -1;
@@ -68,6 +68,20 @@ LoggerColors = {
     LoggerLevel.critical: 0xFF0000,
 };
 
+class LoggerEmbed( discord.Embed ):
+
+    should_log = False;
+
+    cmd_string = '';
+
+    def print( self ) -> bool:
+        '''Try to print the loggig channel. if the log level is disabled returns false'''
+        if self.should_log:
+            global logs;
+            logs.append( self );
+        print( self.cmd_string );
+        return self.should_log;
+
 class Logger():
 
     '''
@@ -79,43 +93,37 @@ class Logger():
     def __init__( self, module_name: str = None ):
         self.module = module_name;
 
-    def __logger__( self, type: str, string: str, LoggerLevel: LoggerLevel, *args ) -> str:
+    def __logger__( self, emoji: str, type: str, string: str, LoggerLevel: LoggerLevel, *args ) -> LoggerEmbed:
 
         for arg in args:
-
             if not '{}' in string:
                 break;
-
             string = string.replace( "{}", arg if isinstance( arg, str ) else str(arg), 1 );
 
-        string_print = '[{}] {}'.format( f'{self.module}::{type}' if self.module else type, string );
+        embed = LoggerEmbed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=g_Utils.time(), title=f'{emoji} [{self.module}] {type}' if self.module else f'{emoji} {type}', description=string )
+        embed.cmd_string = '[{}] {}'.format( f'{self.module}::{type}' if self.module else type, string );
 
         global LogLevel;
         if LogLevel == -1 or LogLevel & ( LoggerLevel ):
 
-            global LoggerColors
-            embed = Embed( color=LoggerColors.get( LoggerLevel, 0x196990 ), timestamp=timezone(), title=f'[{self.module}] {type}' if self.module else type, description=string )
-            global logs
-            logs.append( embed )
+            embed.should_log = True
 
-            print( string_print );
+        return embed;
 
-        return string_print;
+    def error( self, string: str, *args ) -> LoggerEmbed:
+        return self.__logger__( "‼️", "Error", string, LoggerLevel.error, *args );
 
-    def error( self, string: str, *args ) -> str:
-        return self.__logger__( "‼️ Error", string, LoggerLevel.error, *args );
+    def debug( self, string: str, *args ) -> LoggerEmbed:
+        return self.__logger__( "📝", "Debug", string, LoggerLevel.debug, *args );
 
-    def debug( self, string: str, *args ) -> str:
-        return self.__logger__( "📝 Debug", string, LoggerLevel.debug, *args );
+    def warn( self, string: str, *args ) -> LoggerEmbed:
+        return self.__logger__( "⚠️", "Warning", string, LoggerLevel.warning, *args );
 
-    def warn( self, string: str, *args ) -> str:
-        return self.__logger__( "⚠️ Warning", string, LoggerLevel.warning, *args );
+    def info( self, string: str, *args ) -> LoggerEmbed:
+        return self.__logger__( "❕", "Info", string, LoggerLevel.information, *args );
 
-    def info( self, string: str, *args ) -> str:
-        return self.__logger__( "❕ Info", string, LoggerLevel.information, *args );
+    def trace( self, string: str, *args ) -> LoggerEmbed:
+        return self.__logger__( "➡", "Trace", string, LoggerLevel.trace, *args );
 
-    def trace( self, string: str, *args ) -> str:
-        return self.__logger__( "➡ Trace", string, LoggerLevel.trace, *args );
-
-    def critical( self, string: str, *args ) -> str:
-        return self.__logger__( "⛔ Critical", string, LoggerLevel.critical, *args );
+    def critical( self, string: str, *args ) -> LoggerEmbed:
+        return self.__logger__( "⛔", "Critical", string, LoggerLevel.critical, *args );

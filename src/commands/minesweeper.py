@@ -93,4 +93,5 @@ async def minesweeper( interaction: discord.Interaction, bombs: Optional[int] = 
         minesweper = MineSweper( bombs, blocks, emoji );
         await interaction.response.send_message( minesweper.message() );
     except Exception as e:
-        bot.exception( f"command::minesweeper: {e}" )
+        embed = bot.exception( f"command::minesweeper: {e}", interaction )
+        await interaction.followup.send( embed=embed )

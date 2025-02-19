@@ -9,4 +9,11 @@ bot: Bot
 import discord
 
 async def on_start():
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_start: {e}" )

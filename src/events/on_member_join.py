@@ -30,4 +30,4 @@ async def on_member_join( member : discord.Member ):
 
     except Exception as e:
 
-        bot.exception( f"on_member_join: {e}" )
+        bot.exception( f"on_member_join: {e}", member )

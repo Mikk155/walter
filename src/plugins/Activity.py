@@ -1,6 +1,6 @@
 import datetime
 from src.utils.CCacheManager import g_Cache
-from src.utils.timezone import timezone
+from src.utils.utils import g_Utils
 
 class CActivity:
 
@@ -37,7 +37,7 @@ class CActivity:
         self.state = 0;
         self.states = []
         self.intervals = 5;
-        self.time = timezone();
+        self.time = g_Utils.time();
 
         self.update(self.time);
 

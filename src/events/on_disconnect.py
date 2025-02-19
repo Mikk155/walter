@@ -10,4 +10,11 @@ import discord
 
 @bot.event
 async def on_disconnect():
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_disconnect: {e}" )

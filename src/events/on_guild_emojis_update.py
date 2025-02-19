@@ -10,4 +10,11 @@ import discord
 
 @bot.event
 async def on_guild_emojis_update( guild: discord.Guild, before: list[discord.Emoji], after: list[discord.Emoji] ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_guild_emojis_update: {e}" )

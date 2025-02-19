@@ -33,4 +33,5 @@ async def activity( interaction: discord.Interaction, new_activity: Optional[dis
 
     except Exception as e:
 
-        await bot.exception( f"command::activity: {e}" )
+        embed = bot.exception( f"command::activity: {e}", interaction )
+        await interaction.followup.send( embed=embed )

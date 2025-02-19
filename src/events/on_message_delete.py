@@ -10,4 +10,11 @@ import discord
 
 @bot.event
 async def on_message_delete( message: discord.Message ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_message_delete: {e}", message )

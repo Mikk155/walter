@@ -41,12 +41,9 @@ class g_Cache:
     @staticmethod
     def initialize() -> None:
 
-        from src.utils.CJsonCommentary import jsonc;
-        from os.path import join, abspath;
+        from mikk import jsonc, fmt
 
-        __cache_dir__ = join( abspath(""), ( "cache.json" ) );
-
-        __json__ = jsonc.load( __cache_dir__, exists_ok=True )
+        __json__ = jsonc.load( fmt.join( "cache.json" ), exists_ok=True )
 
         g_Cache.__cache__ = g_Cache.CCacheDictionary( __json__ );
 
@@ -62,8 +59,8 @@ class g_Cache:
 
             if obj:
 
-                from os.path import join, abspath;
-                open( join( abspath(""), ( "cache.json" ) ), 'w' ).write( obj );
+                from mikk import fmt
+                open( fmt.join( "cache.json" ), 'w' ).write( obj );
 
             else:
 

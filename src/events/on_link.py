@@ -53,4 +53,4 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
     except Exception as e:
 
-        bot.exception( f"on_link: {e}" )
+        bot.exception( f"command::on_link: {e}", message )

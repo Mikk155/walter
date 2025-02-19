@@ -23,14 +23,19 @@ DEALINGS IN THE SOFTWARE.
 """
 
 import os
+import sys
 import discord
 
 from typing import Optional
 from discord.ext import commands, tasks
-from datetime import timedelta, datetime
+from datetime import timedelta
 
-from src.utils.Args import argument
-from src.utils.timezone import timezone
+from src.utils.utils import g_Utils
+
+def argument( name: str, default: str = None ) -> None | str:
+    if name in sys.argv and len(sys.argv) > sys.argv.index( name ):
+        return sys.argv[ sys.argv.index( name ) + 1 ]
+    return default
 
 from src.Bot import Bot as DiscordBot
 bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False )
@@ -49,7 +54,7 @@ import src.commands.minesweeper
 
 from src.utils.CCacheManager import g_Cache
 g_Cache.initialize()
-bot.m_Logger.trace( bot.sentences.get( "OBJECT_INITIALISED", __name__ ) );
+bot.m_Logger.trace( bot.sentences.get( "OBJECT_INITIALISED", "Cache System" ) ).print();
 
 #================================================
 # Start of Events
@@ -149,7 +154,7 @@ async def think_runner():
 
     await on_think_second()
 
-    now = timezone()
+    now = g_Utils.time()
 
     if bot.ThinkDelta.Minute < now:
         await on_think_minute()
@@ -184,14 +189,11 @@ async def on_ready():
 
     if not bot.__on_start_called__:
 
-        bot.m_Logger.info( bot.sentences.get( "EVENT_ON_START", bot.user.name, bot.user.discriminator ) )
+        bot.m_Logger.info( bot.sentences.get( "EVENT_ON_START", bot.user.name, bot.user.discriminator ) ).print()
 
         await on_start()
 
-        now = timezone()
-        bot.ThinkDelta.Minute = now + timedelta(minutes=1)
-        bot.ThinkDelta.Hour = now + timedelta(hours=1)
-        bot.ThinkDelta.Day = now + timedelta(days=1)
+        bot.ThinkDelta.Minute = bot.ThinkDelta.Hour = bot.ThinkDelta.Day = g_Utils.time() + timedelta(days=1)
 
         bot.__on_start_called__ = True
 

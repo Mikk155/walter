@@ -29,4 +29,4 @@ async def on_member_remove( member : discord.Member ):
 
     except Exception as e:
 
-        bot.exception( f"on_member_remove: {e}" )
+        bot.exception( f"on_member_remove: {e}", member )

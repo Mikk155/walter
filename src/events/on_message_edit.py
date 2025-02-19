@@ -10,4 +10,11 @@ import discord
 
 @bot.event
 async def on_message_edit( before: discord.Message, after: discord.Message ):
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_message_edit: {e}", after )

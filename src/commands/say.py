@@ -25,8 +25,9 @@ async def say( interaction: discord.Interaction, message: str, user: Optional[di
 
         said = await webhook.send( content=message, username=user.display_name, avatar_url=user.avatar.url if user.avatar else None, wait=True );
 
-        bot.m_Logger.info( bot.sentences.get( "SAY_MEMBER_SAID", interaction.user.global_name, said.jump_url, message ) )
+        bot.m_Logger.info( bot.sentences.get( "SAY_MEMBER_SAID", interaction.user.global_name, said.jump_url, message ) ).print()
 
     except Exception as e:
 
-        await bot.exception( f"command::say: {e}" )
+        embed = bot.exception( f"command::say: {e}", interaction )
+        await interaction.followup.send( embed=embed )

@@ -8,7 +8,7 @@ bot: Bot
 
 import discord
 
-from src.utils.timezone import timezone
+from src.utils.utils import g_Utils
 from src.utils.CCacheManager import g_Cache
 
 from src.plugins.Activity import g_Activity
@@ -17,7 +17,7 @@ async def on_think_second():
 
     try:
 
-        now = timezone()
+        now = g_Utils.time()
 
         if g_Activity.time < now:
 
@@ -38,10 +38,31 @@ async def on_think_second():
         bot.exception( f"on_think_second: {e}" )
 
 async def on_think_minute():
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_think_minute: {e}" )
 
 async def on_think_hour():
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_think_hour: {e}" )
 
 async def on_think_day():
-    pass
+
+    try:
+
+        ''''''
+
+    except Exception as e:
+
+        bot.exception( f"on_think_day: {e}" )

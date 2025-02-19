@@ -40,7 +40,7 @@ async def on_message( message: discord.Message ):
                             await message.add_reaction( '❌' );
                         except:
                             await message.author.timeout( datetime.timedelta( minutes=30 ), reason="Burrito" );
-                            await message.reply( "Burrito deja de tirarme excepciones", silent=True, delete_after=10 )
+                            await message.reply( "Burrito deja de tirarme excepciones", silent=True, delete_after=5 )
                             await message.delete();
                     else:
                         cache[ "number" ] = desired;
@@ -55,8 +55,8 @@ async def on_message( message: discord.Message ):
                     hour = datetime.datetime.now( pytz.timezone( "Asia/Kuala_Lumpur" ) ).hour
                     hour = 3
                     if hour <= 5:
-                        from src.utils.timezone import timezone
-                        time_diff = timezone() + datetime.timedelta( hours = ( 6 - hour ) )
+                        from src.utils.utils import g_Utils
+                        time_diff = g_Utils.time() + datetime.timedelta( hours = ( 6 - hour ) )
                         temp_vars[ "control_arase_mimido" ] = time_diff.strftime( "%Y-%m-%d %H:%M:%S" )
                         user = await bot.fetch_user( 438449162527440896 );
                         webhook = await bot.webhook( message.channel )

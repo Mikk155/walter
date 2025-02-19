@@ -3,9 +3,11 @@ import json
 import aiohttp
 import asyncio
 import discord
-from datetime import datetime
 
-from src.utils.timezone import timezone
+from datetime import datetime
+from typing import Optional
+
+from src.utils.utils import g_Utils
 
 class Bot( discord.Client ):
 
@@ -27,12 +29,12 @@ class Bot( discord.Client ):
     m_Logger: Logger = Logger( "BOT" )
 
     developer: bool = False
-    '''If argument ``-developer`` is ``1`` this will be true.'''
+    '''If ``-developer`` is ``1`` this will be true.'''
 
     from src.utils.CSentences import sentence as __sentences__
     sentences: __sentences__;
 
-    def __init__( self, developer: bool = False ):
+    def __init__( self, developer: Optional[bool] = False ):
 
         self.developer = developer
 
@@ -40,7 +42,7 @@ class Bot( discord.Client ):
 
         self.sentences = sentence()
         if self.sentences:
-            self.m_Logger.trace( self.sentences.get( "OBJECT_INITIALISED", __name__ ) )
+            self.m_Logger.trace( self.sentences.get( "OBJECT_INITIALISED", "Discord Bot" ) ).print()
 
         super().__init__( intents = discord.Intents.all() )
         self.tree = discord.app_commands.CommandTree( self )
@@ -56,14 +58,53 @@ class Bot( discord.Client ):
         else:
             await self.tree.sync()
 
-    def exception( self, exception_obj: ( Exception | str ) ) -> discord.Embed:
+    def additional_info_data( self, obj ) -> None | dict[str, str]:
+
+        if obj:
+
+            data = {}
+
+            if isinstance( obj, discord.Interaction ):
+                if obj.channel:
+                    data[ "channel" ] = obj.channel.jump_url
+                if obj.user:
+                    data[ "user" ] = obj.user.name
+                if obj.guild:
+                    data[ "guild" ] = obj.guild.name
+
+            elif isinstance( obj, discord.Message ):
+                if obj.channel:
+                    data[ "channel" ] = obj.channel.jump_url
+                if obj.author:
+                    data[ "user" ] = obj.author.name
+                data[ "message" ] = obj.jump_url
+                if obj.guild:
+                    data[ "guild" ] = obj.guild.name
+
+            elif isinstance( obj, discord.Member ):
+                data[ "user" ] = obj.name
+                if obj.guild:
+                    data[ "guild" ] = obj.guild.name
+
+            if len(data) > 0:
+                return data
+
+        return None
+
+    def exception( self, exception_obj: ( Exception | str ), additional_info = None ) -> discord.Embed:
 
         '''
             Build a ``discord.Embed`` class with the stack flow of the exception handled.
         '''
 
+        try:
+            additional_info = self.additional_info_data( additional_info );
+        except Exception as e:
+            self.m_Logger.error( "Failed to generate additional data dictionary: {}", e )
+            additional_info = None
+
         from src.utils.Logger import LoggerColors, LoggerLevel
-        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=timezone() )
+        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=g_Utils.time() )
 
         try:
 
@@ -83,23 +124,26 @@ class Bot( discord.Client ):
                     value = f"```py\n{frame.line}``` `{filename}`"
                 )
 
-                if len( embed.fields ) > 24:
+                if len( embed.fields ) > ( 23 if additional_info else 24 ): # Save one slot for data if provided
                     break
 
                 embed.title = exc_type.__name__
                 embed.description = str(exception_obj)
                 embed.set_footer( text="This incident will be reported." )
 
+            if additional_info:
+                embed.add_field( inline = False, name = f"Additional data", value = json.dumps( additional_info, indent=0 ) )
+
         except Exception as e:
 
-            embed = discord.Embed( color = 3447003, timestamp=timezone(), title=f'Exception raised during exception builder LOL:', description=e )
+            embed = discord.Embed( color = 3447003, timestamp=g_Utils.time(), title=f'Exception raised during exception builder LOL:', description=e )
 
         from src.utils.Logger import logs
         logs.append(embed)
 
         return embed
 
-    def response( self, description=None, error = False ) -> discord.Embed:
+    def response( self, description: Optional[str] = None, error: Optional[bool] = False ) -> discord.Embed:
         if error:
             return discord.Embed( color=0xFF0000, title=f'⛔ Error', description=description )
         return discord.Embed( color=0x00FF00, title=f'✅ Response', description=description )
@@ -114,7 +158,7 @@ class Bot( discord.Client ):
         data = None
         embed = None
         if not json_file.filename.endswith( '.json' ):
-            embed = self.response( self.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ), True )
+            embed = self.m_Logger.error( self.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ) )
         else:
             async with aiohttp.ClientSession() as session:
                 async with session.get( json_file.url ) as response:
@@ -123,11 +167,11 @@ class Bot( discord.Client ):
                         try:
                             data = json.loads( data_bytes )
                         except Exception as e:
-                            embed = self.response( self.sentences.get( "INVALID_JSON_OBJECT", e ), True )
+                            embed = self.m_Logger.error( self.sentences.get( "INVALID_JSON_OBJECT", e ) )
                             return ( data, embed )
-                        embed = self.response( self.sentences.get( "UPDATED_FILE" ) )
+                        embed = self.m_Logger.error( self.sentences.get( "UPDATED_FILE" ) )
                     else:
-                        embed = self.response( self.sentences.get( "FAIL_DOWNLOAD_FILE" ), True )
+                        embed = self.m_Logger.error( self.sentences.get( "FAIL_DOWNLOAD_FILE" ) )
         return ( data, embed )
 
     async def webhook( self, channel: discord.TextChannel ) -> discord.Webhook:
