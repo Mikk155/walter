@@ -98,9 +98,13 @@ class Bot( discord.Client ):
         '''
 
         try:
+
             additional_info = self.additional_info_data( additional_info );
+
         except Exception as e:
+
             self.m_Logger.error( "Failed to generate additional data dictionary: {}", e )
+
             additional_info = None
 
         from src.utils.Logger import LoggerColors, LoggerLevel
@@ -116,9 +120,13 @@ class Bot( discord.Client ):
             traceback_list = extract_tb(exc_traceback)
 
             for frame in traceback_list:
+
                 filename = frame.filename.replace( abspath( "" ), '' )
+
                 if "Python" in filename:
+
                     filename = filename[ filename.find( "Python" ) : ]
+
                 embed.add_field( inline = False,
                     name = f"{frame.name} line {frame.lineno}",
                     value = f"```py\n{frame.line}``` `{filename}`"
@@ -128,10 +136,13 @@ class Bot( discord.Client ):
                     break
 
                 embed.title = exc_type.__name__
+
                 embed.description = str(exception_obj)
+
                 embed.set_footer( text="This incident will be reported." )
 
             if additional_info:
+
                 embed.add_field( inline = False, name = f"Additional data", value = json.dumps( additional_info, indent=0 ) )
 
         except Exception as e:
@@ -144,29 +155,50 @@ class Bot( discord.Client ):
         return embed
 
     def json_to_file( self, json_object: dict ) -> discord.File:
+
         json_serialized = json.dumps( json_object, indent=2 )
+
         buffer = io.BytesIO( json_serialized.encode( 'utf-8' ) )
+
         buffer.seek(0)
+
         return discord.File( buffer, "json.json" )
 
     async def file_to_json( self, json_file: discord.Attachment ) -> tuple[ dict, discord.Embed ]:
+
         data = None
         embed = None
+
         if not json_file.filename.endswith( '.json' ):
+
             embed = self.m_Logger.error( self.sentences.get( "ONLY_FORMAT_SUPPORT", "json" ) )
+
         else:
+
             async with aiohttp.ClientSession() as session:
+
                 async with session.get( json_file.url ) as response:
+
                     if response.status == 200:
+
                         data_bytes = await response.read()
+
                         try:
+
                             data = json.loads( data_bytes )
+
                         except Exception as e:
+
                             embed = self.m_Logger.error( self.sentences.get( "INVALID_JSON_OBJECT", e ) )
+
                             return ( data, embed )
+
                         embed = self.m_Logger.error( self.sentences.get( "UPDATED_FILE" ) )
+
                     else:
+
                         embed = self.m_Logger.error( self.sentences.get( "FAIL_DOWNLOAD_FILE" ) )
+
         return ( data, embed )
 
     async def webhook( self, channel: discord.TextChannel ) -> discord.Webhook:
@@ -174,16 +206,25 @@ class Bot( discord.Client ):
         webhooks: list[discord.Webhook] = await channel.webhooks()
 
         for webhook in webhooks:
+
             if webhook and webhook.name == "walter":
+
                 return webhook
 
         return await channel.create_webhook( name="walter" );
 
     async def user_reacted( self, emoji: str, user: discord.Member | discord.User, message: discord.Message ) -> bool:
+
         if message and user:
+
             for reaction in message.reactions:
+
                 if str(reaction.emoji) == emoji:
+
                     async for user_in_reaction in reaction.users():
+
                         if user == user_in_reaction:
+
                             return True;
+
         return False;

@@ -53,7 +53,9 @@ import src.commands.minesweeper;
 #================================================
 
 from src.utils.CCacheManager import g_Cache;
+
 g_Cache.initialize();
+
 bot.m_Logger.trace( bot.sentences.get( "OBJECT_INITIALISED", "Cache System" ) ).print();
 
 #================================================
@@ -82,30 +84,46 @@ from src.events.on_audit_log_entry_create import on_audit_log_entry_create;
 
 @bot.event
 async def on_invite_create( invite: discord.Invite ):
+
     try:
+
         await on_invite( invite, InviteAction.created );
+
     except Exception as e:
+
         bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_create", e ) );
 
 @bot.event
 async def on_invite_delete( invite: discord.Invite ):
+
     try:
+
         await on_invite( invite, InviteAction.deleted );
+
     except Exception as e:
+
         bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_invite_delete", e ) );
 
 @bot.event
 async def on_reaction_add( reaction: discord.Reaction, user : discord.User ):
+
     try:
+
         await on_reaction( reaction, user, ReactionAction.added );
+
     except Exception as e:
+
         bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reaction_add", e ) );
 
 @bot.event
 async def on_reaction_remove( reaction: discord.Reaction, user : discord.User ):
+
     try:
+
         await on_reaction( reaction, user, ReactionAction.removed );
+
     except Exception as e:
+
         bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reaction_remove", e ) );
 
 @bot.event
@@ -115,34 +133,57 @@ async def on_message( message: discord.Message ):
 
     # Contains a mention
     if message.mentions and len( message.mentions ) > 0:
+
         try:
+
             await on_mention( message, message.mentions );
+
         except Exception as e:
+
             bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_mention", e ) );
 
     # is a reply message
     if message.reference and message.reference.message_id:
+
         try:
+
             replied_message = await message.channel.fetch_message( message.reference.message_id );
+
             if replied_message:
+
                 try:
+
                     await on_reply( message, replied_message );
+
                 except Exception as e:
+
                     bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_reply", e ) );
+
         except discord.NotFound:
+
             pass;
 
     # Is a url
     if 'https://' in message.content or 'www.' in message.content:
+
         contents = message.content.split();
+
         urls=[];
+
         for c in contents:
+
             if c.startswith( 'https://' ) or c.startswith( 'www.' ):
+
                 urls.append( c );
+
         if len( urls ) > 0:
+
             try:
+
                 await on_link( message, urls );
+
             except Exception as e:
+
                 bot.exception( bot.sentences.get( "EVENT_FAIL_CALL_CUSTOM_HOOK", "on_link", e ) );
 
 @tasks.loop( seconds = 1.0, reconnect=True )
@@ -157,29 +198,46 @@ async def think_runner():
     await on_think_second( time );
 
     if bot.ThinkDelta.Minute < time:
+
         await on_think_minute( time );
+
         bot.ThinkDelta.Minute = time + timedelta(minutes=1);
 
     if bot.ThinkDelta.Hour < time:
+
         await on_think_hour( time );
+
         bot.ThinkDelta.Hour = time + timedelta(hours=1);
 
     if bot.ThinkDelta.Day < time:
+
         await on_think_day( time );
+
         bot.ThinkDelta.Day = time + timedelta(days=1);
 
     # Print out any delayed logger
     from src.utils.Logger import logs;
+
     if len(logs) > 0:
+
         log_channel = bot.get_channel( 1340781319566659605 if bot.developer else 1340784821105983508 );
+
         if log_channel:
+
             from src.utils.Logger import logs;
+
             amount = 3; # Print only these messages per second
+
             while len(logs) > 0 and amount > 0:
+
                 if logs[0]:
+
                     await log_channel.send( embed=logs[0], silent=True );
+
                     await bot.wait_until_ready();
+
                     amount -= 1;
+
                 logs.pop(0);
 
 @bot.event
