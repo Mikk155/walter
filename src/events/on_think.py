@@ -7,21 +7,19 @@ from src.Bot import Bot;
 bot: Bot;
 
 import discord;
+import datetime;
 
 from src.utils.utils import g_Utils;
-from src.utils.CCacheManager import g_Cache;
 
 from src.plugins.Activity import g_Activity;
 
-async def on_think_second():
+async def on_think_second( time: datetime.datetime ):
 
     try:
 
-        now = g_Utils.time();
+        if g_Activity.time < time:
 
-        if g_Activity.time < now:
-
-            g_Activity.update( now );
+            g_Activity.update( time );
 
             pActivity = discord.Activity(
                 type = g_Activity.type,
@@ -37,7 +35,7 @@ async def on_think_second():
 
         bot.exception( f"on_think_second: {e}" );
 
-async def on_think_minute():
+async def on_think_minute( time: datetime.datetime ):
 
     try:
 
@@ -47,7 +45,7 @@ async def on_think_minute():
 
         bot.exception( f"on_think_minute: {e}" );
 
-async def on_think_hour():
+async def on_think_hour( time: datetime.datetime ):
 
     try:
 
@@ -57,7 +55,7 @@ async def on_think_hour():
 
         bot.exception( f"on_think_hour: {e}" );
 
-async def on_think_day():
+async def on_think_day( time: datetime.datetime ):
 
     try:
 

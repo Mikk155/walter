@@ -152,21 +152,21 @@ async def think_runner():
 
     await bot.wait_until_ready();
 
-    await on_think_second();
+    time = g_Utils.time();
 
-    now = g_Utils.time();
+    await on_think_second( time );
 
-    if bot.ThinkDelta.Minute < now:
-        await on_think_minute();
-        bot.ThinkDelta.Minute = now + timedelta(minutes=1);
+    if bot.ThinkDelta.Minute < time:
+        await on_think_minute( time );
+        bot.ThinkDelta.Minute = time + timedelta(minutes=1);
 
-    if bot.ThinkDelta.Hour < now:
-        await on_think_hour();
-        bot.ThinkDelta.Hour = now + timedelta(hours=1);
+    if bot.ThinkDelta.Hour < time:
+        await on_think_hour( time );
+        bot.ThinkDelta.Hour = time + timedelta(hours=1);
 
-    if bot.ThinkDelta.Day < now:
-        await on_think_day();
-        bot.ThinkDelta.Day = now + timedelta(days=1);
+    if bot.ThinkDelta.Day < time:
+        await on_think_day( time );
+        bot.ThinkDelta.Day = time + timedelta(days=1);
 
     # Print out any delayed logger
     from src.utils.Logger import logs;
