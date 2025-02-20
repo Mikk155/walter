@@ -8,7 +8,7 @@ bot: Bot;
 
 import discord;
 
-from src.utils.sentences import setences
+from src.utils.sentences import sentences
 from src.utils.constants import guild_limitlesspotential_id;
 
 @bot.event
@@ -23,9 +23,9 @@ async def on_member_remove( member : discord.Member ):
             if users_channel:
 
                 embed = discord.Embed( color = discord.Color(0xda00ff), title=member.global_name, \
-                                description = setences[ "MEMBER_LEFT" ].format( member.mention ) ); #-TODO Pass if baned/kicked + reason
+                                description = sentences[ "MEMBER_LEFT" ].format( member.mention ) ); #-TODO Pass if baned/kicked + reason
 
-                embed.add_field( inline = False, name =setences[ "MEMBER_SINCE" ], value = f'{member.joined_at.day}/{member.joined_at.month}/{member.joined_at.year}' );
+                embed.add_field( inline = False, name =sentences[ "MEMBER_SINCE" ], value = f'{member.joined_at.day}/{member.joined_at.month}/{member.joined_at.year}' );
 
                 await users_channel.send( embed=embed );
 

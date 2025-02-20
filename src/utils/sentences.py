@@ -1,4 +1,4 @@
-class CSetences( dict ):
+class CSentences( dict ):
 
     '''
         Sentences
@@ -32,4 +32,4 @@ class CSetences( dict ):
         return f"Trans#{message}";
 
 global sentences;
-sentences: CSetences = CSetences();
+sentences: CSentences = CSentences();
