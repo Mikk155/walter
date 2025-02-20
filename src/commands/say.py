@@ -7,6 +7,8 @@ from discord import app_commands;
 
 from typing import Optional;
 
+from src.utils.sentences import sentences
+
 @bot.tree.command()
 
 @app_commands.guild_only()

@@ -46,5 +46,38 @@
     {
         "english": "Member {} used /say at {}\n{}",
         "spanish": "Miembro {} uso /say en {}\n{}"
-    }
+    },
+    "MEMBER_JOINED_FROM":
+    {
+        "english": "{} Joined the server from {}"
+    },
+    "MEMBER_JOINED_BY":
+    {
+        "english": "{} Invited by {}"
+    },
+    "ACCOUNT_CREATION":
+    {
+        "english": "{} Joined the server from {}"
+    },
+    "MEMBER_SINCE":
+    {
+        "english": "Member since"
+    },
+    "MEMBER_LEFT":
+    {
+        "english": "{} left the server"
+    },
+    "REPORT_INCIDENT":
+    {
+        "english": "This incident will be reported"
+    },
+    "ADDITIONAL_DATA":
+    {
+        "english": "Additioal data"
+    },
+    "FAIL_GETTING_DATA":
+    {
+        "english": "Failed to generate additional data dictionary: {}"
+    },
+    "EOF": true
 }

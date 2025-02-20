@@ -1,10 +1,8 @@
 import io
 import json
 import aiohttp
-import asyncio
 import discord
 
-from datetime import datetime
 from typing import Optional
 
 from src.utils.sentences import sentences
@@ -94,7 +92,7 @@ class Bot( discord.Client ):
 
         except Exception as e:
 
-            self.m_Logger.error( "Failed to generate additional data dictionary: {}", e )
+            self.m_Logger.error( sentences[ "FAIL_GETTING_DATA" ], e )
 
             additional_info = None
 
@@ -130,7 +128,7 @@ class Bot( discord.Client ):
 
                 embed.description = str(exception_obj)
 
-                embed.set_footer( text="This incident will be reported." )
+                embed.set_footer( text = sentences[ "REPORT_INCIDENT" ] )
 
             if additional_info:
 
