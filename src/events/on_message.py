@@ -21,7 +21,7 @@ async def on_message( message: discord.Message ):
 
         content_lower = message.content.lower();
 
-        if message.guild.id == guild_limitlesspotential_id():
+        if message.guild and message.guild.id == guild_limitlesspotential_id():
 
             # Remove sent messages to #welcome #-TODO Should we use a button + vgui instead of a app command
             if message.channel.id == 1118352656096829530 and not message.author.guild_permissions.administrator:
@@ -73,8 +73,6 @@ async def on_message( message: discord.Message ):
                 if not "control_arase_mimido" in temp_vars:
 
                     hour = datetime.datetime.now( pytz.timezone( "Asia/Kuala_Lumpur" ) ).hour;
-
-                    hour = 3;
 
                     if hour <= 5:
 
