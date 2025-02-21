@@ -56,6 +56,8 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
                     await webhook_message.clear_reaction( '❌' );
 
+                    bot.deleted_messages.append( message.id );
+
                     await message.delete();
 
                 else:

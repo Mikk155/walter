@@ -30,6 +30,9 @@ class Bot( discord.Client ):
     developer: bool = False
     '''If ``-developer`` is ``1`` this will be true.'''
 
+    deleted_messages: list[int] = {}
+    '''ID of discord.Message that this bot has deleted'''
+
     def __init__( self, developer: Optional[bool] = False ):
         self.developer = developer
         super().__init__( intents = discord.Intents.all() )
