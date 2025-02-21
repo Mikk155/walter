@@ -246,6 +246,10 @@ async def on_ready():
 
     await bot.wait_until_ready();
 
+    if not bot.developer:
+        from src.plugins.Roles import role_view_setup;
+        await role_view_setup();
+
     if not bot.__on_start_called__:
 
         bot.m_Logger.info( sentences[ "EVENT_ON_START" ].format( bot.user.name, bot.user.discriminator ) ).print();

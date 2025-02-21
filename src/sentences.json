@@ -79,5 +79,17 @@
     {
         "english": "Failed to generate additional data dictionary: {}"
     },
+    "SELECT_ROLE":
+    {
+        "english": "Select a role."
+    },
+    "ROLE_REMOVED":
+    {
+        "english": "Role {} removed"
+    },
+    "ROLE_ADDED":
+    {
+        "english": "Role {} added"
+    },
     "EOF": true
 }
