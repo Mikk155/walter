@@ -1,4 +1,5 @@
 import datetime;
+import random;
 from src.utils.CCacheManager import g_Cache;
 from src.utils.utils import g_Utils;
 
@@ -41,6 +42,8 @@ class CActivity:
 
         self.update(self.time);
 
+        random.shuffle( self.states );
+
     def get_state( self ) -> int:
 
         '''Get next state in the states list'''
@@ -50,6 +53,8 @@ class CActivity:
         if self.state > len( self.states ):
 
             self.state = 1;
+
+            random.shuffle( self.states );
 
         return self.states[ self.state - 1 ];
 
