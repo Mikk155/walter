@@ -194,27 +194,23 @@ async def think_runner():
 
     await bot.wait_until_ready();
 
+    last_time = g_Cache.get( "timedelta" );
+
     time = g_Utils.time();
 
     await on_think_second( time );
 
-    if bot.ThinkDelta.Minute < time:
-
+    if last_time.get( "minute", 0 ) != time.minute:
+        last_time[ "minute" ] = time.minute;
         await on_think_minute( time );
 
-        bot.ThinkDelta.Minute = time + timedelta(minutes=1);
-
-    if bot.ThinkDelta.Hour < time:
-
+    if last_time.get( "hour", 0 ) != time.hour:
+        last_time[ "hour" ] = time.hour;
         await on_think_hour( time );
 
-        bot.ThinkDelta.Hour = time + timedelta(hours=1);
-
-    if bot.ThinkDelta.Day < time:
-
+    if last_time.get( "day", 0 ) != time.day:
+        last_time[ "day" ] = time.day;
         await on_think_day( time );
-
-        bot.ThinkDelta.Day = time + timedelta(days=1);
 
     # Print out any delayed logger
     from src.utils.Logger import logs;
@@ -254,9 +250,9 @@ async def on_ready():
 
         bot.m_Logger.info( sentences[ "EVENT_ON_START" ].format( bot.user.name, bot.user.discriminator ) ).print();
 
-        await on_start();
+        bot.timedelta = g_Utils.time();
 
-        bot.ThinkDelta.Minute = bot.ThinkDelta.Hour = bot.ThinkDelta.Day = g_Utils.time() + timedelta(days=1);
+        await on_start();
 
         bot.__on_start_called__ = True;
 

@@ -17,12 +17,8 @@ class Bot( discord.Client ):
     __on_start_called__: bool = False
     '''Temporal bool to know if this is the first time the bot is run and not a connection recovery.'''
 
-    class ThinkDelta:
-        from datetime import datetime
-        Secod = datetime
-        Minute = datetime
-        Hour = datetime
-        Day = datetime
+    timedelta = g_Utils.time();
+    '''Last time on the previous think'''
 
     from src.utils.Logger import Logger
     m_Logger: Logger = Logger( "BOT" )
