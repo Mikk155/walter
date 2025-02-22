@@ -276,6 +276,8 @@ async def on_ready():
 
         bot.timedelta = g_Utils.time;
 
+        await bot.update_invites();
+
         await on_start();
 
         bot.__on_start_called__ = True;

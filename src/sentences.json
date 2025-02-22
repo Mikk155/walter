@@ -49,15 +49,19 @@
     },
     "MEMBER_JOINED_FROM":
     {
-        "english": "{} Joined the server from {}"
+        "english": "Joined from:"
     },
-    "MEMBER_JOINED_BY":
+    "MEMBER_INVITED_BY":
     {
-        "english": "{} Invited by {}"
+        "english": "Invited by:"
+    },
+    "MEMBER_JOINED":
+    {
+        "english": "{} Joined the server"
     },
     "ACCOUNT_CREATION":
     {
-        "english": "{} Joined the server from {}"
+        "english": "Account creation"
     },
     "MEMBER_SINCE":
     {

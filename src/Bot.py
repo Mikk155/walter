@@ -26,6 +26,8 @@ class Bot( discord.Client ):
     deleted_messages: list[int] = {}
     '''ID of discord.Message that this bot has deleted'''
 
+    invites: list[discord.Invite] = []
+
     def __init__( self ):
         super().__init__( intents = discord.Intents.all() )
         self.tree = discord.app_commands.CommandTree( self )
@@ -212,3 +214,7 @@ class Bot( discord.Client ):
                             return True;
 
         return False;
+
+    async def update_invites(self):
+
+        self.invites = await self.get_guild( g_Utils.Guild.LimitlessPotential ).invites();

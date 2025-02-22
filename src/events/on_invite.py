@@ -21,7 +21,11 @@ async def on_invite( invite: discord.Invite, action: InviteAction ):
 
     try:
 
-        ''''''
+        if invite.guild:
+
+            if invite.guild.id == g_Utils.Guild.LimitlessPotential:
+
+                await bot.update_invites();
 
     except Exception as e:
 

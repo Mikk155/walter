@@ -23,7 +23,7 @@ async def on_member_remove( member : discord.Member ):
 
             if member.guild.id == g_Utils.Guild.LimitlessPotential:
 
-                users_channel = bot.get_channel( 842174687445778483 );
+                users_channel = bot.get_channel( g_Utils.Guild.Channel_Users );
 
                 if users_channel:
 
