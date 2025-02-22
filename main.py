@@ -229,19 +229,37 @@ async def think_runner():
 
             from src.utils.Logger import logs;
 
+            embeds: list[discord.Embed] = []
+
             amount = 3; # Print only these messages per second
 
-            while len(logs) > 0 and amount > 0:
+            while amount > 0:
 
-                if logs[0]:
+                while len(embeds) < 10 and len(logs) > 0:
 
-                    await log_channel.send( embed=logs[0], silent=True );
+                    if logs[0]:
+
+                        embeds.append( logs[0] );
+
+                        logs.pop(0);
+
+                    else:
+
+                        break;
+
+                if len( embeds ) > 0:
+
+                    await log_channel.send( embeds = embeds, silent = True );
+
+                    embeds.clear();
 
                     await bot.wait_until_ready();
+                
+                else:
 
-                    amount -= 1;
+                    break;
 
-                logs.pop(0);
+                amount -= 1;
 
 @bot.event
 async def on_ready():
