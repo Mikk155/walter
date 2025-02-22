@@ -64,33 +64,41 @@ async def role_view_setup():
 
     cache = g_Cache.get( "RoleManager" );
 
-    if "roles" in cache:
+    role_types = [ "colors", "roles" ];
 
-        roles_data = cache[ "roles" ]
+    for role_type in role_types:
 
-        if len( roles_data ) <= 0:
-            return;
+        cache_role = cache[ role_type ];
 
-        view = CRoleSelectionView( roles_data );
+        if "roles" in cache_role:
 
-        channel = bot.get_channel( g_Utils.Guild.Channel_Welcome );
+            roles_data = cache_role[ "roles" ]
 
-        message: discord.Message = None;
+            if len( roles_data ) <= 0:
+                return;
 
-        if "menu_id" in cache:
+            view = CRoleSelectionView( roles_data );
 
-            try:
+            channel = bot.get_channel( g_Utils.Guild.Channel_Welcome );
 
-                message = await channel.fetch_message( cache[ "menu_id" ] );
+            message: discord.Message = None;
 
-                message = await message.edit( view=view );
+            if "menu_id" in cache_role:
 
-            except discord.NotFound:
+                try:
 
-                bot.exception( "Failed on getting CRoleSelectionView by ID. sending a new one." );
+                    message = await channel.fetch_message( cache_role[ "menu_id" ] );
 
-        if not message or message is None:
+                    message = await message.edit( view=view );
 
-            message = await channel.send(view=view);
+                except discord.NotFound:
 
-            cache[ "menu_id" ] = message.id;
+                    bot.exception( "Failed on getting CRoleSelectionView by ID. sending a new one." );
+
+            if not message or message is None:
+
+                message = await channel.send(view=view);
+
+                cache_role[ "menu_id" ] = message.id;
+
+                cache[ role_type ] = cache_role;

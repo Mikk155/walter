@@ -112,11 +112,11 @@ async def on_message( message: discord.Message ):
 
                         cache = g_Cache.get( "control_arase" );
 
-                        number = cache.get( "time", 0 );
+                        number = cache.get( "times", 0 );
 
                         number += 1;
 
-                        cache[ "time" ] = number;
+                        cache[ "times" ] = number;
 
                         webhook = await bot.webhook( message.channel );
 
