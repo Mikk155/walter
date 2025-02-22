@@ -8,9 +8,14 @@ bot: Bot;
 
 import discord;
 
-from src.utils.CCacheManager import g_Cache;
-
 async def on_mention( message: discord.Message, mentions: list[ discord.User | discord.Member ] ):
+
+    from src.utils.CCacheManager import g_Cache;
+
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
 
     try:
 

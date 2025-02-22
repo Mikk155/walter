@@ -1,16 +1,30 @@
 import datetime;
 import pytz;
 
-global g_Utils;
-class g_Utils:
+from src.utils.CGuild import CGuild
+
+class CUtils:
 
     '''
         Utility methods
     '''
 
-    @staticmethod
-    def time() -> datetime.datetime:
+    def __init__(self):
+        pass
+
+    @property
+    def time(self) -> datetime.datetime:
         '''
             Get the curret time for the bot zone
         '''
-        return  datetime.datetime.now( pytz.timezone( "America/Argentina/Cordoba" ) );
+        return datetime.datetime.now( pytz.timezone( "America/Argentina/Cordoba" ) );
+
+    Guild = CGuild();
+
+    @property
+    def developer(self) -> bool:
+        from __main__ import developer as is_developer;
+        return is_developer;
+
+global g_Utils;
+g_Utils: CUtils = CUtils();

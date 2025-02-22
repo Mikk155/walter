@@ -11,11 +11,18 @@ import discord;
 @bot.event
 async def on_audit_log_entry_create( entry: discord.audit_logs.AuditLogEntry ):
 
-    try:
+    from src.utils.utils import g_Utils
 
-        ''''''
+    if g_Utils.developer:
+        return;
 
-    except Exception as e:
+    if entry.guild:
 
-        bot.exception( f"on_audit_log_entry_create: {e}" );
+        try:
+
+            ''''''
+
+        except Exception as e:
+
+            bot.exception( f"on_audit_log_entry_create: {e}" );
 

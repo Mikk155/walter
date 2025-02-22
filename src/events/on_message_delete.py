@@ -8,46 +8,51 @@ bot: Bot;
 
 import discord;
 
-from src.utils.constants import guild_limitlesspotential_id
-
 @bot.event
 async def on_message_delete( message: discord.Message ):
 
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
-        if message.guild and message.guild.id == guild_limitlesspotential_id():
+        if message.guild:
 
-            if not message.id in bot.deleted_messages and message.author.id != bot.user.id:
+            if message.guild.id == g_Utils.Guild.LimitlessPotential:
 
-                channel = bot.get_channel( 877268843330961499 );
+                if not message.id in bot.deleted_messages and message.author.id != bot.user.id:
 
-                if channel:
+                    channel = bot.get_channel( 877268843330961499 );
 
-                    embed = discord.Embed(
-                        color = 0xFF0000
-                    );
+                    if channel:
 
-                    embed.add_field( inline = False,
-                        name = message.author.name,
-                        value = "Message sent by {} deleted in {}".format( message.author.mention, message.channel.jump_url )
-                    );
+                        embed = discord.Embed(
+                            color = 0xFF0000
+                        );
 
-                    embed.add_field( inline = False,
-                        name = "Content",
-                        value = message.content
-                    );
+                        embed.add_field( inline = False,
+                            name = message.author.name,
+                            value = "Message sent by {} deleted in {}".format( message.author.mention, message.channel.jump_url )
+                        );
 
-                    if message.embeds and len(message.embeds) > 0:
+                        embed.add_field( inline = False,
+                            name = "Content",
+                            value = message.content
+                        );
 
-                        embeds = message.embeds;
+                        if message.embeds and len(message.embeds) > 0:
 
-                        embeds.insert( 0, embed );
+                            embeds = message.embeds;
 
-                        await channel.send( embeds=embeds, allowed_mentions=False, mention_author=False, silent=True );
+                            embeds.insert( 0, embed );
 
-                    else:
+                            await channel.send( embeds=embeds, allowed_mentions=False, mention_author=False, silent=True );
 
-                        await channel.send( embed=embed, allowed_mentions=False, mention_author=False, silent=True );
+                        else:
+
+                            await channel.send( embed=embed, allowed_mentions=False, mention_author=False, silent=True );
 
     except Exception as e:
 

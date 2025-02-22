@@ -14,6 +14,11 @@ async def on_resumed():
 
     bot.m_Logger.info( f"Connection restored." ).print() # -TODO Store timedelta?
 
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
         ''''''

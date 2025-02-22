@@ -37,7 +37,7 @@ class CActivity:
         self.state = 0;
         self.states = []
         self.intervals = 5;
-        self.time = g_Utils.time();
+        self.time = g_Utils.time;
 
         self.update(self.time);
 

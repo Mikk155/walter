@@ -17,29 +17,25 @@ class Bot( discord.Client ):
     __on_start_called__: bool = False
     '''Temporal bool to know if this is the first time the bot is run and not a connection recovery.'''
 
-    timedelta = g_Utils.time();
+    timedelta = g_Utils.time;
     '''Last time on the previous think'''
 
     from src.utils.Logger import Logger
     m_Logger: Logger = Logger( "BOT" )
 
-    developer: bool = False
-    '''If ``-developer`` is ``1`` this will be true.'''
-
     deleted_messages: list[int] = {}
     '''ID of discord.Message that this bot has deleted'''
 
-    def __init__( self, developer: Optional[bool] = False ):
-        self.developer = developer
+    def __init__( self ):
         super().__init__( intents = discord.Intents.all() )
         self.tree = discord.app_commands.CommandTree( self )
 #        self.m_Logger.trace( sentences[ "OBJECT_INITIALIZED" ], "Discord Bot" ).print()
 
     async def setup_hook(self):
 
-        if self.developer:
-            from src.utils.constants import guild_testserver_id
-            __MY_GUILD__ = discord.Object( id = guild_testserver_id() )
+        from __main__ import developer;
+        if developer:
+            __MY_GUILD__ = discord.Object( id = g_Utils.Guild.TestServer )
             self.tree.clear_commands( guild=__MY_GUILD__ )
             self.tree.copy_global_to( guild=__MY_GUILD__ )
             await self.tree.sync( guild=__MY_GUILD__ )
@@ -96,7 +92,7 @@ class Bot( discord.Client ):
             additional_info = None
 
         from src.utils.Logger import LoggerColors, LoggerLevel
-        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=g_Utils.time() )
+        embed = discord.Embed( color = LoggerColors.get( LoggerLevel.error, 0x196990 ), timestamp=g_Utils.time )
 
         try:
 
@@ -135,7 +131,7 @@ class Bot( discord.Client ):
 
         except Exception as e:
 
-            embed = discord.Embed( color = 3447003, timestamp=g_Utils.time(), title=f'Exception raised during exception builder LOL:', description=e )
+            embed = discord.Embed( color = 3447003, timestamp=g_Utils.time, title=f'Exception raised during exception builder LOL:', description=e )
 
         from src.utils.Logger import logs
         logs.append(embed)

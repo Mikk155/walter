@@ -11,6 +11,11 @@ import discord;
 @bot.event
 async def on_guild_stickers_update( guild: discord.Guild, before: list[discord.Sticker], after: list[discord.Sticker] ):
 
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
         ''''''

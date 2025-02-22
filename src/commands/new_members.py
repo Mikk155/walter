@@ -4,8 +4,9 @@ bot: Bot
 
 import discord
 
-from src.utils.constants import guild_limitlesspotential_id
-@bot.tree.command( guild=bot.get_guild( guild_limitlesspotential_id() ) )
+from src.utils.utils import g_Utils
+
+@bot.tree.command( guild=bot.get_guild( g_Utils.Guild.LimitlessPotential ) )
 @discord.app_commands.guild_only()
 @discord.app_commands.describe(
     why='Why you joined this server?'
@@ -17,7 +18,7 @@ async def verify( interaction: discord.Interaction, why: str ):
 
     try:
 
-        if interaction.channel_id != 1118352656096829530 \
+        if interaction.channel_id != g_Utils.Guild.Channel_Welcome \
         or not interaction.guild.get_role( 1316214066384994324 ) in interaction.user.roles:
 
             return;

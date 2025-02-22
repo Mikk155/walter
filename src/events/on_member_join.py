@@ -8,33 +8,38 @@ bot: Bot;
 
 import discord;
 
-from src.utils.sentences import sentences
-from src.utils.constants import guild_limitlesspotential_id
-
 @bot.event
 async def on_member_join( member : discord.Member ):
 
+    from src.utils.sentences import sentences
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
-        if member.guild and member.guild.id == guild_limitlesspotential_id():
+        if member.guild:
 
-            await member.add_roles( member.guild.get_role( 1316214066384994324 ) );
+            if member.guild.id == g_Utils.Guild.LimitlessPotential:
 
-            users_channel = bot.get_channel( 842174687445778483 );
+                await member.add_roles( member.guild.get_role( 1316214066384994324 ) );
 
-            if users_channel:
+                users_channel = bot.get_channel( 842174687445778483 );
 
-                join_from = "global invite"; #-TODO Track down invites
-                invited_by: discord.Member = None
-                message_label = "MEMBER_JOINED_BY" if invited_by else "MEMBER_JOINED_FROM";
+                if users_channel:
 
-                embed = discord.Embed( color = discord.Color(0xda00ff), title=member.global_name, \
-                                        description = sentences[ message_label ].format( member.mention, invited_by.name if invited_by else join_from ) )
+                    join_from = "global invite"; #-TODO Track down invites
+                    invited_by: discord.Member = None
+                    message_label = "MEMBER_JOINED_BY" if invited_by else "MEMBER_JOINED_FROM";
 
-                embed.add_field( inline = False, name = sentences[ "ACCOUNT_CREATION" ], \
-                                value = f'{member.created_at.day}/{member.created_at.month}/{member.created_at.year}' );
+                    embed = discord.Embed( color = discord.Color(0xda00ff), title=member.global_name, \
+                                            description = sentences[ message_label ].format( member.mention, invited_by.name if invited_by else join_from ) )
 
-                await users_channel.send( embed=embed );
+                    embed.add_field( inline = False, name = sentences[ "ACCOUNT_CREATION" ], \
+                                    value = f'{member.created_at.day}/{member.created_at.month}/{member.created_at.year}' );
+
+                    await users_channel.send( embed=embed );
 
     except Exception as e:
 

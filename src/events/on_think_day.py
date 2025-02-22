@@ -1,7 +1,3 @@
-'''
-    Event called when a member is typing
-'''
-
 from __main__ import bot;
 from src.Bot import Bot;
 bot: Bot;
@@ -9,10 +5,10 @@ bot: Bot;
 import discord;
 import datetime;
 
-@bot.event
-async def on_typing( channel: discord.abc.Messageable, user: discord.Member | discord.User, when: datetime.datetime ):
+async def on_think_day( time: datetime.datetime ):
 
     from src.utils.utils import g_Utils;
+    from src.plugins.Activity import g_Activity;
 
     if g_Utils.developer:
         return;
@@ -23,4 +19,4 @@ async def on_typing( channel: discord.abc.Messageable, user: discord.Member | di
 
     except Exception as e:
 
-        bot.exception( f"on_typing: {e}", channel );
+        bot.exception( f"on_think_day: {e}" );

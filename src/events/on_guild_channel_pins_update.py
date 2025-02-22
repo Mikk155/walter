@@ -12,6 +12,11 @@ import datetime;
 @bot.event
 async def on_guild_channel_pins_update( channel: discord.TextChannel | discord.Thread, last_pin: datetime.datetime ):
 
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
         ''''''

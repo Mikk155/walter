@@ -22,8 +22,16 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-import os;
 import sys;
+
+def argument( name: str, default: str = None ) -> None | str:
+    if name in sys.argv and len(sys.argv) > sys.argv.index( name ):
+        return sys.argv[ sys.argv.index( name ) + 1 ]
+    return default
+
+developer = argument( "-developer" ) == "true";
+
+import os;
 import discord;
 
 from typing import Optional;
@@ -33,13 +41,8 @@ from datetime import timedelta;
 from src.utils.sentences import sentences
 from src.utils.utils import g_Utils;
 
-def argument( name: str, default: str = None ) -> None | str:
-    if name in sys.argv and len(sys.argv) > sys.argv.index( name ):
-        return sys.argv[ sys.argv.index( name ) + 1 ]
-    return default
-
 from src.Bot import Bot as DiscordBot;
-bot: DiscordBot = DiscordBot( developer = True if argument( "-developer" ) == "true" else False );
+bot: DiscordBot = DiscordBot();
 
 #================================================
 # Start of Application Commands
@@ -64,7 +67,10 @@ g_Cache.initialize();
 #================================================
 from src.events.on_start import on_start;
 from src.events.on_resumed import on_resumed;
-from src.events.on_think import on_think_second, on_think_minute, on_think_hour, on_think_day;
+from src.events.on_think_second import on_think_second
+from src.events.on_think_minute import on_think_minute
+from src.events.on_think_hour import on_think_hour
+from src.events.on_think_day import on_think_day
 from src.events.on_mention import on_mention;
 from src.events.on_message import on_message as on_sub_message;
 from src.events.on_reply import on_reply;
@@ -196,7 +202,7 @@ async def think_runner():
 
     last_time = g_Cache.get( "timedelta" );
 
-    time = g_Utils.time();
+    time = g_Utils.time;
 
     await on_think_second( time );
 
@@ -217,7 +223,7 @@ async def think_runner():
 
     if len(logs) > 0:
 
-        log_channel = bot.get_channel( 1340781319566659605 if bot.developer else 1340784821105983508 );
+        log_channel = bot.get_channel( 1340781319566659605 if developer else 1340784821105983508 );
 
         if log_channel:
 
@@ -242,7 +248,7 @@ async def on_ready():
 
     await bot.wait_until_ready();
 
-    if not bot.developer:
+    if not developer:
         from src.plugins.Roles import role_view_setup;
         await role_view_setup();
 
@@ -250,7 +256,7 @@ async def on_ready():
 
         bot.m_Logger.info( sentences[ "EVENT_ON_START" ].format( bot.user.name, bot.user.discriminator ) ).print();
 
-        bot.timedelta = g_Utils.time();
+        bot.timedelta = g_Utils.time;
 
         await on_start();
 

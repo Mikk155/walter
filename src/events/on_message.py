@@ -12,19 +12,22 @@ import discord;
 
 import datetime;
 
-from src.utils.CCacheManager import g_Cache;
-from src.utils.constants import guild_limitlesspotential_id, owner_id;
-
 async def on_message( message: discord.Message ):
+
+    from src.utils.CCacheManager import g_Cache;
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
 
     try:
 
         content_lower = message.content.lower();
 
-        if message.guild and message.guild.id == guild_limitlesspotential_id():
+        if message.guild and message.guild.id == g_Utils.Guild.LimitlessPotential:
 
             # Remove sent messages to #welcome #-TODO Should we use a button + vgui instead of a app command
-            if message.channel.id == 1118352656096829530 and not message.author.guild_permissions.administrator:
+            if message.channel.id == g_Utils.Guild.Channel_Welcome and not message.author.guild_permissions.administrator:
 
                 await message.delete();
 
@@ -78,7 +81,7 @@ async def on_message( message: discord.Message ):
 
                         from src.utils.utils import g_Utils;
 
-                        time_diff = g_Utils.time() + datetime.timedelta( hours = ( 6 - hour ) );
+                        time_diff = g_Utils.time + datetime.timedelta( hours = ( 6 - hour ) );
 
                         temp_vars[ "control_arase_mimido" ] = time_diff.strftime( "%Y-%m-%d %H:%M:%S" );
 
@@ -122,11 +125,11 @@ async def on_message( message: discord.Message ):
                         return;
 
             # Neko marry sara
-            elif message.author.id == owner_id():
+            elif message.author.id == g_Utils.Guild.Owner:
 
                 if 'neko marry' in content_lower:
 
-                    sare: discord.User = bot.get_guild( guild_limitlesspotential_id() ).get_member( 746914044828450856 );
+                    sare: discord.User = bot.get_guild( g_Utils.Guild.LimitlessPotential ).get_member( 746914044828450856 );
 
                     if sare and sare in message.mentions:
 
@@ -142,7 +145,7 @@ async def on_message( message: discord.Message ):
 
         if 'woman moment' in content_lower or 'woman unmoment' in content_lower:
 
-            bunnt: discord.User = bot.get_guild( guild_limitlesspotential_id() ).get_member( 740196277844967458 );
+            bunnt: discord.User = bot.get_guild( g_Utils.Guild.LimitlessPotential ).get_member( 740196277844967458 );
 
             if bunnt:
 

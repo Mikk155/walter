@@ -14,6 +14,11 @@ class InviteAction:
 
 async def on_invite( invite: discord.Invite, action: InviteAction ):
 
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
         ''''''

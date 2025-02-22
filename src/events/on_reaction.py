@@ -14,6 +14,11 @@ class ReactionAction:
 
 async def on_reaction( reaction: discord.Reaction, user : discord.User, action: ReactionAction ):
 
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
         ''''''

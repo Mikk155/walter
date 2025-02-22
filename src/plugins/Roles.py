@@ -6,7 +6,7 @@ import discord
 
 from src.utils.sentences import sentences
 from src.utils.CCacheManager import g_Cache
-from src.utils.constants import guild_limitlesspotential_id
+from src.utils.utils import g_Utils
 
 class CRoleSelectionView( discord.ui.View ):
 
@@ -16,7 +16,7 @@ class CRoleSelectionView( discord.ui.View ):
 
         options: list[discord.Role] = [];
 
-        guild: discord.Guild = bot.get_guild( guild_limitlesspotential_id() );
+        guild: discord.Guild = bot.get_guild( g_Utils.Guild.LimitlessPotential );
 
         if guild:
 
@@ -73,7 +73,7 @@ async def role_view_setup():
 
         view = CRoleSelectionView( roles_data );
 
-        channel = bot.get_channel( 1118352656096829530 );
+        channel = bot.get_channel( g_Utils.Guild.Channel_Welcome );
 
         message: discord.Message = None;
 

@@ -11,6 +11,11 @@ import discord;
 #@bot.event
 async def on_error( event: str, *args, **kwargs ):
 
+    from src.utils.utils import g_Utils
+
+    if g_Utils.developer:
+        return;
+
     try:
 
         ''''''
