@@ -20,11 +20,20 @@ async def on_member_join( member : discord.Member ):
 
             if member.guild.id == g_Utils.Guild.LimitlessPotential:
 
+                # The cult member role
+                if bot.get_guild( g_Utils.Guild.TheCult ).get_member( member.id ):
+
+                    role = member.guild.get_role( 964650157008363600 )
+
+                    if not role in member.roles:
+
+                        await member.add_roles( role );
+
                 users_channel = bot.get_channel( g_Utils.Guild.Channel_Users );
 
-                remaining_mikk_uses: int = 0;
-
                 if users_channel:
+
+                    remaining_mikk_uses: int = 0;
 
                     inviter: discord.Member = None;
 
