@@ -176,13 +176,15 @@ class Bot( discord.Client ):
 
                             embed = self.m_Logger.error( sentences[ "INVALID_JSON_OBJECT" ], e )
 
-                            return ( data, embed )
+                            return ( None, embed )
 
                         embed = self.m_Logger.info( sentences[ "UPDATED_FILE" ] )
 
                     else:
 
                         embed = self.m_Logger.error( sentences[ "FAIL_DOWNLOAD_FILE" ] )
+
+                        return ( None, embed )
 
         return ( data, embed )
 

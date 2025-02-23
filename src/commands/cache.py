@@ -28,7 +28,7 @@ async def cache( interaction: discord.Interaction, new_cache: Optional[discord.A
 
             json_object: tuple[ dict, discord.Embed ] = await bot.file_to_json( new_cache );
 
-            if json_object[0]:
+            if json_object[0] and len(json_object[0]) > 0:
 
                 g_Cache.__cache__ = g_Cache.CCacheDictionary( json_object[0] );
 
