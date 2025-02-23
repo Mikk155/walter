@@ -33,7 +33,7 @@ async def count_together( interaction: discord.Interaction, number: int ):
 
         await interaction.followup.send( message );
 
-        channel = await bot.get_channel( g_Utils.Guild.Channel_CountTogether );
+        channel = bot.get_channel( g_Utils.Guild.Channel_CountTogether );
 
         if channel:
 

@@ -31,19 +31,23 @@ async def on_message( message: discord.Message ):
                 return
 
             # Count together channel
-            elif message.channel.id == 877493398070767636:
+            elif message.channel.id == g_Utils.Guild.Channel_CountTogether and not message.author.bot:
 
                 cache = g_Cache.get( "count_together" );
 
                 num = re.search( r'\b(\d+)\b', message.content );
 
-                if num:
+                if num and "number" in cache:
 
                     current = int( num.group(1) );
 
-                    desired = cache[ "number" ] + 1;
+                    desired = cache.get( "number", 0 ) + 1;
 
                     if desired != current:
+
+                        response = await message.reply( f"Expected {desired}", silent=True, delete_after=10 );
+
+                        bot.deleted_messages.append( response.id );
 
                         try:
 
@@ -51,11 +55,9 @@ async def on_message( message: discord.Message ):
 
                         except:
 
-                            await message.author.timeout( datetime.timedelta( minutes=30 ), reason="Burrito" );
-
-                            await message.reply( "Burrito deja de tirarme excepciones", silent=True, delete_after=5 );
-
                             await message.delete();
+
+                            return;
 
                     else:
 
