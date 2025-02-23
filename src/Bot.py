@@ -178,7 +178,7 @@ class Bot( discord.Client ):
 
                             return ( data, embed )
 
-                        embed = self.m_Logger.error( sentences[ "UPDATED_FILE" ] )
+                        embed = self.m_Logger.info( sentences[ "UPDATED_FILE" ] )
 
                     else:
 
