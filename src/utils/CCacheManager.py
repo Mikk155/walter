@@ -43,7 +43,8 @@ class g_Cache:
     @staticmethod
     def initialize() -> None:
 
-        from mikk import jsonc, fmt;
+        from src.utils.fmt import fmt;
+        from src.utils.jsonc import jsonc;
 
         __json__ = jsonc.load( fmt.join( "cache.json" ), exists_ok=True );
 
@@ -61,7 +62,7 @@ class g_Cache:
 
             if obj:
 
-                from mikk import fmt
+                from src.utils.fmt import fmt;
 
                 open( fmt.join( "cache.json" ), 'w' ).write( obj );
 
@@ -88,3 +89,4 @@ class g_Cache:
     def set( label: str, value ) -> None:
 
         g_Cache.__cache__[ label ] = value;
+

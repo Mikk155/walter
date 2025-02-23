@@ -6,7 +6,8 @@ class CSentences( dict ):
 
     def __init__( self ):
 
-        from mikk import jsonc, fmt;
+        from src.utils.fmt import fmt;
+        from src.utils.jsonc import jsonc;
         super().__init__( jsonc.load( fmt.join("src/sentences.json" ) ) );
         from src.utils.Logger import Logger;
         self.m_Logger = Logger( "Sentences" );
