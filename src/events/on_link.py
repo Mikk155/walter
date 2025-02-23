@@ -48,15 +48,15 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
             if webhook_message:
 
-                await webhook_message.add_reaction( '❌' );
+                await webhook_message.add_reaction( '✅' );
 
                 await asyncio.sleep(10);
 
                 webhook_message = await message.channel.fetch_message( webhook_message.id );
 
-                if await bot.user_reacted( '❌', message.author, webhook_message ):
+                if await bot.user_reacted( '✅', message.author, webhook_message ):
 
-                    await webhook_message.clear_reaction( '❌' );
+                    await webhook_message.clear_reaction( '✅' );
 
                     bot.deleted_messages.append( message.id );
 
