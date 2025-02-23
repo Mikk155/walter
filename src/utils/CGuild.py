@@ -36,7 +36,7 @@ class CGuild:
 
     @property
     def Channel_BotLogs(self) -> int:
-        return 1343203478742241372;
+        return 1343209173969535108;
 
     @property
     def Channel_CountTogether(self) -> int:
