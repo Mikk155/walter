@@ -67,6 +67,7 @@ g_Cache.initialize();
 # Start of Events
 #================================================
 from src.events.on_start import on_start;
+from src.events.on_ready import on_ready as on_sub_ready;
 from src.events.on_resumed import on_resumed;
 from src.events.on_think_second import on_think_second
 from src.events.on_think_minute import on_think_minute
@@ -266,6 +267,8 @@ async def think_runner():
 async def on_ready():
 
     await bot.wait_until_ready();
+
+    await on_sub_ready();
 
     from src.plugins.Roles import role_view_setup;
     await role_view_setup();
