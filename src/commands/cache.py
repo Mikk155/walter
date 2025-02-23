@@ -48,6 +48,6 @@ async def cache( interaction: discord.Interaction, new_cache: Optional[discord.A
 
     except Exception as e:
 
-        embed = bot.exception( f"command::activity: {e}", interaction );
+        embed = bot.exception( f"command::cache: {e}", interaction );
 
         await interaction.followup.send( embed = embed );

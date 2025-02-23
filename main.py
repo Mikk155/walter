@@ -49,6 +49,7 @@ bot: DiscordBot = DiscordBot();
 #================================================
 import src.commands.Activity;
 import src.commands.cache;
+import src.commands.pick;
 import src.commands.ping_count;
 import src.commands.count_together;
 import src.commands.say;

@@ -111,5 +111,15 @@
     {
         "english": "Role {} added"
     },
+    "PICK_OPTIONS":
+    {
+        "english": "You have to provide at least two options separated by comas.",
+        "spanish": "Tienes que proveer al menos dos opciones separadas por comas."
+    },
+    "PICK_DONE":
+    {
+        "english": "From {}\nI choose ``{}``",
+        "spanish": "De {}\nYo eligo ``{}``"
+    },
     "EOF": true
 }
