@@ -9,8 +9,9 @@ bot: Bot;
 import re;
 import pytz;
 import discord;
-
 import datetime;
+
+from typing import Optional
 
 async def on_message( message: discord.Message ):
 
@@ -33,39 +34,47 @@ async def on_message( message: discord.Message ):
             # Count together channel
             elif message.channel.id == g_Utils.Guild.Channel_CountTogether and not message.author.bot:
 
-                cache = g_Cache.get( "count_together" );
+                async def count_wrong( msg: discord.Message, number: Optional[int] = None ):
 
-                num = re.search( r'\b(\d+)\b', message.content );
+                    if msg:
 
-                if num and "number" in cache:
+                        if number:
 
-                    current = int( num.group(1) );
+                            response = await msg.reply( f"Expected {number}", silent=True, delete_after=10 );
 
-                    desired = cache.get( "number", 0 ) + 1;
-
-                    if desired != current:
-
-                        response = await message.reply( f"Expected {desired}", silent=True, delete_after=10 );
-
-                        bot.deleted_messages.append( response.id );
+                            bot.deleted_messages.append( response.id );
 
                         try:
 
-                            await message.add_reaction( '❌' );
+                            await msg.add_reaction( '❌' );
 
                         except:
 
-                            await message.delete();
+                            await msg.delete();
 
-                            return;
+                cache = g_Cache.get( "count_together" );
+
+                if "number" in cache:
+
+                    num = re.search( r'\b(\d+)\b', message.content );
+
+                    if num:
+
+                        current = int( num.group(1) );
+
+                        desired = cache.get( "number", 0 ) + 1;
+
+                        if desired != current:
+
+                            await count_wrong( message, desired );
+
+                        else:
+
+                            cache[ "number" ] = desired;
 
                     else:
 
-                        cache[ "number" ] = desired;
-
-                else:
-
-                    await message.add_reaction( '❌' );
+                        await count_wrong( message );
 
             # Control arase
             if message.author.id == 768337526888726548:
