@@ -15,17 +15,33 @@ class CGuild:
     @property
     def LimitlessPotential(self) -> int:
         '''Limitless potential server ID'''
-        return 744769532513615922 if not developer else self.TestServer;
+        return 744769532513615922;
 
     @property
     def TheCult(self) -> int:
         '''The Cult server ID'''
-        return 1216162825307820042 if not developer else self.TestServer;
+        return 1216162825307820042;
 
     @property
     def Channel_Welcome(self) -> int:
-        return 1118352656096829530 if not developer else 1342674343003422800;
+        return 1118352656096829530;
 
     @property
     def Channel_Users(self) -> int:
-        return 842174687445778483 if not developer else 1342794342783254661;
+        return 1343203830787080203;
+
+    @property
+    def Channel_DiscordLogs(self) -> int:
+        return 1343203478742241372;
+
+    @property
+    def Channel_BotLogs(self) -> int:
+        return 1343203478742241372;
+
+    @property
+    def Channel_CountTogether(self) -> int:
+        return 1343206179878211755;
+
+    @property
+    def Channel_Trusted(self) -> int:
+        return 1343197825751715851;

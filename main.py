@@ -223,7 +223,7 @@ async def think_runner():
 
     if len(logs) > 0:
 
-        log_channel = bot.get_channel( 1340781319566659605 if developer else 1340784821105983508 );
+        log_channel = bot.get_channel( g_Utils.Guild.Channel_BotLogs );
 
         if log_channel:
 

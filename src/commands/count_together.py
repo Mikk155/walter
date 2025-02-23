@@ -7,6 +7,7 @@ from discord import app_commands;
 
 from src.utils.sentences import sentences
 from src.utils.CCacheManager import g_Cache;
+from src.utils.utils import g_Utils
 
 @bot.tree.command( name = "cfg_count_together" )
 
@@ -32,7 +33,7 @@ async def count_together( interaction: discord.Interaction, number: int ):
 
         await interaction.followup.send( message );
 
-        channel: discord.TextChannel = await bot.get_channel( 877493398070767636 );
+        channel: discord.TextChannel = await bot.get_channel( g_Utils.Guild.Channel_CountTogether );
 
         if channel:
 

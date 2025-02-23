@@ -24,7 +24,7 @@ async def on_message_delete( message: discord.Message ):
 
                 if not message.id in bot.deleted_messages and message.author.id != bot.user.id:
 
-                    channel = bot.get_channel( 877268843330961499 );
+                    channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
 
                     if channel:
 

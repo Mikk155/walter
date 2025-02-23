@@ -23,7 +23,7 @@ async def verify( interaction: discord.Interaction, why: str ):
 
             return;
 
-        admin = await bot.get_channel( 1287940238202769418 ).send(
+        admin = await bot.get_channel( g_Utils.Guild.Channel_Trusted ).send(
                 embed=discord.Embed(
                 title = f"User {interaction.user.name} used verification",
                 description = f"{interaction.user.mention} Response: {why}",

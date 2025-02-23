@@ -5,6 +5,11 @@ bot: Bot;
 import discord;
 import datetime;
 
+global active_channels;
+active_channels: list[int] = [
+    846124305329815632 # copybind
+];
+
 async def on_think_day( time: datetime.datetime ):
 
     from src.utils.utils import g_Utils;

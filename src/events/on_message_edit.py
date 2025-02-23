@@ -23,7 +23,7 @@ async def on_message_edit( before: discord.Message, after: discord.Message ):
 
             if after.guild.id == g_Utils.Guild.LimitlessPotential:
 
-                channel = bot.get_channel( 877268843330961499 );
+                channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
 
                 if channel and after.author.id != bot.user.id:
 
