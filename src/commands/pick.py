@@ -20,7 +20,7 @@ async def pick( interaction: discord.Interaction, options: str ):
 
     """Make the bot decide a option for you"""
 
-    await interaction.response.defer( thinking=True, ephemeral=True );
+    await interaction.response.defer( thinking=True );
 
     try:
 
@@ -28,11 +28,11 @@ async def pick( interaction: discord.Interaction, options: str ):
 
         if len( items ) > 1:
 
-            await interaction.followup.send( sentences[ "PICK_DONE" ].format( ''.join( f'\n- {i}' for i in items ), items[ random.randint( 0, len( items ) - 1 ) ] ), ephemeral=False );
+            await interaction.followup.send( sentences[ "PICK_DONE" ].format( ''.join( f'\n- {i}' for i in items ), items[ random.randint( 0, len( items ) - 1 ) ] ) );
 
         else:
 
-            await interaction.followup.send( sentences[ "PICK_OPTIONS" ] );
+            await interaction.followup.send( sentences[ "PICK_OPTIONS" ], ephemeral=True );
 
     except Exception as e:
 
