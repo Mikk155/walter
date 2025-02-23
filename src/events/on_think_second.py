@@ -1,7 +1,10 @@
-from __main__ import bot;
+from __main__ import bot
+
+import aiohttp.client_exceptions;
 from src.Bot import Bot;
 bot: Bot;
 
+import aiohttp
 import discord;
 import datetime;
 
@@ -24,7 +27,12 @@ async def on_think_second( time: datetime.datetime ):
 
             if pActivity:
 
-                await bot.change_presence( activity = pActivity );
+                try:
+
+                    await bot.change_presence( activity = pActivity );
+
+                except aiohttp.ClientConnectionResetError:
+                    pass
 
     except Exception as e:
 
