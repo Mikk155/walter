@@ -19,7 +19,7 @@ async def on_message_delete( message: discord.Message ):
 
             if message.guild.id == g_Utils.Guild.LimitlessPotential:
 
-                if not message.id in bot.deleted_messages and message.author.id != bot.user.id:
+                if not message.id in bot.deleted_messages:
 
                     channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
 

@@ -23,7 +23,7 @@ class Bot( discord.Client ):
     from src.utils.Logger import Logger
     m_Logger: Logger = Logger( "BOT" )
 
-    deleted_messages: list[int] = {}
+    deleted_messages: list[int] = []
     '''ID of discord.Message that this bot has deleted'''
 
     invites: list[discord.Invite] = []
