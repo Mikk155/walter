@@ -18,7 +18,7 @@ async def on_ready():
 
         if lp_guild:
 
-            tc_role = lp_guild.get_role( 1311845801428910101 )
+            tc_role = lp_guild.get_role( 964650157008363600 )
 
             for lp_member in lp_guild.members:
 
@@ -39,7 +39,7 @@ async def on_ready():
                             await lp_member.remove_roles( tc_role );
 
                 except Exception as e:
-                    print(e)
+                    print( f"on_ready::the_cult_member: {e}")
 
     except Exception as e:
 
