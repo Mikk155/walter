@@ -14,9 +14,6 @@ async def on_typing( channel: discord.abc.Messageable, user: discord.Member | di
 
     from src.utils.utils import g_Utils;
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         ''''''

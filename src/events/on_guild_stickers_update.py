@@ -13,9 +13,6 @@ async def on_guild_stickers_update( guild: discord.Guild, before: list[discord.S
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         ''''''

@@ -16,9 +16,6 @@ async def on_resumed():
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         ''''''

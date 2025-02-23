@@ -17,9 +17,6 @@ async def on_message( message: discord.Message ):
     from src.utils.CCacheManager import g_Cache;
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         content_lower = message.content.lower();

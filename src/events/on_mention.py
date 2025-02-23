@@ -14,9 +14,6 @@ async def on_mention( message: discord.Message, mentions: list[ discord.User | d
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         cache = g_Cache.get( "ping_counter");

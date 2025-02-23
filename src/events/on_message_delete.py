@@ -13,9 +13,6 @@ async def on_message_delete( message: discord.Message ):
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         if message.guild:

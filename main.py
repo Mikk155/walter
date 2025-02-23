@@ -266,9 +266,8 @@ async def on_ready():
 
     await bot.wait_until_ready();
 
-    if not developer:
-        from src.plugins.Roles import role_view_setup;
-        await role_view_setup();
+    from src.plugins.Roles import role_view_setup;
+    await role_view_setup();
 
     if not bot.__on_start_called__:
 

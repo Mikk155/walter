@@ -1,7 +1,7 @@
 import datetime;
 import pytz;
 
-from src.utils.CGuild import CGuild
+from src.utils.CGuild import CGuild, CTestGuild
 
 class CUtils:
 
@@ -10,7 +10,10 @@ class CUtils:
     '''
 
     def __init__(self):
-        pass
+        if self.developer:
+            self.Guild = CTestGuild();
+        else:
+            self.Guild = CGuild();
 
     @property
     def time(self) -> datetime.datetime:
@@ -19,7 +22,7 @@ class CUtils:
         '''
         return datetime.datetime.now( pytz.timezone( "America/Argentina/Cordoba" ) );
 
-    Guild = CGuild();
+    Guild: CGuild;
 
     @property
     def developer(self) -> bool:

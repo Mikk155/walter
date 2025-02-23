@@ -13,9 +13,6 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
     from src.utils.utils import g_Utils;
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         fix_embeds_kvp = {

@@ -14,9 +14,6 @@ async def on_member_remove( member : discord.Member ):
     from src.utils.sentences import sentences
     from src.utils.utils import g_Utils;
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         if member.guild:

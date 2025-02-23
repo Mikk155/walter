@@ -13,9 +13,6 @@ async def on_audit_log_entry_create( entry: discord.audit_logs.AuditLogEntry ):
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     if entry.guild:
 
         try:

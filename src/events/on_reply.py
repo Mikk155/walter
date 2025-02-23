@@ -12,9 +12,6 @@ async def on_reply( message: discord.Message, replied: discord.Message ):
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         ''''''

@@ -83,9 +83,25 @@
     {
         "english": "Failed to generate additional data dictionary: {}"
     },
-    "SELECT_ROLE":
+    "SELECT_ROLE_COLORS":
     {
-        "english": "Select a role."
+        "english": "Color to display in your name."
+    },
+    "SELECT_ROLE_CONTINENT":
+    {
+        "english": "Your continent"
+    },
+    "SELECT_ROLE_DEVELOPER":
+    {
+        "english": "Are you a developer?"
+    },
+    "SELECT_ROLE_PINGS":
+    {
+        "english": "Notify for game sessions"
+    },
+    "SELECT_ROLE_OTHERS":
+    {
+        "english": "Other roles"
     },
     "ROLE_REMOVED":
     {

@@ -13,9 +13,6 @@ async def on_guild_emojis_update( guild: discord.Guild, before: list[discord.Emo
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         ''''''

@@ -8,11 +8,6 @@ class CGuild:
         return 744768007892500481;
 
     @property
-    def TestServer(self) -> int:
-        '''Test server ID'''
-        return 1145236064596918304;
-
-    @property
     def LimitlessPotential(self) -> int:
         '''Limitless potential server ID'''
         return 744769532513615922;
@@ -45,3 +40,37 @@ class CGuild:
     @property
     def Channel_Trusted(self) -> int:
         return 1343197825751715851;
+
+class CTestGuild( CGuild ):
+
+    @property
+    def LimitlessPotential(self) -> int:
+        return 1145236064596918304;
+
+    @property
+    def TheCult(self) -> int:
+        return 1145236064596918304;
+
+    @property
+    def Channel_Welcome(self) -> int:
+        return 1343236659516538901;
+
+    @property
+    def Channel_Users(self) -> int:
+        return 1343235715625910302;
+
+    @property
+    def Channel_DiscordLogs(self) -> int:
+        return 1343235788623708350;
+
+    @property
+    def Channel_BotLogs(self) -> int:
+        return 1343235842822504481;
+
+    @property
+    def Channel_CountTogether(self) -> int:
+        return 1343235904902266880;
+
+    @property
+    def Channel_Trusted(self) -> int:
+        return 1343235956345405570;

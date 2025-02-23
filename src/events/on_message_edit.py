@@ -14,9 +14,6 @@ async def on_message_edit( before: discord.Message, after: discord.Message ):
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         if after.guild:

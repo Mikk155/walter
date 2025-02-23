@@ -14,9 +14,6 @@ async def on_guild_channel_pins_update( channel: discord.TextChannel | discord.T
 
     from src.utils.utils import g_Utils
 
-    if g_Utils.developer:
-        return;
-
     try:
 
         ''''''

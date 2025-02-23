@@ -35,9 +35,8 @@ class Bot( discord.Client ):
 
     async def setup_hook(self):
 
-        from __main__ import developer;
-        if developer:
-            __MY_GUILD__ = discord.Object( id = g_Utils.Guild.TestServer )
+        if g_Utils.developer:
+            __MY_GUILD__ = discord.Object( id = g_Utils.Guild.LimitlessPotential )
             self.tree.clear_commands( guild=__MY_GUILD__ )
             self.tree.copy_global_to( guild=__MY_GUILD__ )
             await self.tree.sync( guild=__MY_GUILD__ )
