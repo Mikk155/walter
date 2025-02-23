@@ -13,7 +13,7 @@ from src.utils.sentences import sentences
 
 @app_commands.guild_only()
 
-@app_commands.default_permissions( administrator=True )
+#@app_commands.default_permissions( administrator=True )
 
 @app_commands.describe( message='Say something', user='User to use identity', )
 
@@ -21,7 +21,7 @@ async def say( interaction: discord.Interaction, message: str, user: Optional[di
 
     """Make the bot say something"""
 
-    await interaction.response.defer( thinking=True );
+    await interaction.response.defer( thinking=True, ephemeral=True );
 
     try:
 
@@ -35,6 +35,8 @@ async def say( interaction: discord.Interaction, message: str, user: Optional[di
                                                         avatar_url=user.avatar.url if user.avatar else None, wait=True );
 
         bot.m_Logger.info( sentences[ "SAY_MEMBER_SAID" ], interaction.user.global_name, said.jump_url, message ).print();
+
+        await interaction.delete_original_response();
 
     except Exception as e:
 
