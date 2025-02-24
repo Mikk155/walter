@@ -13,6 +13,7 @@ async def on_member_join( member : discord.Member ):
 
     from src.utils.sentences import sentences
     from src.utils.utils import g_Utils
+    from src.utils.CCacheManager import g_Cache
 
     try:
 
@@ -25,9 +26,27 @@ async def on_member_join( member : discord.Member ):
 
                     role = member.guild.get_role( 964650157008363600 )
 
-                    if not role in member.roles:
+                    if role and not role in member.roles:
 
                         await member.add_roles( role );
+
+                cache = g_Cache.get( "new_members" );
+
+                queue: list[int] = cache.get( "queue", [] );
+
+                if not str(member.id) in queue:
+
+                    new_member_role = member.guild.get_role( 1316214066384994324 )
+
+                    if new_member_role and not new_member_role in member.roles:
+
+                        await member.add_roles( new_member_role );
+
+                else:
+
+                    queue.remove( str(member.id) );
+
+                    cache[ "queue" ] = queue;
 
                 users_channel = bot.get_channel( g_Utils.Guild.Channel_Users );
 

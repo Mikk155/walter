@@ -49,11 +49,13 @@ bot: DiscordBot = DiscordBot();
 #================================================
 import src.commands.Activity;
 import src.commands.cache;
+import src.commands.count_together;
+import src.commands.minesweeper;
+import src.commands.new_members;
 import src.commands.pick;
 import src.commands.ping_count;
-import src.commands.count_together;
+import src.commands.queue_invited;
 import src.commands.say;
-import src.commands.minesweeper;
 #================================================
 # End of Application Commands
 #================================================
