@@ -64,6 +64,8 @@ async def on_link( message: discord.Message, urls: list[str] ):
 
                 else:
 
+                    bot.deleted_messages.append( webhook_message.id );
+
                     await webhook_message.delete();
 
     except Exception as e:
