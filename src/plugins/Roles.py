@@ -107,7 +107,8 @@ all_roles = {
         "1153074477056405624": "Get notified when playing Sven Co-op",
         "1311848524165677221": "Get notified when playing Half-Life",
         "1311863018816147497": "Get notified when playing Baldur's Gate 3",
-        "1303921521969987658": "Get notified when playing Minecraft"
+        "1303921521969987658": "Get notified when playing Minecraft",
+        "1346875100489715865": "Get notified when playing Serious Sam"
     },
     "OTHERS": {
         "1111484625265631262": "Your operative system is linux",
