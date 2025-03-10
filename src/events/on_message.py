@@ -77,7 +77,7 @@ async def on_message( message: discord.Message ):
                         await count_wrong( message );
 
             # Control arase
-            if message.author.id == 768337526888726548:
+            if message.author.id in [ 768337526888726548, 1312014737449549826 ]:
 
                 temp_vars = g_Cache.get( "temp" )
 
