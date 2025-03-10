@@ -8,6 +8,7 @@ from discord import app_commands;
 from typing import Optional;
 
 from src.utils.sentences import sentences
+from src.utils.utils import g_Utils
 
 @bot.tree.command()
 
@@ -34,7 +35,11 @@ async def say( interaction: discord.Interaction, message: str, user: Optional[di
         said: discord.WebhookMessage = await webhook.send( content=message, username=user.display_name, \
                                                         avatar_url=user.avatar.url if user.avatar else None, wait=True );
 
-        bot.m_Logger.info( sentences[ "SAY_MEMBER_SAID" ], interaction.user.global_name, said.jump_url, message ).print();
+        channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
+
+        if channel:
+
+            await channel.send( embed = bot.m_Logger.info( sentences[ "SAY_MEMBER_SAID" ], interaction.user.global_name, said.jump_url, message ), silent=True );
 
         await interaction.delete_original_response();
 
