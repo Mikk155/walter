@@ -39,6 +39,14 @@ async def on_message_delete( message: discord.Message ):
                             value = message.content
                         );
 
+                        async for entry in message.guild.audit_logs(limit=5, action=discord.AuditLogAction.message_delete):
+                            if entry.target.id == message.author.id:
+                                embed.add_field( inline = False,
+                                    name = "Deleted by",
+                                    value = f"<@{entry.user_id}>"
+                                );
+                                break;
+
                         if message.embeds and len(message.embeds) > 0:
 
                             embeds = message.embeds;
