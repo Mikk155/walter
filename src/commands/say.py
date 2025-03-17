@@ -16,9 +16,18 @@ from src.utils.utils import g_Utils
 
 #@app_commands.default_permissions( administrator=True )
 
-@app_commands.describe( message='Say something', user='User to use identity', )
+@app_commands.describe(
+    message='Say something',
+    user='User to use identity',
+    file='File to upload'
+)
 
-async def say( interaction: discord.Interaction, message: str, user: Optional[discord.Member] = None ):
+async def say(
+    interaction: discord.Interaction,
+    message: Optional[str] = None,
+    user: Optional[discord.Member] = None,
+    file: Optional[discord.Attachment] = None
+):
 
     """Make the bot say something"""
 
@@ -30,9 +39,11 @@ async def say( interaction: discord.Interaction, message: str, user: Optional[di
 
             user = bot.user;
 
+        file_send = await file.to_file() if file else None;
+
         webhook = await bot.webhook( interaction.channel );
 
-        said: discord.WebhookMessage = await webhook.send( content=message, username=user.display_name, \
+        said: discord.WebhookMessage = await webhook.send( content=message, username=user.display_name, file=file_send, \
                                                         avatar_url=user.avatar.url if user.avatar else None, wait=True );
 
         channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
