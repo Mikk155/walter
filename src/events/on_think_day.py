@@ -5,19 +5,22 @@ bot: Bot;
 import discord;
 import datetime;
 
-global active_channels;
-active_channels: list[int] = [
-    846124305329815632 # copybind
-];
-
 async def on_think_day( time: datetime.datetime ):
 
     from src.utils.utils import g_Utils;
-    from src.plugins.Activity import g_Activity;
+    from src.utils.CCacheManager import g_Cache;
 
     try:
 
-        ''''''
+        birthdays = g_Cache.get( "birthdays" );
+
+        off_topic_channel = bot.get_channel( 1343196084876476499 );
+
+        for user, data in birthdays.items():
+
+            if data[0] == time.day and data[1] == time.month and off_topic_channel:
+
+                await off_topic_channel.send( f"Everyone give <@{user}> a happy birthday! <:kaleun:1212181960890253372>🎉" );
 
     except Exception as e:
 

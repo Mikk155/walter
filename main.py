@@ -48,6 +48,7 @@ bot: DiscordBot = DiscordBot();
 # Start of Application Commands
 #================================================
 import src.commands.Activity;
+import src.commands.birthdays;
 import src.commands.cache;
 import src.commands.count_together;
 import src.commands.minesweeper;
