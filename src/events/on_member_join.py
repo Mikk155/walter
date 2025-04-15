@@ -52,7 +52,8 @@ async def on_member_join( member : discord.Member ):
 
                 if users_channel:
 
-                    remaining_mikk_uses: int = 0;
+                    remaining_uses_discord: int = 0;
+                    remaining_uses_steam: int = 0;
 
                     inviter: discord.Member = None;
 
@@ -63,27 +64,30 @@ async def on_member_join( member : discord.Member ):
                     for invite in invites:
 
                         if invite in bot.invites:
-                            
+
                             if invite.code == "9RCY6DsYjY":
 
-                                remaining_mikk_uses = 100 - invite.uses;
+                                remaining_uses_discord = 100 - invite.uses;
 
-                            invite_index = bot.invites.index( invite ) - 1;
+                            elif invite.code == "ksY4XmBDfC":
 
-                            if invite.uses > bot.invites[ invite_index ].uses:
+                                remaining_uses_steam = 50 - invite.uses;
+
+                            elif invite.uses > bot.invites[ bot.invites.index( invite ) - 1 ].uses:
 
                                 inviter = invite.inviter;
 
                                 invite_code = invite.code;
 
-                                bot.invites[ invite_index ] = invite
+                                bot.invites[ bot.invites.index( invite ) - 1 ] = invite
 
                     invite_source = None
                     join_from = None
 
                     invites_list = {
                         "2ErNUQh6fE": "Github (Unlimited)",
-                        "9RCY6DsYjY": f"Mikk's profile ({remaining_mikk_uses}/100)",
+                        "ksY4XmBDfC": f"Mikk's Steam profile ({remaining_uses_steam}/50)",
+                        "9RCY6DsYjY": f"Mikk's Discord profile ({remaining_uses_discord}/100)",
                     };
 
                     if invite_code in invites_list:
