@@ -39,19 +39,15 @@ async def say(
 
             user = bot.user;
 
-        file_send = await file.to_file() if file else None;
-
         webhook = await bot.webhook( interaction.channel );
-
-        said: discord.WebhookMessage;
 
         avatar = user.avatar.url if user.avatar else None;
 
-        if file_send:
-            said = await webhook.send( content=message, username=user.display_name, file=file_send, avatar_url=avatar, wait=True );
-
+        if file:
+            file_send = await file.to_file();
+            said: discord.WebhookMessage = await webhook.send( content=message, username=user.display_name, file=file_send, avatar_url=avatar, wait=True );
         else:
-            said = await webhook.send( content=message, username=user.display_name, avatar_url=avatar, wait=True );
+            said: discord.WebhookMessage = await webhook.send( content=message, username=user.display_name, avatar_url=avatar, wait=True );
 
         channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
 
