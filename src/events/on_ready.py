@@ -16,7 +16,7 @@ async def on_ready():
 
         lp_guild = bot.get_guild( g_Utils.Guild.LimitlessPotential );
 
-        if lp_guild:
+        if lp_guild and not g_Utils.developer:
 
             tc_role = lp_guild.get_role( 964650157008363600 )
 
