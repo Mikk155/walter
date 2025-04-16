@@ -90,3 +90,17 @@ class g_Cache:
 
         g_Cache.__cache__[ label ] = value;
 
+    from datetime import timedelta
+    @staticmethod
+    def set_temporal( label: str, delta: timedelta ) -> None:
+
+        from src.utils.utils import g_Utils;
+
+        temp_vars = g_Cache.get( "temp" );
+
+        time_diff = g_Utils.time + delta;
+
+        temp_vars[ label ] = time_diff.strftime( "%Y-%m-%d %H:%M:%S" );
+
+    def has_temporal( label: str ) -> bool:
+        return ( label in g_Cache.get( "temp" ) );

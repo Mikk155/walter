@@ -216,6 +216,12 @@ async def think_runner():
         last_time[ "minute" ] = time.minute;
         await on_think_minute( time );
 
+        # Expire temporal cache variables
+        temp_vars = g_Cache.get( "temp" )
+        for key, expire in temp_vars.items():
+            if time.strptime( expire, "%Y-%m-%d %H:%M:%S") < time.now():
+                temp_vars.pop( key );
+
     if last_time.get( "hour", 0 ) != time.hour:
         last_time[ "hour" ] = time.hour;
         await on_think_hour( time );
