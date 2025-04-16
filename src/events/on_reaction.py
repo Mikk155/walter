@@ -15,14 +15,15 @@ class ReactionAction:
 async def on_reaction( reaction: discord.Reaction, user : discord.User, action: ReactionAction ):
 
     from src.utils.utils import g_Utils
-    from src.utils.CCacheManager import g_Cache
 
     try:
 
-        if reaction.guild and reaction.guild.id == g_Utils.Guild.LimitlessPotential:
+        if reaction.message.guild and reaction.message.guild.id == g_Utils.Guild.LimitlessPotential:
 
-            from src.plugins.EmojiManager import check_emoji;
-            check_emoji(reaction);
+            if action == ReactionAction.added:
+
+                from src.plugins.EmojiManager import check_emoji;
+                check_emoji(reaction);
 
     except Exception as e:
 
