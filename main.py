@@ -217,8 +217,9 @@ async def think_runner():
         await on_think_minute( time );
 
         # Expire temporal cache variables
-        temp_vars = g_Cache.get( "temp" )
-        for key, expire in temp_vars.items():
+        temp_vars = g_Cache.get( "temp" );
+        temp_vars_copy = temp_vars.copy();
+        for key, expire in temp_vars_copy.items():
             if time.strptime( expire, "%Y-%m-%d %H:%M:%S") < time.now():
                 temp_vars.pop( key );
 
