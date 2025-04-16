@@ -79,9 +79,7 @@ async def on_message( message: discord.Message ):
             # Control arase
             if message.author.id in [ 768337526888726548, 1312014737449549826 ]:
 
-                temp_vars = g_Cache.get( "temp" )
-
-                if not "control_arase_mimido" in temp_vars:
+                if not g_Cache.has_temporal( "control_arase_mimido" ):
 
                     hour = datetime.datetime.now( pytz.timezone( "Asia/Kuala_Lumpur" ) ).hour;
 
@@ -89,9 +87,7 @@ async def on_message( message: discord.Message ):
 
                         from src.utils.utils import g_Utils;
 
-                        time_diff = g_Utils.time + datetime.timedelta( hours = ( 6 - hour ) );
-
-                        temp_vars[ "control_arase_mimido" ] = time_diff.strftime( "%Y-%m-%d %H:%M:%S" );
+                        g_Cache.set_temporal( "control_arase_mimido", datetime.timedelta( hours = ( 6 - hour ) ) );
 
                         user = await bot.fetch_user( 438449162527440896 );
 
@@ -99,38 +95,38 @@ async def on_message( message: discord.Message ):
 
                         await webhook.send( content='[What the fuck arase go to sleep](https://cdn.discordapp.com/attachments/342709269017133064/1292115993040126083/SPOILER_youtube-jDgMkHB1pEI.mp4?ex=6702904b&is=67013ecb&hm=816913c613de3cd284f7765b3d13383b1251ee35bf62eee4d953c30c2cc004bb&)', username='KEZÆIV', avatar_url=user.avatar.url if user.avatar else None );
 
-                elif datetime.datetime.strptime( temp_vars[ "control_arase_mimido" ], "%Y-%m-%d %H:%M:%S") < datetime.datetime.now():
+                if not g_Cache.has_temporal( "control_arase_horny" ):
 
-                    temp_vars.pop( "control_arase_mimido" );
+                    arase_words = [
+                        'mommy',
+                        'mama',
+                        'sex',
+                        'gf',
+                        'feet',
+                        'armpit'
+                    ];
 
-                arase_words = [
-                    'mommy',
-                    'mama',
-                    'sex',
-                    'gf',
-                    'feet',
-                    'armpit'
-                ];
+                    for h in arase_words:
 
-                for h in arase_words:
+                        if h in content_lower:
 
-                    if h in content_lower:
+                            user = await bot.fetch_user( 121735805369581570 );
 
-                        user = await bot.fetch_user( 121735805369581570 );
+                            cache = g_Cache.get( "control_arase" );
 
-                        cache = g_Cache.get( "control_arase" );
+                            number = cache.get( "times", 0 );
 
-                        number = cache.get( "times", 0 );
+                            number += 1;
 
-                        number += 1;
+                            cache[ "times" ] = number;
 
-                        cache[ "times" ] = number;
+                            webhook = await bot.webhook( message.channel );
 
-                        webhook = await bot.webhook( message.channel );
+                            await webhook.send( content=f'Control yourself. This is the {number}th time.', username='KernCore', avatar_url=user.avatar.url if user.avatar else None );
 
-                        await webhook.send( content='Control yourself', username='KernCore', avatar_url=user.avatar.url if user.avatar else None );
+                            g_Cache.set_temporal( "control_arase_horny", datetime.timedelta( hours = 1 ) );
 
-                        return;
+                            return;
 
             # Neko marry sara
             elif message.author.id == g_Utils.Guild.Owner:
