@@ -12,6 +12,9 @@ async def on_think_day( time: datetime.datetime ):
 
     try:
 
+        from src.plugins.EmojiManager import manage_emojis;
+        await manage_emojis();
+
         birthdays = g_Cache.get( "birthdays" );
 
         off_topic_channel = bot.get_channel( 1343196084876476499 );

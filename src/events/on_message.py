@@ -24,6 +24,9 @@ async def on_message( message: discord.Message ):
 
         if message.guild and message.guild.id == g_Utils.Guild.LimitlessPotential:
 
+            from src.plugins.EmojiManager import check_emoji;
+            check_emoji(message);
+
             # Remove sent messages to #welcome #-TODO Should we use a button + vgui instead of a app command
             if message.channel.id == g_Utils.Guild.Channel_Welcome and not message.author.guild_permissions.administrator:
 
