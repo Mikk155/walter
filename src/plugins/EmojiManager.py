@@ -17,13 +17,16 @@ def check_emoji( input: discord.Reaction | discord.Message ) -> None:
 
     emoji_text = input.emoji if isinstance( input, discord.Reaction ) else input.content;
 
+    if not isinstance( emoji_text, str ):
+        emoji_text = str(emoji_text);
+
     has_emoji = emoji_text.find( "<:" );
 
     if has_emoji != -1:
 
-        ename = input.content[ has_emoji + 2 : ];
+        emoji_text = emoji_text[ has_emoji + 2 : ];
 
-        ename = ename[ : ename.find( ":", has_emoji ) ];
+        ename = emoji_text[ : emoji_text.find( ":", has_emoji ) ];
 
     if ename:
 
@@ -37,7 +40,7 @@ def check_emoji( input: discord.Reaction | discord.Message ) -> None:
 
             if emoji:
 
-                uses = emojis.get( ename, 1 );
+                uses = emojis.get( ename, 0 );
 
                 uses = uses + 1;
 
