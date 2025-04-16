@@ -14,7 +14,8 @@ async def on_start():
 
     try:
 
-        ''''''
+        from src.plugins.EmojiManager import manage_emojis;
+        await manage_emojis();
 
     except Exception as e:
 
