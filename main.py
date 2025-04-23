@@ -51,6 +51,7 @@ import src.commands.Activity;
 import src.commands.birthdays;
 import src.commands.cache;
 import src.commands.count_together;
+import src.commands.delete;
 import src.commands.minesweeper;
 import src.commands.new_members;
 import src.commands.pick;
