@@ -61,7 +61,7 @@ async def upload_emoji( interaction: discord.Interaction, name: str, file: disco
 
                     await interaction.followup.send(f"⚠️ The image is {image.width}x{image.height}. it should be ≤128x128." );
 
-                return;
+                    return;
 
             except Exception as e:
 
