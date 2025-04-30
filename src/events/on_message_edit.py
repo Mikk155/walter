@@ -22,7 +22,7 @@ async def on_message_edit( before: discord.Message, after: discord.Message ):
 
                 channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
 
-                if channel and after.author.id != bot.user.id:
+                if channel and not after.author.bot:
 
                     embed = discord.Embed(
                         color = 0x00FF00
