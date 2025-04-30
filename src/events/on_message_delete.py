@@ -12,52 +12,11 @@ import discord;
 async def on_message_delete( message: discord.Message ):
 
     from src.utils.utils import g_Utils
+    from src.plugins.delete_log import delete_notice
 
     try:
 
-        if message.guild:
-
-            if message.guild.id == g_Utils.Guild.LimitlessPotential:
-
-                if not message.id in bot.deleted_messages:
-
-                    channel = bot.get_channel( g_Utils.Guild.Channel_DiscordLogs );
-
-                    if channel:
-
-                        embed = discord.Embed(
-                            color = 0xFF0000
-                        );
-
-                        embed.add_field( inline = False,
-                            name = message.author.name,
-                            value = "Message sent by {} deleted in {}".format( message.author.mention, message.channel.jump_url )
-                        );
-
-                        embed.add_field( inline = False,
-                            name = "Content",
-                            value = message.content
-                        );
-
-                        async for entry in message.guild.audit_logs(limit=5, action=discord.AuditLogAction.message_delete):
-                            if entry.target.id == message.author.id:
-                                embed.add_field( inline = False,
-                                    name = "Deleted by",
-                                    value = f"<@{entry.user_id}>"
-                                );
-                                break;
-
-                        if message.embeds and len(message.embeds) > 0:
-
-                            embeds = message.embeds;
-
-                            embeds.insert( 0, embed );
-
-                            await channel.send( embeds=embeds, allowed_mentions=False, mention_author=False, silent=True );
-
-                        else:
-
-                            await channel.send( embed=embed, allowed_mentions=False, mention_author=False, silent=True );
+        await delete_notice(message=message);
 
     except Exception as e:
 

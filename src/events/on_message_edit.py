@@ -61,15 +61,51 @@ async def on_message_edit( before: discord.Message, after: discord.Message ):
 
                     if old != new:
 
-                        embed.add_field( inline = False,
-                            name = "Before",
-                            value = old
-                        );
+                        content = old;
+                        if len(content) > 1024:
+                            part = 1;
+                            while len( content ) > 1024:
+                                content_part = content[ : 1024 ];
+                                content = content[ 1024 : ];
+                                embed.add_field( inline = False,
+                                    name = f"Before split {part}",
+                                    value = content_part
+                                );
+                                part = part + 1;
+                            if len(content) > 0:
 
-                        embed.add_field( inline = False,
-                            name = "After",
-                            value = new
-                        );
+                                embed.add_field( inline = False,
+                                    name = "Before",
+                                    value = content
+                                );
+                        else:
+                            embed.add_field( inline = False,
+                                name = "Before",
+                                value = content
+                            );
+
+                        content = new;
+                        if len(content) > 1024:
+                            part = 1;
+                            while len( content ) > 1024:
+                                content_part = content[ : 1024 ];
+                                content = content[ 1024 : ];
+                                embed.add_field( inline = False,
+                                    name = f"After split {part}",
+                                    value = content_part
+                                );
+                                part = part + 1;
+                            if len(content) > 0:
+
+                                embed.add_field( inline = False,
+                                    name = "After",
+                                    value = content
+                                );
+                        else:
+                            embed.add_field( inline = False,
+                                name = "After",
+                                value = content
+                            );
 
                         await channel.send( embed=embed, allowed_mentions=False, mention_author=False );
 
