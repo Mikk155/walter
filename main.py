@@ -58,7 +58,7 @@ import src.commands.pick;
 import src.commands.ping_count;
 import src.commands.queue_invited;
 import src.commands.say;
-import src.commands.upload_emoji;
+#import src.commands.upload_emoji;
 #================================================
 # End of Application Commands
 #================================================

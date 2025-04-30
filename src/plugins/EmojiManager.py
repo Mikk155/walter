@@ -110,7 +110,7 @@ async def manage_emojis() -> None:
 
         embed.add_field( inline = False,
             name = emoji.name,
-            value = f"{str(emoji)} Uses: {used} times this week"
+            value = f"{str(emoji)} Used: {used} times this week"
         );
 
     used_emojis.clear();

@@ -22,8 +22,8 @@ async def on_reaction( reaction: discord.Reaction, user : discord.User, action: 
 
             if action == ReactionAction.added:
 
-                from src.plugins.EmojiManager import check_emoji;
-                check_emoji(reaction);
+#                from src.plugins.EmojiManager import check_emoji;
+#                check_emoji(reaction);
 
     except Exception as e:
 
