@@ -27,6 +27,24 @@ async def on_message( message: discord.Message ):
 #            from src.plugins.EmojiManager import check_emoji;
 #            check_emoji(message);
 
+            if message.content:
+
+                used_words = g_Cache.get( "most_used_word" );
+
+                all_words = message.content.split( " " );
+
+                for word in all_words:
+
+                    word_times = 0;
+
+                    if word in used_words:
+
+                        word_times = used_words[ word ];
+
+                    word_times = word_times + 1;
+
+                    used_words[ word ] = word_times;
+
             # Remove sent messages to #welcome #-TODO Should we use a button + vgui instead of a app command
             if message.channel.id == g_Utils.Guild.Channel_Welcome and not message.author.guild_permissions.administrator:
 

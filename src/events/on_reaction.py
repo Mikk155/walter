@@ -17,10 +17,10 @@ async def on_reaction( reaction: discord.Reaction, user : discord.User, action: 
     from src.utils.utils import g_Utils
 
     try:
+        ''''''
+#        if reaction.message.guild and reaction.message.guild.id == g_Utils.Guild.LimitlessPotential:
 
-        if reaction.message.guild and reaction.message.guild.id == g_Utils.Guild.LimitlessPotential:
-
-            if action == ReactionAction.added:
+#            if action == ReactionAction.added:
 
 #                from src.plugins.EmojiManager import check_emoji;
 #                check_emoji(reaction);
