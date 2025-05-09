@@ -31,7 +31,7 @@ async def on_message( message: discord.Message ):
 
                 used_words = g_Cache.get( "most_used_word" );
 
-                all_words = message.content.split( " " );
+                all_words = message.content.lower().split( " " );
 
                 for word in all_words:
 
