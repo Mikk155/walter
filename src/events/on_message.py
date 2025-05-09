@@ -27,7 +27,7 @@ async def on_message( message: discord.Message ):
 #            from src.plugins.EmojiManager import check_emoji;
 #            check_emoji(message);
 
-            if message.content:
+            if message.content and not message.author.bot:
 
                 used_words = g_Cache.get( "most_used_word" );
 
