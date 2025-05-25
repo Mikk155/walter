@@ -76,12 +76,14 @@ async def delete_notice( message: discord.Message, deleter_id: Optional[int] = N
     else:
 
         async for entry in message.guild.audit_logs(limit=5, action=discord.AuditLogAction.message_delete):
-            if entry.target.id == message.author.id:
-                embed.add_field( inline = False,
-                    name = "Deleted by",
-                    value = f"<@{entry.user_id}>"
-                );
-                break;
+                from datetime import datetime, timezone;
+                time_now = datetime.now(timezone.utc);
+                if entry.created_at.day == time_now.day and entry.created_at.hour == time_now.hour and entry.created_at.minute == time_now.minute:
+                    embed.add_field( inline = False,
+                        name = "Deleted by",
+                        value = f"<@{entry.user_id}>"
+                    );
+                    break;
 
     if message.embeds and len(message.embeds) > 0:
 
