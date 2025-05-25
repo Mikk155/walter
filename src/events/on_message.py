@@ -129,7 +129,13 @@ async def on_message( message: discord.Message ):
                                 "You ain't going to find a girlfriend at this time,"
                                 f"Reminder para <@{message.author.id}> to fucking sleep early"
                             ];
-                            mimir_text = mimir_texts[ random.randint( 0, len(mimir_texts) - 1 ) ] + f' It\'s {hour} AM.';
+
+                            if hour == 0:
+                                hour = f' It\'s 12 PM.';
+                            else:
+                                hour = f' It\'s {hour} AM.';
+
+                            mimir_text = mimir_texts[ random.randint( 0, len(mimir_texts) - 1 ) ] + hour;
 
                             await webhook.send( content=f'{mimir_text} [a mimir](https://cdn.discordapp.com/attachments/847485688282480640/1376229990378508398/a_mimir.mp4?ex=6834918e&is=6833400e&hm=ea97d291d22f7a0dbc723032baee9ce6d4e195e112913df24b786cfb9e697e2a&)', username='KEZÆIV', avatar_url=user.avatar.url if user.avatar else None );
 
