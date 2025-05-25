@@ -35,6 +35,9 @@ async def on_message( message: discord.Message ):
 
                 for word in all_words:
 
+                    if not word or len(word) < 3:
+                        continue;
+
                     word_times = 0;
 
                     if word in used_words:
