@@ -110,7 +110,7 @@ async def on_message( message: discord.Message ):
 
                     if hour <= 5:
 
-                        if random.randint( 0, 1 ) == 1:
+                        if message.content.find( "test" ) != -1 and random.randint( 0, 1 ) == 1:
 
                             from src.utils.utils import g_Utils;
 
@@ -131,7 +131,7 @@ async def on_message( message: discord.Message ):
                             ];
                             mimir_text = mimir_texts[ random.randint( 0, len(mimir_texts) - 1 ) ] + f' It\'s {hour} AM.';
 
-                            await webhook.send( content=f'[{mimir_text}](https://cdn.discordapp.com/attachments/342709269017133064/1292115993040126083/SPOILER_youtube-jDgMkHB1pEI.mp4?ex=6702904b&is=67013ecb&hm=816913c613de3cd284f7765b3d13383b1251ee35bf62eee4d953c30c2cc004bb&)', username='KEZÆIV', avatar_url=user.avatar.url if user.avatar else None );
+                            await webhook.send( content=f'{mimir_text} [a mimir](https://cdn.discordapp.com/attachments/847485688282480640/1376229990378508398/a_mimir.mp4?ex=6834918e&is=6833400e&hm=ea97d291d22f7a0dbc723032baee9ce6d4e195e112913df24b786cfb9e697e2a&)', username='KEZÆIV', avatar_url=user.avatar.url if user.avatar else None );
 
                 if not g_Cache.has_temporal( "control_arase_horny" ):
 
