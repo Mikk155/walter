@@ -8,6 +8,7 @@ bot: Bot;
 
 import re;
 import pytz;
+import random;
 import discord;
 import datetime;
 
@@ -109,15 +110,28 @@ async def on_message( message: discord.Message ):
 
                     if hour <= 5:
 
-                        from src.utils.utils import g_Utils;
+                        if random.randint( 0, 1 ) == 1:
 
-                        g_Cache.set_temporal( "control_arase_mimido", datetime.timedelta( hours = ( 6 - hour ) ) );
+                            from src.utils.utils import g_Utils;
 
-                        user = await bot.fetch_user( 438449162527440896 );
+                            g_Cache.set_temporal( "control_arase_mimido", datetime.timedelta( hours = ( 6 - hour ) ) );
 
-                        webhook = await bot.webhook( message.channel );
+                            user = await bot.fetch_user( 438449162527440896 );
 
-                        await webhook.send( content='[What the fuck arase go to sleep](https://cdn.discordapp.com/attachments/342709269017133064/1292115993040126083/SPOILER_youtube-jDgMkHB1pEI.mp4?ex=6702904b&is=67013ecb&hm=816913c613de3cd284f7765b3d13383b1251ee35bf62eee4d953c30c2cc004bb&)', username='KEZÆIV', avatar_url=user.avatar.url if user.avatar else None );
+                            webhook = await bot.webhook( message.channel );
+
+                            mimir_texts = [
+                                "What the fuck arase go to sleep",
+                                "Go to fucking sleep arase",
+                                "Ok but go to sleep",
+                                "when sleeping",
+                                "Mimir time mf",
+                                "You ain't going to find a girlfriend at this time,"
+                                f"Reminder para <@{message.author.id}> to fucking sleep early"
+                            ];
+                            mimir_text = mimir_texts[ random.randint( 0, len(mimir_texts) - 1 ) ] + f' It\'s {hour} AM.';
+
+                            await webhook.send( content=f'[{mimir_text}](https://cdn.discordapp.com/attachments/342709269017133064/1292115993040126083/SPOILER_youtube-jDgMkHB1pEI.mp4?ex=6702904b&is=67013ecb&hm=816913c613de3cd284f7765b3d13383b1251ee35bf62eee4d953c30c2cc004bb&)', username='KEZÆIV', avatar_url=user.avatar.url if user.avatar else None );
 
                 if not g_Cache.has_temporal( "control_arase_horny" ):
 
