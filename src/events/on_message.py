@@ -34,9 +34,22 @@ async def on_message( message: discord.Message ):
 
                 all_words = message.content.lower().split( " " );
 
+                COMMON_WORDS = (
+                    "the", "and", "you", "that", "for", "but", "with", "just", "like", "have",
+                    "a", "an", "to", "in", "of", "on", "at", "is", "it", "this", "i", "we",
+                    "they", "he", "she", "him", "her", "was", "were", "be", "been", "am",
+                    "are", "as", "by", "not", "do", "does", "did", "so", "if", "or", "from",
+                    "my", "your", "our", "their", "them", "me", "us", "can", "could", "should",
+                    "would", "will", "shall", "there", "what", "which", "who", "whom", "how",
+                    "when", "where", "why", "because", "about", "into", "up", "down", "out",
+                    "over", "under", "again", "then", "than", "too", "very", "no", "yes",
+                    "also", "more", "most", "some", "such", "each", "few", "many", "every",
+                    "any", "all", "these", "those"
+                );
+
                 for word in all_words:
 
-                    if not word or len(word) < 3:
+                    if not word or len(word) < 3 or word in COMMON_WORDS:
                         continue;
 
                     word_times = 0;
