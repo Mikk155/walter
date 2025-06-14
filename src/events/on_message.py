@@ -62,6 +62,21 @@ async def on_message( message: discord.Message ):
 
                     used_words[ word ] = word_times;
 
+            if message.channel.id == g_Utils.Guild.Channel_LPMemes and message.author.id != bot.user.id:
+
+                Elements = len(message.embeds) + len(message.attachments);
+
+                if Elements == 0 and not message.author.guild_permissions.administrator:
+
+                    response = await message.reply( f"This channel is for memes only. Please forward your target message and reply somewhere else",\
+                                            silent=True, delete_after=10 );
+
+                    bot.deleted_messages.append( response.id );
+
+                    await message.delete();
+
+                    return;
+
             # Remove sent messages to #welcome #-TODO Should we use a button + vgui instead of a app command
             if message.channel.id == g_Utils.Guild.Channel_Welcome and not message.author.guild_permissions.administrator:
 

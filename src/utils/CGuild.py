@@ -41,6 +41,10 @@ class CGuild:
     def Channel_Trusted(self) -> int:
         return 1343197825751715851;
 
+    @property
+    def Channel_LPMemes(self) -> int:
+        return 1343244435583926323;
+
 class CTestGuild( CGuild ):
 
     @property
