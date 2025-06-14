@@ -49,7 +49,7 @@ async def on_message( message: discord.Message ):
 
                 for word in all_words:
 
-                    if not word or len(word) < 3 or word in COMMON_WORDS:
+                    if not word or len(word) < 3 or word in COMMON_WORDS or word.startswith( '<:' ):
                         continue;
 
                     word_times = 0;
