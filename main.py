@@ -29,8 +29,13 @@ from src.Bot import Bot;
 
 bot: Bot = Bot();
 
-@bot.event
-async def on_ready():
-    await bot.wait_until_ready();
+from src.events import on_audit_log_entry_create;
+from src.events import on_message_delete;
+from src.events import on_message_edit;
+from src.events import on_message;
+from src.events import on_ready;
+from src.events import on_think;
 
-bot.run( token = open( os.path.join( os.path.dirname( __file__ ), "token.txt" ), "r" ).readline(), reconnect = True );
+bot.dirname = os.path.dirname( __file__ );
+
+bot.run( token = open( os.path.join( bot.dirname, "token.txt" ), "r" ).readline(), reconnect = True );
