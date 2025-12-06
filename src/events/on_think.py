@@ -13,11 +13,4 @@ from discord.ext.tasks import loop as Loop
 async def on_think() -> None:
 #
     await bot.wait_until_ready()
-
-    if len(bot.m_RaisedExceptions) > 0:
-    #
-        embed: discord.Embed = bot.m_RaisedExceptions.pop(0);
-
-        await bot.get_channel( 1343235842822504481 ).send( embed=embed, silent=True, mention_author=False, allowed_mentions=False );
-    #
 #

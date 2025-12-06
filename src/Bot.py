@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 import discord;
 from discord.app_commands.tree import CommandTree;
 
-import os;
+import functools;
 from inspect import FrameInfo
 from traceback import StackSummary
 
@@ -35,8 +35,6 @@ class Bot( discord.Client ):
 #
     dirname: str = '';
     '''Directory path'''
-
-    m_RaisedExceptions: list[discord.Embed] = [];
 
     def __init__( self ) -> None:
     #
@@ -49,75 +47,71 @@ class Bot( discord.Client ):
         await self.tree.sync();
     #
 
-    def exception(
-        self,
-        exception: Exception,
-        server: Optional[ discord.Guild | int ] = None,
-        returnEmbed: bool = False
-    ) -> discord.Embed | None:
+    def exception( self, func ):
     #
         '''
-            Delays a message to the main server's loggin channel
-
-            exception: exception that was raised.
-                if this is a str there won't be any special formating and we'll use that message.
-
-            server: either discord.Guild or int (guild id) to have an idea where the exception happened.
-
-            returnEmbed: if true it returns a copy of the created embed before the "server" data is applied.
+            Delays a message to the main server's loggin channel when an exception is thrown
         '''
 
-        embed: discord.Embed = discord.Embed();
-
-        embed.color = 0xE74C3C;
-        embed.title = "Exception";
-
-        if isinstance( exception, str ):
+        @functools.wraps( func )
+        async def wrapper( *args, **kwargs ):
         #
-            embed.description = exception;
+            try:
+            #
+                return await func( *args, **kwargs );
+            #
+            except Exception as e:
+            #
+                embed: discord.Embed = discord.Embed();
+
+                embed.color = 0xE74C3C;
+                embed.title = "Exception";
+
+                if isinstance( e, str ):
+                #
+                    embed.description = e;
+                #
+                else:
+                #
+                    embed.title = str(type(e));
+                    embed.description = str(e)
+                #
+
+                # Append Callback trace
+                from sys import exc_info;
+                from traceback import extract_tb;
+
+                excType, exc_value, exc_traceback = exc_info();
+                tracebackCalls: StackSummary = extract_tb( exc_traceback );
+
+                tracebackCalls.reverse();
+
+                EmbedFields: list[ tuple[ str, str, Optional[bool] ] ] = [];
+
+                for frame in tracebackCalls:
+                #
+                    FrameFilename: str = frame.filename[ frame.filename.rfind( "Python" )
+                        if ( frame.filename.find( "Python" ) != -1 )
+                        else len( self.dirname ) : ];
+
+                    EmbedFields.append(
+                        (
+                            f'**{excType.__name__}** line: ``{frame.lineno}``',
+                            "```py\n{}``` ``{}``".format(
+                                frame.line,
+                                FrameFilename
+                            ),
+                            False
+                        )
+                    );
+                #
+
+                self.AddEmbedFields( embed, EmbedFields );
+
+                await self.get_channel( 1343235842822504481 ).send( embed=embed, silent=True, mention_author=False, allowed_mentions=False );
+            #
         #
-        else:
-        #
-            embed.title = str(type(exception));
-            embed.description = f"{exception}"
-        #
-
-        # Append Callback trace
-        from sys import exc_info;
-        from traceback import extract_tb;
-
-        excType, exc_value, exc_traceback = exc_info();
-        tracebackCalls: StackSummary = extract_tb( exc_traceback );
-
-        tracebackCalls.reverse();
-
-        EmbedFields: list[ tuple[ str, str, Optional[bool] ] ] = [];
-
-        for frame in tracebackCalls:
-        #
-            FrameFilename: str = frame.filename[ frame.filename.rfind( "Python" )
-                if ( frame.filename.find( "Python" ) != -1 )
-                else len( self.dirname ) : ];
-
-            EmbedFields.append(
-                (
-                    f'**{excType.__name__}** line: ``{frame.lineno}``',
-                    "```py\n{}``` ``{}``".format(
-                        frame.line,
-                        FrameFilename
-                    ),
-                    False
-                )
-            );
-        #
-
-        self.AddEmbedFields( embed, EmbedFields );
-
-        embedCopy: discord.Embed | None = embed.copy() if returnEmbed is True else None;
-
-        self.m_RaisedExceptions.append( embed );
-
-        return embedCopy;
+        return wrapper;
     #
 
     def AddEmbedFields( self, embed: discord.Embed, items: list[ tuple[ str, str, Optional[bool] ] ] ) -> discord.Embed:
