@@ -84,6 +84,9 @@ class Bot( discord.Client ):
                 excType, exc_value, exc_traceback = exc_info();
                 tracebackCalls: StackSummary = extract_tb( exc_traceback );
 
+                # Pop the wrapper
+                tracebackCalls.pop(0);
+
                 tracebackCalls.reverse();
 
                 EmbedFields: list[ tuple[ str, str, Optional[bool] ] ] = [];
