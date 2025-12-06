@@ -1,9 +1,6 @@
 cache.json
 token.txt
-token_dev.txt
 __pycache__
 **/__pycache__/**
 
 wip/*
-
-emojis/*

@@ -1,19 +1,12 @@
 {
-    "files.associations":
-    {
-        "*.json": "jsonc"
-    },
     "files.exclude":
     {
         "**/__pycache__/": true,
-        "token.txt": true,
-        "token_dev.txt": true,
+        "token.txt": true
     },
     "search.exclude":
     {
         "**/__pycache__/": true,
-        "token.txt": true,
-        "token_dev.txt": true,
-        "wip/": true
+        "token.txt": true
     }
 }
