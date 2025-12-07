@@ -44,6 +44,8 @@ from src.events import on_typing;
 from src.events import on_audit_log_entry_create;
 from src.events import on_disconnect;
 
+import src.libs.trusted;
+
 import os;
 
 bot.dirname = os.path.dirname( __file__ );

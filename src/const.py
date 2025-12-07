@@ -43,3 +43,4 @@ class Colors( IntEnum ):
     Red: int = RGB( 255, 0, 0 ).hex;
     Lime: int = RGB( 100, 255, 0 ).hex;
     LightBlue: int = RGB( 80, 170, 255 ).hex;
+    Orange: int = RGB( 255, 128, 0 ).hex;
