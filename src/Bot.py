@@ -33,6 +33,8 @@ from typing import Optional;
 
 class Bot( discord.Client ):
 #
+    __Started__ = False;
+
     dirname: str = '';
     '''Directory path'''
 

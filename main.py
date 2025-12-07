@@ -22,19 +22,29 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-import os;
-import discord;
-
 from src.Bot import Bot;
 
 bot: Bot = Bot();
 
-from src.events import on_audit_log_entry_create;
+# Events
+from src.events import on_error;
+from src.events import on_guild_channel_pins_update;
+from src.events import on_guild_emojis_update;
+from src.events import on_guild_stickers_update;
+from src.events import on_invite;
+from src.events import on_member_join;
+from src.events import on_member_remove;
+from src.events import on_message;
 from src.events import on_message_delete;
 from src.events import on_message_edit;
-from src.events import on_message;
+from src.events import on_reaction;
 from src.events import on_ready;
 from src.events import on_think;
+from src.events import on_typing;
+from src.events import on_audit_log_entry_create;
+from src.events import on_disconnect;
+
+import os;
 
 bot.dirname = os.path.dirname( __file__ );
 
