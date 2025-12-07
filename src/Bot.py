@@ -153,4 +153,48 @@ class Bot( discord.Client ):
         #
         return embed;
     #
+
+    async def webhook( self, channel: discord.TextChannel ) -> discord.Webhook:
+    #
+        '''
+            Get the bot's webhook for the given channel, creates one if it doesn't exists.
+        '''
+        webhooks: list[discord.Webhook] = await channel.webhooks();
+
+        for webhook in webhooks:
+        #
+            if webhook and webhook.name == "walter":
+            #
+                return webhook;
+            #
+        #
+        return await channel.create_webhook( name="walter" );
+    #
+    async def UserReacted( self,
+        user: discord.Member | discord.User,
+        message: discord.Message,
+        emoji: Optional[str] = None
+    ) -> bool:
+    #
+        '''
+            Return whatever the given user reacted with the given emoji to the given message
+        '''
+        if not message or not user:
+            return False;
+
+        for r in message.reactions:
+        #
+            if emoji is None or str( r.emoji ) == emoji:
+            #
+                async for reactor in r.users():
+                #
+                    if reactor.id == user.id:
+                    #
+                        return True
+                    #
+                #
+            #
+        #
+        return False;
+    #
 #
