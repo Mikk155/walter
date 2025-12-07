@@ -42,3 +42,4 @@ class Colors( IntEnum ):
     TheCult: int = RGB( 200, 0, 50 ).hex;
     Red: int = RGB( 255, 0, 0 ).hex;
     Lime: int = RGB( 100, 255, 0 ).hex;
+    LightBlue: int = RGB( 80, 170, 255 ).hex;
