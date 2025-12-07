@@ -39,3 +39,4 @@ class Colors( IntEnum ):
     LimitlessPotential: int = RGB( 200, 0, 200 ).hex;
     TheCult: int = RGB( 200, 0, 50 ).hex;
     Red: int = RGB( 255, 0, 0 ).hex;
+    Lime: int = RGB( 100, 255, 0 ).hex;
