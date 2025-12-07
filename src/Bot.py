@@ -28,6 +28,7 @@ from discord.app_commands.tree import CommandTree;
 import functools;
 from inspect import FrameInfo
 from traceback import StackSummary
+from src.const import LimitlessPotential;
 
 from typing import Optional;
 
@@ -113,7 +114,7 @@ class Bot( discord.Client ):
 
                 self.AddEmbedFields( embed, EmbedFields );
 
-                await self.get_channel( 1343235842822504481 ).send( embed=embed, silent=True, mention_author=False, allowed_mentions=False );
+                await self.get_channel( LimitlessPotential.Channels.BotLogs ).send( embed=embed, silent=True, mention_author=False, allowed_mentions=False );
             #
         #
         return wrapper;

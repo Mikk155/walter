@@ -9,12 +9,12 @@ from src.const import TheCult, LimitlessPotential;
 @bot.exception
 async def on_ready() -> None:
 
-    print( f"Bot connected and logged as {bot.user.name}#{bot.user.discriminator}" );
-
     await bot.wait_until_ready();
 
     if bot.__Started__ is False: # This is the first time the bot is running. since on_ready is called multiple times
     #
+        await bot.get_channel( LimitlessPotential.Channels.BotLogs ).send( f"Connected and logged as {bot.user.name}#{bot.user.discriminator}", silent=True );
+
         async def getInvites( target: TheCult | LimitlessPotential ) -> None:
         #
             targetGuild: discord.Guild = bot.get_guild( target.id );
@@ -40,7 +40,7 @@ async def on_ready() -> None:
     #
     else: # Otherwise this is called from a connection recovered
     #
-        pass;
+        await bot.get_channel( LimitlessPotential.Channels.BotLogs ).send( f"Reconnected after connection lost", silent=True );
     #
 
     from src.events.on_think import on_think;
