@@ -11,6 +11,7 @@ class LimitlessPotential:
     id: int = 1145236064596918304 if g_Testing else 744769532513615922;
 
     class Channels( IntEnum ):
+        Information: int = 1447268395568464065 if g_Testing else 1118352656096829530;
         Announcements: int = 842129545494134785;
         Users: int = 1343203830787080203;
         BotLogs: int = 1343235842822504481 if g_Testing else 1343209173969535108;
@@ -28,6 +29,7 @@ class TheCult:
     id: int = 1145236064596918304 if g_Testing else 1216162825307820042;
 
     class Channels( IntEnum ):
+        Information: int = 1447268395568464065 if g_Testing else 1216173523500793857;
         Announcements: int = 1397367866667434125;
         Benefactors: int = 1216208600725196922;
         Users: int = 1447021578532425802;

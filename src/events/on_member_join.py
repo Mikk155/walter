@@ -72,6 +72,7 @@ async def on_member_join( member : discord.Member ) -> None:
     if not member or not member.guild:
         return;
 
+    rules_id: int = None;
     channel_id: int = None;
     Color: Colors = None;
     inviteList: dict[str, int] = None;
@@ -79,14 +80,31 @@ async def on_member_join( member : discord.Member ) -> None:
     if member.guild.id == LimitlessPotential.id:
     #
         channel_id = LimitlessPotential.Channels.Users;
+        rules_id = LimitlessPotential.Channels.Information;
         Color = Colors.LimitlessPotential;
         inviteList = LimitlessPotential.Invites;
     #
     elif member.guild.id == TheCult.id:
     #
         channel_id = TheCult.Channels.Users;
+        rules_id = LimitlessPotential.Channels.Information;
         Color = Colors.TheCult;
         inviteList = TheCult.Invites;
+    #
+
+    if rules_id is not None:
+    #
+        channel: discord.TextChannel = member.guild.get_channel( rules_id );
+
+        if channel:
+        #
+            welcum = f"Welcome to {member.guild.name}!\nBy staying here you agree to abide by our rules.\nYou can find them at {channel.jump_url}";
+
+            try:
+                await member.send( welcum );
+            except:
+                pass;
+        #
     #
 
     if channel_id is not None:
