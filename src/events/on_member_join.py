@@ -75,7 +75,7 @@ async def on_member_join( member : discord.Member ) -> None:
     rules_id: int = None;
     channel_id: int = None;
     Color: Colors = None;
-    inviteList: dict[str, int] = None;
+    inviteList: dict[str, int] = {};
 
     if member.guild.id == LimitlessPotential.id:
     #
@@ -94,11 +94,11 @@ async def on_member_join( member : discord.Member ) -> None:
 
     if rules_id is not None:
     #
-        channel: discord.TextChannel = member.guild.get_channel( rules_id );
+        rules_channel: discord.TextChannel = member.guild.get_channel( rules_id );
 
-        if channel:
+        if rules_channel:
         #
-            welcum = f"Welcome to {member.guild.name}!\nBy staying here you agree to abide by our rules.\nYou can find them at {channel.jump_url}";
+            welcum = f"Welcome to {member.guild.name}!\nBy staying here you agree to abide by our rules.\nYou can find them at {rules_channel.jump_url}";
 
             try:
                 await member.send( welcum );
@@ -131,7 +131,7 @@ async def on_member_join( member : discord.Member ) -> None:
 
         for currentInvite in GuildInvites:
         #
-            if currentInvite.uses > inviteList[ currentInvite.code ]:
+            if currentInvite.uses > inviteList.get( currentInvite.code, 0 ):
             #
                 inviteList[ currentInvite.code ] = currentInvite.uses;
         
@@ -165,6 +165,10 @@ async def on_member_join( member : discord.Member ) -> None:
                         #
                             embed.add_field( inline = False, name = "Invited by", value = f"<@{inviter.id}>" );
                             embed.set_footer( text=inviter.name, icon_url=inviter.avatar.url if inviter.avatar else None );
+                        #
+                        else:
+                        #
+                            embed.add_field( inline = False, name = "Invite used:", value = f"``{currentInvite.code}``" );
                         #
                     #
                 #
