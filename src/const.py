@@ -13,7 +13,7 @@ class LimitlessPotential:
     class Channels( IntEnum ):
         Information: int = 1447268395568464065 if g_Testing else 1118352656096829530;
         Announcements: int = 842129545494134785;
-        Users: int = 1343203830787080203;
+        Users: int = 1447235262622208152 if g_Testing else 1343203830787080203;
         BotLogs: int = 1343235842822504481 if g_Testing else 1343209173969535108;
         GreetTheGafther: int = 1376757390757724298;
         Trusted: int = 1343197825751715851;
@@ -32,7 +32,7 @@ class TheCult:
         Information: int = 1447268395568464065 if g_Testing else 1216173523500793857;
         Announcements: int = 1397367866667434125;
         Benefactors: int = 1216208600725196922;
-        Users: int = 1447021578532425802;
+        Users: int = 1447235262622208152 if g_Testing else 1447021578532425802;
         DiscordLogs: int = 1343235788623708350 if g_Testing else 1397355050715578439;
 
     Invites: dict[ str, int ] = {};
